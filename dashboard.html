@@ -1,0 +1,3078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Intelligence Tactical Dashboard — Sidebar Layout</title>
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:            #0a0d13;
+    --bg-grid:       #0d111a;
+    --surface:       #10141d;
+    --surface-2:     #151a25;
+    --surface-3:     #1a2130;
+    --border:        rgba(255,255,255,0.08);
+    --border-strong:  rgba(255,255,255,0.16);
+    --text-1:        #eef1f6;
+    --text-2:        #9aa4b8;
+    --text-3:        #626d84;
+    --brand:         #e30613;
+    --brand-dim:     rgba(227,6,19,0.14);
+    --data:          #22d3ee;
+    --data-dim:      rgba(34,211,238,0.14);
+    --good:          #2fbf6e;
+    --good-dim:      rgba(47,191,110,0.14);
+    --warn:          #f0ad2e;
+    --warn-dim:      rgba(240,173,46,0.14);
+    --bad:           #ef4444;
+    --bad-dim:       rgba(239,68,68,0.14);
+    --violet:        #9a7cf5;
+    --amber:         #eab308;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Consolas, monospace;
+    --sans: -apple-system, "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0; background:var(--bg); color:var(--text-1);
+    font-family:var(--sans); -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body{
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(227,6,19,0.10), transparent 60%),
+      radial-gradient(ellipse 900px 600px at 90% 0%, rgba(34,211,238,0.07), transparent 60%),
+      linear-gradient(var(--bg-grid), var(--bg-grid));
+    background-attachment:fixed;
+    min-height:100vh;
+  }
+  a{ color:inherit; }
+  button{ font-family:inherit; }
+  ::selection{ background:var(--brand); color:#fff; }
+
+  .num{ font-family:var(--mono); font-variant-numeric:tabular-nums; }
+
+  .eyebrow{
+    font-size:11px; font-weight:700; letter-spacing:0.11em; text-transform:uppercase;
+    color:var(--text-3);
+  }
+
+  .wrap{ max-width:1440px; margin:0 auto; padding:0 28px 64px; }
+
+  /* ============ TOP BAR ============ */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,13,19,0.92); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar-inner{
+    max-width:1440px; margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  }
+  .logo-mark{
+    width:38px; height:38px; border-radius:9px; flex:none;
+    background:linear-gradient(155deg,#ff2d3d,var(--brand) 55%,#a4030d);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:19px; color:#fff; letter-spacing:-0.02em;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.14) inset, 0 6px 18px -6px rgba(227,6,19,0.65);
+  }
+  .brand-title{ display:flex; flex-direction:column; gap:2px; margin-right:auto; }
+  .brand-title h1{
+    margin:0; font-size:17px; font-weight:700; letter-spacing:-0.01em;
+  }
+  .brand-title p{
+    margin:0; font-size:11.5px; color:var(--text-3);
+  }
+  .brand-title p b{ color:var(--text-2); font-weight:600; }
+
+  .pill{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:6px 11px; border-radius:100px; font-size:11.5px; font-weight:600;
+    border:1px solid var(--border-strong); white-space:nowrap;
+  }
+  .pill-live{ background:var(--good-dim); border-color:rgba(47,191,110,0.35); color:#7be8ab; }
+  .sidebar-toggle{
+    display:flex; align-items:center; justify-content:center; width:34px; height:34px; flex:none;
+    border-radius:8px; border:1px solid var(--border-strong); background:var(--surface-2);
+    color:var(--text-2); cursor:pointer; transition:border-color .15s, color .15s, background .15s;
+  }
+  .sidebar-toggle:hover{ color:var(--text-1); border-color:var(--data); background:var(--surface-3); }
+  .sidebar-toggle svg{ display:block; }
+  .pill-live .dot{
+    width:7px; height:7px; border-radius:50%; background:var(--good);
+    box-shadow:0 0 0 0 rgba(47,191,110,0.6); animation:pulse 1.8s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(47,191,110,0.55); }
+    70%{ box-shadow:0 0 0 6px rgba(47,191,110,0); }
+    100%{ box-shadow:0 0 0 0 rgba(47,191,110,0); }
+  }
+
+  .user-chip{
+    display:flex; align-items:center; gap:9px;
+    padding:5px 12px 5px 6px; border-radius:100px;
+    background:var(--surface-2); border:1px solid var(--border);
+  }
+  .user-chip .avatar{
+    width:26px; height:26px; border-radius:50%; flex:none;
+    background:linear-gradient(155deg,#2a3140,#171c27);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:700; color:var(--text-2); border:1px solid var(--border-strong);
+  }
+  .user-chip .who{ display:flex; flex-direction:column; line-height:1.25; }
+  .user-chip .who .name{ font-size:12.5px; font-weight:600; }
+  .user-chip .who .role{ font-size:10.5px; color:var(--text-3); }
+  .user-chip svg{ flex:none; color:var(--text-3); }
+
+  /* ============ FILTER / QUERY BAR ============ */
+  .control-stack{ display:flex; flex-direction:column; gap:16px; }
+  .control-bar{
+    display:flex; flex-direction:column; gap:12px;
+    padding:16px; border:1px solid var(--border); border-radius:14px;
+    background:linear-gradient(180deg,var(--surface),var(--surface-2));
+  }
+  .ask-card-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  #askBody{ display:flex; flex-direction:column; gap:12px; }
+  .card-toggle{
+    display:flex; align-items:center; justify-content:center; width:26px; height:26px; flex:none;
+    border-radius:7px; border:1px solid var(--border-strong); background:var(--surface-3);
+    color:var(--text-2); cursor:pointer; transition:border-color .15s, color .15s, background .15s;
+  }
+  .card-toggle:hover{ color:var(--text-1); border-color:var(--data); background:#161d2a; }
+  .card-toggle svg{ display:block; transition:transform .2s ease; }
+  .card-toggle.collapsed svg{ transform:rotate(-90deg); }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-size:10.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-3); }
+  select{
+    appearance:none; -webkit-appearance:none;
+    background:var(--surface-3) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6"><path d="M0 0L5 6L10 0" fill="none" stroke="%239aa4b8" stroke-width="1.4"/></svg>') no-repeat right 11px center;
+    color:var(--text-1); border:1px solid var(--border-strong); border-radius:8px;
+    padding:8px 30px 8px 11px; font-size:12.5px; font-weight:600; min-width:150px; cursor:pointer;
+  }
+  select:focus-visible, input:focus-visible, button:focus-visible{
+    outline:2px solid var(--data); outline-offset:2px;
+  }
+  .filter-group{ display:flex; gap:10px; flex-wrap:wrap; }
+  .scope-line{
+    font-size:11.5px; color:var(--text-3); padding-top:4px;
+    border-top:1px dashed var(--border); margin-top:2px;
+  }
+  .scope-line b{ color:var(--data); font-weight:600; }
+
+  .ask-row{ display:flex; gap:8px; }
+  .suggest-row{ display:none; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .suggest-row.show{ display:flex; animation:fadein .15s ease; }
+  .suggest-chip{
+    font-family:var(--sans); font-size:11.5px; font-weight:600; line-height:1.4; padding:7px 12px;
+    border-radius:100px; background:var(--surface-3); border:1px solid var(--border-strong);
+    color:var(--text-2); cursor:pointer; text-align:left; max-width:100%;
+    transition:border-color .15s, color .15s, background .15s;
+  }
+  .suggest-chip:hover{ border-color:var(--data); color:var(--text-1); background:#161d2a; }
+  .ask-row input[type="text"]{
+    flex:1; background:var(--surface-3); border:1px solid var(--border-strong); border-radius:8px;
+    color:var(--text-1); font-size:13px; padding:9px 12px; font-family:var(--sans);
+  }
+  .ask-row input::placeholder{ color:var(--text-3); }
+  .btn{
+    display:inline-flex; align-items:center; gap:6px; justify-content:center;
+    border-radius:8px; border:1px solid var(--border-strong); background:var(--surface-3);
+    color:var(--text-1); font-size:12.5px; font-weight:600; padding:9px 14px; cursor:pointer;
+    transition:border-color .15s, background .15s, transform .05s;
+  }
+  .btn:hover{ border-color:var(--data); background:#161d2a; }
+  .btn:active{ transform:translateY(1px); }
+  .btn-accent{ background:var(--data-dim); border-color:rgba(34,211,238,0.4); color:#8fe6f7; }
+  .btn-accent:hover{ background:rgba(34,211,238,0.22); }
+  .btn-ghost{ background:transparent; }
+  .btn-sm{ padding:6px 11px; font-size:11.5px; }
+
+  .ai-answer{
+    display:none; margin-top:2px; padding:12px 14px; border-radius:10px;
+    background:var(--surface-3); border:1px solid rgba(34,211,238,0.3);
+    font-size:12.8px; line-height:1.55; color:var(--text-2);
+  }
+  .ai-answer.show{ display:block; animation:fadein .25s ease; }
+  .ai-answer .tag{
+    display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--data); margin-bottom:6px;
+  }
+  @keyframes fadein{ from{ opacity:0; transform:translateY(-3px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ============ HADOOP SNAPSHOT BAR ============ */
+  .hadoop-bar{
+    margin-top:14px; display:flex; align-items:center; justify-content:space-between; gap:14px;
+    flex-wrap:wrap; padding:11px 14px; border:1px solid var(--border); border-radius:10px;
+    background:var(--surface-2);
+  }
+  .hb-left{ display:flex; flex-direction:column; gap:3px; }
+  .hb-status{ font-size:11.5px; color:var(--text-2); font-family:var(--mono); }
+  .hb-status.live{ color:#7be8ab; }
+  .hb-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+  .hb-format{
+    margin-top:10px; padding:12px; border-radius:10px; background:#0d1119; border:1px solid var(--border);
+    font-size:11px; color:var(--text-2); overflow-x:auto; white-space:pre; font-family:var(--mono);
+  }
+
+  /* ============ CORE KPI ROW (Hadoop-sourced) ============ */
+  .kpi-row{ margin-top:14px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  @media (max-width:820px){ .kpi-row{ grid-template-columns:1fr; } }
+  .kpi-tile{
+    padding:14px 16px; border-radius:12px; border:1px solid var(--border);
+    background:linear-gradient(180deg,var(--surface-2),var(--surface)); position:relative; overflow:hidden;
+  }
+  .kpi-tile::before{
+    content:""; position:absolute; left:0; top:0; right:0; height:2px;
+    background:linear-gradient(90deg, var(--panel-accent, var(--data)), transparent 70%);
+  }
+  .kpi-top{ display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .kpi-label{ font-size:11.5px; font-weight:700; color:var(--text-2); }
+  .kpi-source{ font-size:9.5px; font-weight:700; letter-spacing:.04em; padding:2px 7px; border-radius:100px; white-space:nowrap; }
+  .kpi-source.hadoop{ background:var(--good-dim); color:#7be8ab; border:1px solid rgba(47,191,110,.35); }
+  .kpi-source.modeled{ background:var(--warn-dim); color:#f7c874; border:1px solid rgba(240,173,46,.35); }
+  .kpi-mid{ display:flex; align-items:baseline; gap:10px; margin-top:8px; flex-wrap:wrap; }
+  .kpi-value{ font-size:26px; font-weight:700; }
+  .kpi-delta{ font-size:12px; font-weight:700; }
+  .kpi-spark{ margin-top:8px; opacity:0.92; }
+  .kpi-spark svg{ display:block; }
+
+  /* ============ TICKERS ============ */
+  .ticker{
+    margin-top:16px; border:1px solid var(--border); border-radius:12px;
+    background:var(--surface); overflow:hidden; position:relative;
+  }
+  .ticker-label{
+    position:absolute; left:0; top:0; bottom:0; z-index:2; display:flex; align-items:center;
+    padding:0 14px; font-size:10.5px; font-weight:800; letter-spacing:0.1em;
+    background:linear-gradient(90deg, var(--surface) 70%, transparent);
+    color:var(--text-3);
+  }
+  .ticker-label.macro{ color:#8fe6f7; }
+  .ticker-label.voc{ color:#f5a3ad; }
+  .ticker-track-wrap{
+    overflow:hidden; padding-left:96px;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+            mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .ticker-track{
+    display:flex; align-items:center; width:max-content;
+    animation:scroll-left 55s linear infinite;
+  }
+  .ticker.voc .ticker-track{ animation-duration:80s; }
+  .ticker-track:hover{ animation-play-state:paused; }
+  @keyframes scroll-left{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+  @media (prefers-reduced-motion:reduce){
+    .ticker-track{ animation:none; overflow-x:auto; }
+  }
+
+  .macro-item{
+    display:flex; align-items:center; gap:9px; padding:12px 22px; white-space:nowrap;
+    border-right:1px solid var(--border); cursor:pointer; transition:background .15s;
+  }
+  .macro-item:hover{ background:var(--surface-2); }
+  .macro-item .m-name{ font-size:11px; color:var(--text-3); font-weight:600; }
+  .macro-item .m-val{ font-size:13px; font-weight:700; font-family:var(--mono); }
+  .dir{ font-size:11px; font-weight:800; display:inline-flex; align-items:center; }
+  .dir.up{ color:var(--good); } .dir.down{ color:var(--bad); } .dir.flat{ color:var(--text-3); }
+
+  .voc-item{
+    display:flex; flex-direction:column; gap:5px; padding:11px 20px; white-space:nowrap;
+    border-right:1px solid var(--border); max-width:420px; cursor:pointer; transition:background .15s;
+  }
+  .voc-item:hover{ background:var(--surface-2); }
+  /* ticker items are compact and repeat many times in the marquee — skip the floating
+     ⤢ affordance used on cards; cursor + hover highlight is enough here */
+  .macro-item[data-detail]::after, .voc-item[data-detail]::after{ display:none; }
+  .voc-top{ display:flex; align-items:center; gap:7px; }
+  .voc-platform{
+    font-size:9.5px; font-weight:800; letter-spacing:0.06em; padding:2px 6px; border-radius:4px;
+    background:var(--surface-3); color:var(--text-2); border:1px solid var(--border-strong);
+  }
+  .voc-sent{ font-size:9.5px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; }
+  .voc-sent.positive{ color:var(--good); } .voc-sent.negative{ color:var(--bad); } .voc-sent.neutral{ color:var(--warn); }
+  .voc-quote{ font-size:12.5px; color:var(--text-1); white-space:normal; max-width:400px; }
+  .voc-meta{ font-size:10.5px; color:var(--text-3); font-family:var(--mono); }
+
+  /* ============ PANELS ============ */
+  .panel{
+    border:1px solid var(--border); border-radius:14px; background:var(--surface);
+    padding:20px; position:relative; overflow:hidden;
+  }
+  .panel::before{
+    content:""; position:absolute; left:0; top:0; right:0; height:2px;
+    background:linear-gradient(90deg, var(--panel-accent, var(--data)), transparent 70%);
+  }
+  .panel-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:14px; }
+  .panel-head h2{ margin:0 0 3px; font-size:15px; font-weight:700; letter-spacing:-0.005em; }
+  .panel-head .sub{ font-size:12px; color:var(--text-3); }
+  .stack{ display:flex; flex-direction:column; gap:16px; margin-top:20px; }
+  .row-2col{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:920px){ .row-2col{ grid-template-columns:1fr; } }
+
+  .chip{
+    display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:600;
+    padding:3px 8px; border-radius:6px; background:var(--surface-3); color:var(--text-2);
+    border:1px solid var(--border-strong);
+  }
+  .chip-row{ display:flex; gap:6px; flex-wrap:wrap; }
+
+  /* Synthesis */
+  .synthesis-narrative{ font-size:13.5px; line-height:1.7; color:var(--text-1); }
+  .synthesis-narrative b{ color:#fff; }
+  .synthesis-narrative .hl-neg{ color:#ff8a8a; font-weight:600; }
+  .synthesis-narrative .hl-pos{ color:#7be8ab; font-weight:600; }
+  .action-list{ display:flex; flex-direction:column; gap:9px; margin-top:14px; }
+  .action-item{
+    display:grid; grid-template-columns:auto auto 1fr auto; gap:12px; align-items:center;
+    padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2);
+  }
+  @media (max-width:760px){ .action-item{ grid-template-columns:1fr; } }
+  .prio{
+    font-size:10.5px; font-weight:800; padding:3px 7px; border-radius:5px; letter-spacing:0.04em;
+  }
+  .prio.p1{ background:var(--bad-dim); color:#ff8a8a; border:1px solid rgba(239,68,68,0.4); }
+  .prio.p2{ background:var(--warn-dim); color:#f7c874; border:1px solid rgba(240,173,46,0.4); }
+  .prio.p3{ background:var(--data-dim); color:#8fe6f7; border:1px solid rgba(34,211,238,0.4); }
+  .fn{ font-size:11px; font-weight:700; color:var(--text-2); white-space:nowrap; }
+  .action-text{ font-size:12.5px; color:var(--text-1); }
+  .action-text .horizon{ color:var(--text-3); font-family:var(--mono); font-size:11px; }
+  .btn-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+
+  /* Pricing probe */
+  .table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:10px; }
+  table.probe{ width:100%; border-collapse:collapse; font-size:12.5px; min-width:640px; }
+  table.probe th{
+    text-align:left; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--text-3); font-weight:700; padding:10px 14px; background:var(--surface-2);
+    border-bottom:1px solid var(--border);
+  }
+  table.probe td{ padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
+  table.probe tr:last-child td{ border-bottom:none; }
+  table.probe td.price{ font-family:var(--mono); font-weight:700; }
+  .status-tag{ font-size:10px; font-weight:800; padding:3px 8px; border-radius:100px; letter-spacing:0.03em; white-space:nowrap; }
+  .status-tag.exposed{ background:var(--bad-dim); color:#ff8a8a; }
+  .status-tag.expensive{ background:var(--warn-dim); color:#f7c874; }
+  .status-tag.cheapest{ background:var(--good-dim); color:#7be8ab; }
+  .status-tag.parity{ background:var(--surface-3); color:var(--text-2); }
+  .op-logo{
+    display:inline-flex; align-items:center; justify-content:center; flex:none;
+    border-radius:7px; font-weight:800; letter-spacing:-0.02em; color:#fff;
+  }
+  .op-logo.xs{ width:16px; height:16px; font-size:8px; border-radius:4px; }
+  .op-logo.sm{ width:22px; height:22px; font-size:10px; border-radius:6px; }
+  .op-logo.md{ width:30px; height:30px; font-size:11.5px; }
+  .op-logo.lg{ width:38px; height:38px; font-size:13px; }
+  .op-th-inner{ display:inline-flex; align-items:center; gap:7px; }
+  .op-legend{ display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+  .op-legend-item{ display:flex; align-items:center; gap:7px; font-size:11.5px; font-weight:600; color:var(--text-2); }
+  .op-legend-swatch{ width:10px; height:10px; border-radius:3px; flex:none; }
+  .callout{
+    display:flex; gap:10px; padding:11px 13px; border-radius:10px; margin-top:14px;
+    background:var(--warn-dim); border:1px solid rgba(240,173,46,0.35); font-size:12.5px; color:#f7dcae;
+  }
+  .callout.bad{ background:var(--bad-dim); border-color:rgba(239,68,68,0.35); color:#ffc4c4; }
+  .scan-meta{ display:flex; gap:22px; flex-wrap:wrap; margin-top:14px; }
+  .scan-meta div{ display:flex; flex-direction:column; gap:2px; }
+  .scan-meta .k{ font-size:10px; color:var(--text-3); text-transform:uppercase; letter-spacing:0.06em; }
+  .scan-meta .v{ font-size:14px; font-weight:700; font-family:var(--mono); }
+
+  /* Product movement (validity-tier comparison table) */
+  table.vc-table{ width:100%; border-collapse:collapse; font-size:12px; min-width:640px; }
+  table.vc-table th{
+    text-align:left; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--text-3); font-weight:700; padding:10px 14px; background:var(--surface-2); border-bottom:1px solid var(--border);
+  }
+  table.vc-table td{ padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top; width:25%; }
+  table.vc-table tr:last-child td{ border-bottom:none; }
+  table.vc-table td.bucket-label{ font-weight:700; color:var(--text-1); white-space:nowrap; width:12%; }
+  .pline-group{ margin-bottom:10px; }
+  .pline-group:last-child{ margin-bottom:0; }
+  .pline{ margin:0; line-height:1.4; font-size:12px; }
+  .pline b{ display:block; color:var(--text-1); font-weight:600; }
+  .pline span{ color:var(--text-3); font-size:11px; }
+  .empty-cell{ color:var(--text-3); font-size:11.5px; }
+  .badge-new{
+    font-size:9.5px; font-weight:800; padding:1px 6px; border-radius:100px;
+    color:#7be8ab; background:var(--good-dim); margin-left:5px; letter-spacing:.03em; text-transform:uppercase;
+  }
+
+  /* price / validity / quota mini bars + cost table */
+  .metric-col-title{ font-size:11px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px; }
+  .bar-row{ margin-bottom:12px; }
+  .bar-row:last-child{ margin-bottom:0; }
+  .bar-row-head{ display:flex; align-items:center; gap:6px; margin-bottom:5px; }
+  .bar-row-head .name{ font-size:11.5px; font-weight:600; flex:1; color:var(--text-2); }
+  .bar-row-head .count{ font-size:11.5px; color:var(--text-3); font-family:var(--mono); }
+  .price-track{ position:relative; height:16px; width:100%; background:var(--surface-3); border-radius:4px; }
+  .price-fill{ position:absolute; left:0; top:0; height:16px; border-radius:4px; }
+  .price-fill.tsel{ background:#e30613; } .price-fill.ioh{ background:#f0ad2e; } .price-fill.xl{ background:#2a78d6; }
+  .price-track.undisclosed{
+    background:repeating-linear-gradient(45deg, var(--surface-3), var(--surface-3) 4px, transparent 4px, transparent 8px);
+    display:flex; align-items:center; padding-left:6px;
+  }
+  .price-track.undisclosed span{ font-size:10px; color:var(--text-3); font-style:italic; }
+
+  /* sentiment stacked bars */
+  .stack-track{ position:relative; height:20px; width:100%; }
+  .stack-seg{ position:absolute; top:0; height:20px; border-radius:4px; }
+  .stack-seg.critical{ background:var(--bad); } .stack-seg.neutral-seg{ background:var(--warn); } .stack-seg.good{ background:var(--good); }
+  .no-data-box{ border:1px dashed var(--border-strong); border-radius:10px; padding:12px; font-size:11.5px; color:var(--text-2); line-height:1.5; }
+
+  /* competitive scorecard */
+  .scorecard-grid{ display:grid; grid-template-columns:140px repeat(3,1fr); gap:8px 14px; align-items:center; margin-bottom:18px; }
+  .scorecard-grid .sc-head{ font-size:10.5px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.04em; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .scorecard-grid .sc-head.brandcol{ display:flex; align-items:center; gap:6px; }
+  .scorecard-grid .sc-dim{ font-size:12px; font-weight:600; color:var(--text-2); }
+  .meter{ display:flex; gap:3px; align-items:center; }
+  .meter .seg{ width:16px; height:8px; border-radius:2px; background:var(--surface-3); }
+  .meter .seg.on-tsel{ background:#e30613; } .meter .seg.on-ioh{ background:#f0ad2e; } .meter .seg.on-xl{ background:#2a78d6; }
+  .meter .na{ font-size:11px; color:var(--text-3); font-style:italic; }
+
+  .exec-line{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:16px; }
+  @media (max-width:760px){ .exec-line{ grid-template-columns:1fr; } }
+  .exec-card{ border-left:3px solid var(--ec); padding:4px 0 4px 12px; }
+  .exec-card.tsel{ --ec:#e30613; } .exec-card.ioh{ --ec:#f0ad2e; } .exec-card.xl{ --ec:#2a78d6; }
+  .exec-card .exec-name{ display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; margin-bottom:5px; }
+  .exec-card p{ font-size:12px; line-height:1.5; margin:0; color:var(--text-2); }
+
+  .resume-verdict{ border:1px solid var(--border); border-radius:10px; padding:16px 18px; background:var(--surface-2); }
+  .resume-verdict .verdict-label{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:#7be8ab; margin-bottom:6px; }
+  .resume-verdict p{ font-size:13px; line-height:1.6; margin:0; color:var(--text-1); }
+
+  /* prioritization: quadrant + compact list */
+  .prio-layout{ display:grid; grid-template-columns:260px 1fr; gap:22px; align-items:start; }
+  @media (max-width:760px){ .prio-layout{ grid-template-columns:1fr; } }
+  .quadrant-wrap svg{ width:100%; height:auto; }
+  .prio-row{ display:flex; align-items:center; gap:12px; border:1px solid var(--border); border-radius:10px; padding:10px 14px; background:var(--surface-2); }
+  .prio-chip{ flex:none; width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12.5px; color:#fff; }
+  .prio-chip.act{ background:var(--bad); } .prio-chip.watch{ background:var(--warn); } .prio-chip.low{ background:var(--text-3); }
+  .prio-row h3{ font-size:13px; font-weight:700; margin:0 0 2px; color:var(--text-1); }
+  .prio-row p{ font-size:11.5px; color:var(--text-2); margin:0; line-height:1.45; }
+  .prio-tag{ flex:none; font-size:10px; font-weight:700; text-transform:uppercase; padding:3px 8px; border-radius:100px; }
+  .prio-tag.act{ color:#ff8a8a; background:var(--bad-dim); } .prio-tag.watch{ color:#f7c874; background:var(--warn-dim); } .prio-tag.low{ color:var(--text-3); background:var(--surface-3); }
+
+  /* Alerts */
+  .alert-item{ display:flex; gap:12px; padding:13px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2); }
+  .sev-dot{ width:10px; height:10px; border-radius:50%; flex:none; margin-top:4px; }
+  .sev-dot.critical{ background:var(--bad); box-shadow:0 0 0 3px rgba(239,68,68,0.18); }
+  .sev-dot.high{ background:var(--warn); box-shadow:0 0 0 3px rgba(240,173,46,0.18); }
+  .sev-dot.medium{ background:var(--data); box-shadow:0 0 0 3px rgba(34,211,238,0.18); }
+  .alert-body{ flex:1; display:flex; flex-direction:column; gap:6px; }
+  .alert-title-row{ display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .alert-title{ font-size:13px; font-weight:700; }
+  .alert-cat{
+    font-size:9.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; flex:none;
+    padding:2px 7px; border-radius:100px; border:1px solid; background:var(--surface-3);
+  }
+  .alert-time{ font-size:10.5px; color:var(--text-3); font-family:var(--mono); white-space:nowrap; }
+  .alert-desc{ font-size:12px; color:var(--text-2); line-height:1.5; }
+  .alert-foot{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:2px; flex-wrap:wrap; }
+  .sla-tag{ font-size:10px; font-weight:700; padding:3px 8px; border-radius:6px; background:var(--surface-3); border:1px solid var(--border-strong); color:var(--text-2); }
+  .alert-link-btn{
+    display:inline-flex; align-items:center; gap:6px; align-self:flex-start; font-family:var(--sans);
+    font-size:11px; font-weight:600; padding:5px 10px; border-radius:100px; margin-top:2px;
+    background:var(--data-dim); border:1px solid rgba(34,211,238,.35); color:#8fe6f7; cursor:pointer;
+    transition:background .15s, border-color .15s;
+  }
+  .alert-link-btn:hover{ background:rgba(34,211,238,.22); border-color:var(--data); }
+  .modal-body .news-list{ display:flex; flex-direction:column; gap:8px; }
+  .modal-body .news-item{ padding:10px 12px; border:1px solid var(--border); border-radius:9px; background:var(--surface-2); }
+  .modal-body .news-meta{ display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px; }
+  .modal-body .news-source{ font-size:10.5px; font-weight:800; letter-spacing:.03em; text-transform:uppercase; color:var(--data); }
+  .modal-body .news-date{ font-size:10.5px; font-family:var(--mono); color:var(--text-3); white-space:nowrap; }
+  .modal-body .news-headline{ font-size:12.5px; color:var(--text-1); line-height:1.4; }
+
+  /* Sentiment bars */
+  .sent-row{ display:flex; align-items:center; gap:10px; }
+  .sent-label{ width:150px; flex:none; font-size:12px; color:var(--text-2); }
+  .sent-driver{
+    flex:none; width:78px; text-align:center; font-size:9.5px; font-weight:800; letter-spacing:.04em;
+    text-transform:uppercase; padding:3px 6px; border-radius:100px; border:1px solid; background:var(--surface-3);
+  }
+  .sent-track{ flex:1; height:8px; border-radius:100px; background:var(--surface-3); position:relative; overflow:hidden; }
+  .sent-fill{ position:absolute; inset:0 auto 0 0; border-radius:100px; background:linear-gradient(90deg,#1a95ab,var(--data)); transition:width .5s ease; }
+  .sent-val{ width:38px; flex:none; text-align:right; font-size:12px; font-weight:700; font-family:var(--mono); }
+  .sent-delta{ width:44px; flex:none; text-align:right; font-size:10.5px; font-family:var(--mono); }
+
+  /* Competitor movement */
+  .comp-row{ display:flex; align-items:center; gap:14px; padding:13px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2); }
+  .comp-info{ flex:1; min-width:0; }
+  .comp-info .cname{ font-size:13px; font-weight:700; }
+  .comp-info .ctag{ font-size:11.5px; color:var(--text-3); margin-top:2px; }
+  .pill-row{ display:flex; gap:6px; flex-wrap:wrap; margin-top:7px; }
+  .risk{ font-size:10px; font-weight:800; padding:3px 8px; border-radius:100px; }
+  .risk.high{ background:var(--bad-dim); color:#ff8a8a; }
+  .risk.medium{ background:var(--warn-dim); color:#f7c874; }
+  .risk.low{ background:var(--good-dim); color:#7be8ab; }
+  .act-pill{ background:var(--surface-3); color:var(--text-2); font-size:10px; font-weight:700; padding:3px 8px; border-radius:100px; border:1px solid var(--border-strong); }
+  .comp-highlights{ list-style:none; margin:9px 0 0; padding:0; display:flex; flex-direction:column; gap:4px; }
+  .comp-highlights li{ font-size:11px; color:var(--text-2); padding-left:14px; position:relative; line-height:1.4; }
+  .comp-highlights li::before{ content:"›"; position:absolute; left:0; color:var(--text-3); font-weight:700; }
+
+  /* Buzz chart (mention volume comparison across operators) */
+  .chart-box{ padding-top:6px; }
+  .buzz-groups{ display:flex; align-items:flex-end; gap:12px; height:150px; padding:0 4px; border-bottom:1px solid var(--border); }
+  .buzz-group{ flex:1; display:flex; align-items:flex-end; justify-content:center; gap:3px; height:100%; }
+  .buzz-bar{ width:100%; max-width:16px; border-radius:4px 4px 2px 2px; position:relative; transition:height .4s ease; }
+  .buzz-bar .bv{ position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:9.5px; font-family:var(--mono); color:var(--text-1); font-weight:700; white-space:nowrap; }
+  .day-labels{ display:flex; gap:12px; padding:8px 4px 0; }
+  .day-labels span{ flex:1; text-align:center; font-size:10.5px; color:var(--text-3); }
+  .day-labels span.today{ color:var(--brand); font-weight:800; }
+  .buzz-highlights{ display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+  .buzz-highlight{ display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:9px; background:var(--surface-2); border:1px solid var(--border); }
+  .buzz-highlight .bh-text{ font-size:12px; color:var(--text-2); }
+  .buzz-highlight .bh-text b{ color:var(--text-1); }
+  .buzz-highlight .bh-peak{ margin-left:auto; font-family:var(--mono); font-size:12px; font-weight:700; color:var(--text-1); white-space:nowrap; }
+
+  /* Buzz — weekly trend / hashtag comparison / engagement */
+  .buzz-subhead{ font-size:11px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.04em; margin:16px 0 8px; }
+  table.mini-table{ width:100%; border-collapse:collapse; font-size:11px; }
+  table.mini-table th{ text-align:left; font-size:9.5px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.03em; padding:4px 6px; border-bottom:1px solid var(--border); }
+  table.mini-table td{ padding:6px; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.mini-table tr:last-child td{ border-bottom:none; }
+  table.mini-table td.name-cell{ font-weight:600; color:var(--text-2); white-space:nowrap; }
+  .bh-tag{ font-family:var(--mono); font-weight:700; color:var(--text-1); font-size:11px; }
+  .bh-tag.bh-tag-neg{ color:var(--bad); }
+  .bh-vol{ font-size:9.5px; color:var(--text-3); margin-top:2px; }
+  .engage-row{ display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:9px; background:var(--surface-2); border:1px solid var(--border); margin-bottom:8px; flex-wrap:wrap; }
+  .engage-row .eg-main{ flex:1; min-width:110px; }
+  .engage-row .eg-plat{ font-size:11.5px; font-weight:700; color:var(--text-1); }
+  .engage-row .eg-tag{ font-family:var(--mono); font-size:10.5px; color:var(--text-3); margin-top:1px; }
+  .engage-stats{ display:flex; gap:10px; flex-wrap:wrap; font-family:var(--mono); font-size:10.5px; color:var(--text-2); }
+  .engage-stats b{ color:var(--text-1); }
+  .engage-rate{ font-family:var(--mono); font-size:12px; font-weight:700; color:var(--data); white-space:nowrap; text-align:right; }
+  .engage-rate .eg-reach{ font-size:9px; font-weight:400; color:var(--text-3); font-family:var(--sans); }
+
+  /* Strategic recs */
+  .rec-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:18px; }
+  @media (max-width:1100px){ .rec-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:720px){ .rec-grid{ grid-template-columns:1fr; } }
+  .rec-card{
+    display:flex; flex-direction:column; gap:10px; padding:17px; border-radius:12px;
+    border:1px solid var(--border); background:linear-gradient(180deg,var(--surface-2),var(--surface));
+  }
+  .rec-top{ display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .rec-title{ font-size:14px; font-weight:700; line-height:1.3; }
+  .rec-rationale{ font-size:12px; color:var(--text-2); line-height:1.6; }
+  .rec-rationale .num-cite{ color:var(--text-1); font-weight:600; font-family:var(--mono); }
+  .kpi-line{
+    font-size:11.5px; color:#8fe6f7; background:var(--data-dim); border:1px solid rgba(34,211,238,0.3);
+    padding:7px 10px; border-radius:8px; margin-top:2px;
+  }
+  .kpi-line b{ color:#c9f5ff; }
+
+  /* Governance */
+  .gov-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:18px; }
+  @media (max-width:900px){ .gov-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .gov-grid{ grid-template-columns:1fr; } }
+  .gov-card{ padding:15px; border-radius:11px; border:1px solid var(--border); background:var(--surface-2); }
+  .gov-card h3{ margin:0 0 7px; font-size:12.5px; font-weight:700; display:flex; align-items:center; gap:7px; }
+  .gov-card p{ margin:0; font-size:11.8px; line-height:1.55; color:var(--text-2); }
+  .gov-icon{ width:22px; height:22px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex:none; font-size:11px; }
+
+  /* Footer */
+  .footer{ margin-top:32px; border:1px solid var(--border); border-radius:14px; background:var(--surface); padding:18px 20px; }
+  .footer-grid{ display:flex; flex-wrap:wrap; gap:26px; justify-content:space-between; }
+  .footer-block{ display:flex; flex-direction:column; gap:4px; min-width:170px; }
+  .footer-block .k{ font-size:10px; text-transform:uppercase; letter-spacing:0.07em; color:var(--text-3); font-weight:700; }
+  .footer-block .v{ font-size:12px; color:var(--text-1); font-weight:600; }
+  .footer-block .v.mono{ font-family:var(--mono); font-weight:600; }
+  .conf-notice{
+    margin-top:16px; padding-top:14px; border-top:1px solid var(--border);
+    font-size:11px; color:var(--text-3); line-height:1.6;
+  }
+
+  section.section{ margin-top:22px; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;}
+  .section-head h2{ margin:0; font-size:16px; font-weight:700; }
+  .section-head .sub{ font-size:12px; color:var(--text-3); }
+
+  svg.lock{ display:block; }
+
+  /* ============ SIDEBAR LAYOUT (alternate navigation) ============ */
+  .layout{
+    display:grid; grid-template-columns:220px 1fr; gap:24px; align-items:start; margin-top:20px;
+    transition:grid-template-columns .22s ease;
+  }
+  @media (max-width:900px){ .layout{ grid-template-columns:1fr; } }
+  /* minimized: sidebar collapses to an icon-only rail, main column grows to fill the freed space */
+  .layout.sidebar-min{ grid-template-columns:64px 1fr; gap:16px; }
+  .layout.sidebar-min .sidebar-label{ display:none; }
+  .layout.sidebar-min .navbtn{ justify-content:center; padding:10px 0; }
+  .layout.sidebar-min .navbtn .n-label,
+  .layout.sidebar-min .navbtn .n-count{ display:none; }
+  .sidebar{ position:sticky; top:88px; display:flex; flex-direction:column; gap:3px; min-width:0; }
+  .sidebar-label{ padding:0 10px 8px; }
+  .navbtn{
+    display:flex; align-items:center; gap:10px; padding:10px 11px; border-radius:9px;
+    background:none; border:1px solid transparent; cursor:pointer; font-size:12.8px; font-weight:600;
+    color:var(--text-3); text-align:left; width:100%; box-sizing:border-box; font-family:var(--sans);
+    transition:background .15s, color .15s, border-color .15s, padding .15s;
+  }
+  .navbtn:hover{ background:var(--surface-2); color:var(--text-1); }
+  .navbtn.active{ background:var(--data-dim); border-color:rgba(34,211,238,.35); color:var(--text-1); }
+  .navbtn .n-icon{ width:21px; height:21px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; background:var(--surface-3); color:var(--text-3); flex:none; }
+  .navbtn.active .n-icon{ background:var(--data); color:#04222b; }
+  .navbtn .n-label{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .navbtn .n-count{ margin-left:auto; font-family:var(--mono); font-size:10px; background:var(--surface-3); padding:1px 6px; border-radius:100px; color:var(--text-3); flex:none; }
+  .navbtn.alert-flag .n-icon{ background:var(--bad-dim); color:#ff8a8a; }
+  .sidebar-toggle svg{ transition:transform .2s ease; }
+  .sidebar-toggle.collapsed svg{ transform:rotate(180deg); }
+
+  .main-col{ min-width:0; display:flex; flex-direction:column; gap:20px; }
+  .main-col .section{ margin-top:0; }
+
+  .section-divider{ display:flex; align-items:center; gap:10px; margin-top:2px; }
+  .section-divider .line{ flex:1; height:1px; background:var(--border); }
+
+  .panel-group{ display:none; }
+  .panel-group.active{ display:block; animation:fadein .2s ease; }
+  .group-head{ margin-bottom:12px; }
+  .group-head h2{ margin:0 0 3px; font-size:17px; font-weight:700; }
+  .group-head p{ margin:0; font-size:12px; color:var(--text-3); }
+
+  /* clickable-card affordance */
+  [data-detail]{ position:relative; cursor:pointer; transition:border-color .15s, transform .1s; }
+  [data-detail]:hover{ border-color:var(--data); }
+  [data-detail]:active{ transform:scale(0.995); }
+  [data-detail]::after{
+    content:"⤢"; position:absolute; top:16px; right:18px; font-size:12px; color:var(--text-3);
+    opacity:0; transition:opacity .15s; pointer-events:none;
+  }
+  [data-detail]:hover::after{ opacity:1; }
+  .kpi-tile[data-detail]::after, .comp-row[data-detail]::after, .alert-item[data-detail]::after{ top:12px; right:12px; }
+  .rec-card[data-detail]::after, .gov-card[data-detail]::after{ top:14px; right:14px; }
+
+  /* detail modal */
+  .modal-overlay{ position:fixed; inset:0; background:rgba(5,7,11,.72); backdrop-filter:blur(3px); display:none; align-items:center; justify-content:center; z-index:200; padding:24px; }
+  .modal-overlay.show{ display:flex; }
+  .modal-box{
+    background:var(--surface); border:1px solid var(--border-strong); border-radius:16px; max-width:580px; width:100%;
+    max-height:82vh; overflow-y:auto; padding:26px 26px 22px; position:relative; box-shadow:0 20px 60px -10px rgba(0,0,0,.6);
+    animation:modalIn .15s ease;
+  }
+  @keyframes modalIn{ from{ opacity:0; transform:translateY(8px) scale(.98);} to{ opacity:1; transform:translateY(0) scale(1);} }
+  .modal-close{
+    position:absolute; top:16px; right:16px; width:30px; height:30px; border-radius:8px; border:1px solid var(--border-strong);
+    background:var(--surface-3); color:var(--text-2); cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center;
+  }
+  .modal-close:hover{ color:var(--text-1); border-color:var(--data); }
+  .modal-eyebrow{ font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--data); margin-bottom:8px; }
+  .modal-box h2{ margin:0 0 14px; font-size:19px; font-weight:700; padding-right:34px; line-height:1.3; }
+  .modal-body{ font-size:13px; line-height:1.7; color:var(--text-2); display:flex; flex-direction:column; gap:12px; }
+  .modal-body b{ color:var(--text-1); }
+  .modal-body .detail-table{ display:flex; flex-direction:column; border-top:1px solid var(--border); margin-top:2px; }
+  .modal-body .detail-row{ display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid var(--border); font-size:12.5px; }
+  .modal-body .detail-row .dk{ color:var(--text-3); }
+  .modal-body .detail-row .dv{ font-family:var(--mono); font-weight:700; color:var(--text-1); text-align:right; }
+  .modal-body ul.detail-list{ margin:0; padding-left:18px; display:flex; flex-direction:column; gap:5px; }
+  .modal-box.wide{ max-width:700px; }
+  .modal-body .modal-section-label{ font-size:11.5px; font-weight:700; color:var(--text-1); margin-bottom:6px; }
+  .modal-body .trend-chart{ display:block; }
+  .modal-body table.mkt-table{ width:100%; border-collapse:collapse; font-size:11.5px; font-family:var(--mono); margin-bottom:10px; }
+  .modal-body table.mkt-table th{
+    text-align:left; font-size:9.5px; font-family:var(--sans); text-transform:uppercase; letter-spacing:.04em;
+    color:var(--text-3); font-weight:700; padding:5px 8px; border-bottom:1px solid var(--border);
+  }
+  .modal-body table.mkt-table td{ padding:5px 8px; border-bottom:1px solid var(--border); }
+  .modal-body table.mkt-table tr:last-child td{ border-bottom:none; }
+  .modal-body table.mkt-table td.name-cell{ font-family:var(--sans); font-weight:600; color:var(--text-1); }
+  .modal-body .area-group-label{
+    font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--data);
+    margin:10px 0 4px;
+  }
+  .modal-body .area-group-label:first-child{ margin-top:0; }
+  .modal-body .delta-up{ color:var(--good); }
+  .modal-body .delta-down{ color:var(--bad); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-expanded="true" aria-controls="sidebar" title="Minimize sections sidebar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+    </button>
+    <div class="logo-mark">T</div>
+    <div class="brand-title">
+      <h1>Market Intelligence Tactical Dashboard</h1>
+      <p>Restricted — <b>Telkomsel CMO &amp; senior marketing leadership</b> only</p>
+    </div>
+    <span class="pill pill-live"><span class="dot"></span>LIVE · <span id="liveDate" class="num"></span></span>
+    <div class="user-chip">
+      <div class="avatar">LC</div>
+      <div class="who">
+        <span class="name">Lionel Chng</span>
+        <span class="role">Chief Marketing Officer</span>
+      </div>
+      <svg class="lock" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="layout">
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-label eyebrow">Sections</div>
+    </div>
+    <div class="main-col">
+
+  <!-- ============ HADOOP SNAPSHOT LOADER ============ -->
+  <div class="hadoop-bar" id="hadoopBar">
+    <div class="hb-left">
+      <span class="eyebrow">Core KPI data source</span>
+      <span class="hb-status" id="hbStatus">Modeled estimate — no Hadoop snapshot loaded</span>
+    </div>
+    <div class="hb-actions">
+      <button class="btn btn-sm" id="hbFormatBtn" type="button">Snapshot format ⓘ</button>
+      <label class="btn btn-sm btn-accent" for="hadoopFile">Load snapshot (.json)</label>
+      <input type="file" id="hadoopFile" accept="application/json,.json" style="display:none" />
+      <button class="btn btn-sm btn-ghost" id="hbClearBtn" type="button" style="display:none;">Clear snapshot</button>
+    </div>
+  </div>
+  <pre class="hb-format" id="hbFormat" style="display:none;"></pre>
+
+  <!-- ============ FILTERS (full width) + EXECUTIVE SUMMARY / ASK THE AI (side by side) ============ -->
+  <div class="control-stack" id="controlBar">
+    <div class="control-bar" id="filterCard">
+      <div class="eyebrow">Filters</div>
+      <div class="filter-group">
+        <div class="field">
+          <label for="fArea">Area</label>
+          <select id="fArea"></select>
+        </div>
+        <div class="field">
+          <label for="fRegion">Region</label>
+          <select id="fRegion"></select>
+        </div>
+        <div class="field">
+          <label for="fCity">City / Kabupaten</label>
+          <select id="fCity"></select>
+        </div>
+        <div class="field">
+          <label for="fWeek">Period (Week-Year)</label>
+          <select id="fWeek"></select>
+        </div>
+      </div>
+      <div class="scope-line" id="scopeLine"></div>
+    </div>
+
+    <div class="row-2col">
+      <div class="panel" id="execSummaryCard" style="--panel-accent:var(--brand);">
+        <div class="panel-head">
+          <div>
+            <h2>Executive Summary</h2>
+            <div class="sub">Strategic read across RETINA, Probe, VOC &amp; benchmark data</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex:none;">
+            <span class="chip" id="execScopeChip">National view</span>
+            <button class="card-toggle" type="button" data-target="execSummaryBody" data-label="Executive Summary" aria-expanded="true" title="Hide Executive Summary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+        <div id="execSummaryBody">
+          <div class="synthesis-narrative" id="execSummaryText" style="font-size:13px;"></div>
+          <div class="btn-row">
+            <button class="btn btn-accent" id="execViewOverviewBtn" type="button">View full Synthesis &amp; actions</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-bar" id="askCard">
+        <div class="ask-card-head">
+          <label for="askInput" class="eyebrow" style="margin:0;">Ask the intelligence AI</label>
+          <button class="card-toggle" type="button" data-target="askBody" data-label="Ask the AI" aria-expanded="true" title="Hide Ask the AI">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
+        <div id="askBody">
+          <div class="ask-row">
+            <input type="text" id="askInput" placeholder="e.g. Kenapa pangsa pasar turun di Jatim minggu ini?" />
+            <button class="btn btn-accent" id="askBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4Z"/></svg>
+              Ask
+            </button>
+          </div>
+          <div class="suggest-row" id="suggestRow">
+            <button class="suggest-chip" type="button" data-prompt="What's driving Telkomsel's market share movement — and why?">What's driving Telkomsel's market share movement — and why?</button>
+            <button class="suggest-chip" type="button" data-prompt="Which areas are seeing the sharpest Telkomsel decline?">Which areas are seeing the sharpest Telkomsel decline?</button>
+            <button class="suggest-chip" type="button" data-prompt="Where and on what metrics have competitors overtaken us in rank?">Where and on what metrics have competitors overtaken us in rank?</button>
+          </div>
+          <div class="ai-answer" id="aiAnswer">
+            <div class="tag">◆ AI response · grounded on RETINA, Probe, VOC &amp; benchmark datasets</div>
+            <div id="aiAnswerText"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span class="eyebrow">Selected section</span><span class="line"></span></div>
+
+  <div id="panels">
+
+  <div class="panel-group active" id="panel-overview">
+  <!-- ============ CORE KPIs (Meta Market Share / CSI-NPS / Network Experience Benchmark) ============ -->
+  <div class="kpi-row" id="kpiRow"></div>
+
+  <!-- ============ MACRO TICKER ============ -->
+  <div class="ticker macro" id="macroTicker">
+    <div class="ticker-label macro">MACRO</div>
+    <div class="ticker-track-wrap"><div class="ticker-track" id="macroTrack"></div></div>
+  </div>
+
+  <!-- ============ VOC TICKER ============ -->
+  <div class="ticker voc" id="vocTicker">
+    <div class="ticker-label voc">VOC</div>
+    <div class="ticker-track-wrap"><div class="ticker-track" id="vocTrack"></div></div>
+  </div>
+
+  <!-- ============ SYNTHESIS ============ -->
+  <section class="section">
+    <div class="panel" style="--panel-accent:var(--brand);" data-detail="synthesis">
+      <div class="panel-head">
+        <div>
+          <h2>Synthesis — what's moving Telkomsel's market share</h2>
+          <div class="sub">Auto-generated from RETINA field scan, Probe pricing RPA, network benchmark &amp; VOC signals</div>
+        </div>
+        <span class="chip" id="synthScopeChip">National view</span>
+      </div>
+
+      <div class="synthesis-narrative" id="synthNarrative"></div>
+
+      <div class="action-list" id="actionList"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-accent" data-prompt="Susun brief counter-promo lengkap untuk area yang mengalami tekanan pangsa pasar minggu ini, termasuk struktur harga dan target SKU.">Draft counter-promo brief</button>
+        <button class="btn" data-prompt="Tampilkan hasil lengkap scan lapangan RETINA untuk outlet kompetitor di sekitar area yang terdampak, termasuk jumlah outlet baru dan aktivitas rekrutmen.">Show full RETINA outlet scan</button>
+        <button class="btn" data-prompt="Bandingkan struktur harga paket data Telkomsel vs IOH secara rinci per SKU, termasuk perubahan harga 7 hari terakhir.">Compare IOH vs Telkomsel pricing</button>
+      </div>
+    </div>
+  </section>
+  </div><!-- /panel-overview -->
+
+  <div class="panel-group" id="panel-pricing">
+  <!-- ============ PRICING PROBE ============ -->
+  <section class="section">
+    <div class="panel" style="--panel-accent:var(--violet);" data-detail="pricing">
+      <div class="panel-head">
+        <div>
+          <h2>Pricing–Product Probe</h2>
+          <div class="sub">RPA-based competitor app/web price tracking · Telkomsel vs IOH vs XLSmart</div>
+        </div>
+        <span class="chip">Updated 41 min ago</span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="probe">
+          <thead>
+            <tr>
+              <th>Package tier</th>
+              <th><span class="op-th-inner"><span class="op-logo xs" style="background:#e30613;">T</span>Telkomsel</span></th>
+              <th><span class="op-th-inner"><span class="op-logo xs" style="background:#f0ad2e;">I</span>IOH</span></th>
+              <th><span class="op-th-inner"><span class="op-logo xs" style="background:#2a78d6;">X</span>XLSmart</span></th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="probeBody"></tbody>
+        </table>
+      </div>
+
+      <div class="callout bad">
+        ⚠ <div><b>Price move detected:</b> IOH cut its <b>Freedom Internet 30GB</b> price by <b>18%</b> (Rp 89,000 → Rp 73,000) roughly <b>36 hours before</b> this scan — undercutting Telkomsel's equivalent Combo Sakti SKU by Rp 15,000.</div>
+      </div>
+
+      <div class="scan-meta">
+        <div><span class="k">Apps / storefronts covered</span><span class="v">12</span></div>
+        <div><span class="k">Crawl frequency</span><span class="v">Every 6 hours</span></div>
+        <div><span class="k">SKU tracked</span><span class="v">1,240</span></div>
+        <div><span class="k">Operators monitored</span><span class="v">3</span></div>
+      </div>
+    </div>
+  </section>
+  </div><!-- /panel-pricing -->
+
+  <div class="panel-group" id="panel-alerts">
+  <!-- ============ ALERTS ============ -->
+  <section class="section">
+      <div class="panel" style="--panel-accent:var(--bad);">
+        <div class="panel-head">
+          <div><h2>Active alerts</h2><div class="sub">3 open · sorted by severity</div></div>
+        </div>
+        <div class="stack" id="alertList"></div>
+      </div>
+  </section>
+  </div><!-- /panel-alerts -->
+
+  <div class="panel-group" id="panel-sentiment">
+  <!-- ============ PRODUCT SENTIMENT ============ -->
+  <section class="section">
+    <div class="stack" style="margin-top:0;">
+      <div class="panel" style="--panel-accent:var(--data);" data-detail="sentiment">
+        <div class="panel-head">
+          <div><h2>Product sentiment</h2><div class="sub">Telkomsel-only · reactions to price, quota &amp; experience on recently released packages</div></div>
+        </div>
+        <div class="stack" id="sentimentList" style="gap:12px;"></div>
+        <div class="callout" id="sentimentCallout"></div>
+      </div>
+
+    <!-- ============ PRODUCT MOVEMENT, BY VALIDITY TIER ============ -->
+    <div class="panel" style="--panel-accent:var(--data);" data-detail="pm-validity">
+      <div class="panel-head">
+        <div>
+          <h2>Product movement, by validity tier</h2>
+          <div class="sub">Same 30-day window, aligned by validity so comparable price/quota tiers sit in the same row across operators</div>
+        </div>
+        <span class="chip">Re-crawled 14 Jul</span>
+      </div>
+      <div class="table-wrap">
+        <table class="vc-table">
+          <thead>
+            <tr>
+              <th>Validity</th>
+              <th><span class="op-th-inner"><span class="op-logo xs" style="background:#e30613;">T</span>TSEL</span></th>
+              <th><span class="op-th-inner"><span class="op-logo xs" style="background:#f0ad2e;">I</span>IOH</span></th>
+              <th><span class="op-th-inner"><span class="op-logo xs" style="background:#2a78d6;">X</span>XLSMART</span></th>
+            </tr>
+          </thead>
+          <tbody id="validityBody"></tbody>
+        </table>
+      </div>
+      <div class="callout" style="margin-top:14px;">⚠ "—" means no publicly comparable product was found at that validity. Rows flagged <span class="badge-new">new</span> launched within this 30-day window.</div>
+    </div>
+
+    <!-- ============ CHEAPEST PUBLISHED ENTRY PRICE ============ -->
+    <div class="panel" style="--panel-accent:var(--amber);" data-detail="pm-entryprice">
+      <div class="panel-head">
+        <div>
+          <h2>Cheapest published entry price — price, validity &amp; quota</h2>
+          <div class="sub">Lowest publicly listed price per operator, broken into three separate measures</div>
+        </div>
+      </div>
+      <div class="callout bad" style="margin-top:0;margin-bottom:14px;">⚠ <div><b>Not apples-to-apples:</b> Telkomsel's number is a seasonal add-on, not its base SIMPATI rate (which is gated behind phone-number lookup); XLSmart's quota per starter tier isn't disclosed.</div></div>
+      <div class="row-2col" style="grid-template-columns:1fr 1fr 1fr;">
+        <div>
+          <div class="metric-col-title">Price (Rp)</div>
+          <div id="entryPriceBars"></div>
+        </div>
+        <div>
+          <div class="metric-col-title">Validity (days)</div>
+          <div id="validityDaysBars"></div>
+        </div>
+        <div>
+          <div class="metric-col-title">Quota (GB)</div>
+          <div id="quotaBars"></div>
+        </div>
+      </div>
+      <div class="table-wrap" style="margin-top:14px;">
+        <table class="probe">
+          <thead><tr><th>Operator</th><th>Rp / day</th><th>Rp / GB</th></tr></thead>
+          <tbody id="costTableBody"></tbody>
+        </table>
+      </div>
+      <div class="callout" style="margin-top:14px;">Normalized to cost-per-day, the ranking flips: XLSmart is cheapest per day despite the highest sticker price, because it buys 30 days instead of 1. Telkomsel's cost-per-GB is an outlier because the package sells streaming access/validity, not bulk data.</div>
+    </div>
+
+    <!-- ============ SENTIMENT ON OFFICIAL PRODUCT POSTS ============ -->
+    <div class="panel" style="--panel-accent:var(--good);" data-detail="pm-sentiment">
+      <div class="panel-head">
+        <div>
+          <h2>Sentiment on official product posts</h2>
+          <div class="sub">Telkomsel is the only brand with product-specific posts on its own account this window; for IOH and XLSmart we additionally searched public hashtags tied to their products</div>
+        </div>
+      </div>
+      <div class="chip-row" style="margin-bottom:12px;">
+        <span class="chip" style="background:var(--bad-dim);color:#ff8a8a;border-color:rgba(239,68,68,.4);">● Negative</span>
+        <span class="chip" style="background:var(--warn-dim);color:#f7c874;border-color:rgba(240,173,46,.4);">● Neutral</span>
+        <span class="chip" style="background:var(--good-dim);color:#7be8ab;border-color:rgba(47,191,110,.4);">● Positive</span>
+      </div>
+      <div class="stack" style="gap:20px;">
+        <div>
+          <div class="op-th-inner" style="margin-bottom:8px;"><span class="op-logo sm" style="background:#e30613;">T</span><b>Telkomsel</b></div>
+          <div id="sentTselStack"></div>
+        </div>
+        <div>
+          <div class="op-th-inner" style="margin-bottom:8px;"><span class="op-logo sm" style="background:#f0ad2e;">I</span><b>IOH</b></div>
+          <div class="no-data-box"><b>Not measurable.</b> Searched #iconnet on Instagram: top posts were third-party installer/reseller ads (phone numbers, WhatsApp links), not Indosat or customers. Of 2 more official-looking posts, comments were closed/post inaccessible — zero usable sentiment signal.</div>
+        </div>
+        <div>
+          <div class="op-th-inner" style="margin-bottom:8px;"><span class="op-logo sm" style="background:#2a78d6;">X</span><b>XLSmart</b></div>
+          <div class="no-data-box"><b>Not measurable.</b> Searched #xtracomboflex on Instagram: top posts were reseller/voucher-agent promos, not organic customer reaction. Of 4 more official-looking posts, comments were closed/post inaccessible — zero usable sentiment signal.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ COMPETITIVE POSITIONING — EXECUTIVE SUMMARY ============ -->
+    <div class="panel" style="--panel-accent:var(--brand);" data-detail="pm-positioning">
+      <div class="panel-head">
+        <div>
+          <h2>Competitive positioning — executive summary</h2>
+          <div class="sub">Relative strength across four dimensions, scored from what's publicly verifiable right now (5 = strongest)</div>
+        </div>
+      </div>
+      <div class="scorecard-grid" id="scorecardGrid"></div>
+      <div class="exec-line" id="execLine"></div>
+      <div class="resume-verdict">
+        <div class="verdict-label">Overall read</div>
+        <p>No operator is in an active pricing war this quarter — the real competitive gap is execution, not price. Telkomsel's own World Cup campaign is the biggest live risk in this dataset, not a competitor's move.</p>
+      </div>
+    </div>
+
+    <!-- ============ PRIORITIZATION ============ -->
+    <div class="panel" style="--panel-accent:var(--bad);" data-detail="pm-prioritization">
+      <div class="panel-head">
+        <div>
+          <h2>Prioritization: is it worth Telkomsel responding to competitor moves?</h2>
+          <div class="sub">Short answer: not right now — fix your own campaign first</div>
+        </div>
+      </div>
+      <div class="prio-layout">
+        <div class="quadrant-wrap">
+          <svg id="quadrantChart" viewBox="0 0 300 300"></svg>
+        </div>
+        <div class="stack" id="prioCompact" style="gap:10px;"></div>
+      </div>
+    </div>
+    </div>
+  </section>
+  </div><!-- /panel-sentiment -->
+
+  <div class="panel-group" id="panel-competitor">
+  <!-- ============ ROW: COMPETITOR MOVEMENT + MENTION VOLUME ============ -->
+  <section class="section">
+    <div class="row-2col">
+      <div class="panel" style="--panel-accent:var(--amber);">
+        <div class="panel-head">
+          <div><h2>Competitor movement</h2><div class="sub">Network, pricing &amp; org-signal tracking</div></div>
+        </div>
+        <div class="stack" id="competitorList"></div>
+      </div>
+
+      <div class="panel" style="--panel-accent:var(--data);" data-detail="buzz">
+        <div class="panel-head">
+          <div><h2>Buzz — 7 days</h2><div class="sub">Brand &amp; campaign mention volume · Telkomsel vs. IOH vs. XLSmart</div></div>
+        </div>
+        <div id="buzzLegend"></div>
+        <div class="chart-box">
+          <div class="buzz-groups" id="buzzGroups"></div>
+          <div class="day-labels" id="buzzLabels"></div>
+        </div>
+        <div class="buzz-highlights" id="buzzHighlights"></div>
+        <div class="callout" id="buzzCallout"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ROW: WEEKLY BUZZ TREND + HASHTAG-BY-PLATFORM ============ -->
+  <section class="section">
+    <div class="row-2col">
+      <div class="panel" style="--panel-accent:var(--data);" data-detail="buzz-trend">
+        <div class="panel-head">
+          <div><h2>Buzz — weekly trend</h2><div class="sub">8-week total mention volume by operator</div></div>
+        </div>
+        <div id="buzzLegendTrend"></div>
+        <div id="buzzWeeklyTrend"></div>
+      </div>
+
+      <div class="panel" style="--panel-accent:var(--violet);" data-detail="buzz-hashtags">
+        <div class="panel-head">
+          <div><h2>Highest buzz hashtag by platform</h2><div class="sub">Instagram, TikTok, X, YouTube &amp; Threads — same 7-day period</div></div>
+        </div>
+        <div id="buzzHashtagGrid"></div>
+        <div class="callout" id="buzzHashtagCallout"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ROW: TOP POST ENGAGEMENT ============ -->
+  <section class="section">
+    <div class="panel" style="--panel-accent:var(--good);" data-detail="buzz-engagement">
+      <div class="panel-head">
+        <div><h2>Top post engagement</h2><div class="sub">Likes, comments, shares &amp; views on each operator's single highest-engaging post this period</div></div>
+      </div>
+      <div id="buzzEngagement"></div>
+      <div class="callout" id="buzzEngagementCallout"></div>
+    </div>
+  </section>
+  </div><!-- /panel-competitor -->
+
+  <div class="panel-group" id="panel-recs">
+  <!-- ============ STRATEGIC RECOMMENDATIONS ============ -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Strategic recommendations</h2>
+      <span class="sub">AI-synthesized from all panels above · ranked by priority</span>
+    </div>
+    <div class="rec-grid" id="recGrid"></div>
+  </section>
+  </div><!-- /panel-recs -->
+
+  <div class="panel-group" id="panel-governance">
+  <!-- ============ GOVERNANCE ============ -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Governance &amp; usage guidelines</h2>
+      <span class="sub">Applies to all data and AI output on this dashboard</span>
+    </div>
+    <div class="gov-grid" id="govGrid"></div>
+  </section>
+  </div><!-- /panel-governance -->
+
+  </div><!-- /panels -->
+
+    </div><!-- /main-col -->
+  </div><!-- /layout -->
+
+  <!-- ============ FOOTER ============ -->
+  <div class="footer">
+    <div class="footer-grid">
+      <div class="footer-block"><span class="k">Security</span><span class="v">AES-256 at rest · TLS 1.3 in transit · full audit logging</span></div>
+      <div class="footer-block"><span class="k">Last refresh</span><span class="v mono" id="footRefresh">—</span></div>
+      <div class="footer-block"><span class="k">Owning department</span><span class="v">Consumer Marketing — Market Intelligence &amp; Competitive Strategy Unit</span></div>
+      <div class="footer-block"><span class="k">RETINA field network</span><span class="v mono">8,240+ outlets monitored</span></div>
+      <div class="footer-block"><span class="k">Probe pricing RPA</span><span class="v mono">1,240 SKUs tracked</span></div>
+    </div>
+    <div class="conf-notice">
+      CONFIDENTIAL — INTERNAL USE ONLY. This dashboard and all figures herein are proprietary to Telkomsel and intended solely for authorized CMO and senior marketing leadership. Do not export, forward, or discuss externally. AI-generated narratives and recommendations are decision support, not final directives — validate against source systems (RETINA, Probe, VOC, network benchmarks) before acting.
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <div class="modal-eyebrow" id="modalEyebrow"></div>
+    <h2 id="modalTitle"></h2>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+
+  /* ================= DATA MODEL ================= */
+  const AREA_MAP = {
+    "Area 1": ["SUMBAGUT","SUMBAGTENG","SUMBAGSEL"],
+    "Area 2": ["JAKARTA-BANTEN","EASTERN JABOTABEK","JABAR"],
+    "Area 3": ["JATENG-DIY","JATIM","BALINUSRA"],
+    "Area 4": ["KALIMANTAN","SULAWESI","PUMA"]
+  };
+  const REGION_LABELS = {
+    "SUMBAGUT":"1. SUMBAGUT","SUMBAGTENG":"2. SUMBAGTENG","SUMBAGSEL":"3. SUMBAGSEL",
+    "JAKARTA-BANTEN":"4. JAKARTA-BANTEN","EASTERN JABOTABEK":"5. EASTERN JABOTABEK","JABAR":"6. JABAR",
+    "JATENG-DIY":"7. JATENG-DIY","JATIM":"8. JATIM","BALINUSRA":"9. BALINUSRA",
+    "KALIMANTAN":"10. KALIMANTAN","SULAWESI":"11. SULAWESI","PUMA":"12. PUMA"
+  };
+  const CITY_MAP = {
+    "SUMBAGUT": ["Kota Medan","Kota Banda Aceh","Kabupaten Deli Serdang","Kota Pematangsiantar","Kota Binjai","Kabupaten Langkat","Kota Lhokseumawe","Kabupaten Simalungun"],
+    "SUMBAGTENG": ["Kota Pekanbaru","Kota Padang","Kota Batam","Kota Jambi","Kota Dumai","Kabupaten Kampar","Kota Tanjungpinang","Kabupaten Bungo"],
+    "SUMBAGSEL": ["Kota Palembang","Kota Bandar Lampung","Kota Bengkulu","Kota Pangkalpinang","Kabupaten Ogan Ilir","Kota Prabumulih","Kabupaten Lampung Selatan","Kota Metro"],
+    "JAKARTA-BANTEN": ["Kota Jakarta Selatan","Kota Jakarta Pusat","Kota Tangerang","Kota Tangerang Selatan","Kota Serang","Kabupaten Tangerang","Kota Cilegon","Kota Jakarta Barat"],
+    "EASTERN JABOTABEK": ["Kota Bekasi","Kabupaten Bekasi","Kota Depok","Kota Bogor","Kabupaten Bogor","Kota Jakarta Timur","Kabupaten Karawang","Kota Jakarta Utara"],
+    "JABAR": ["Kota Bandung","Kota Cirebon","Kabupaten Bandung","Kota Sukabumi","Kota Tasikmalaya","Kabupaten Garut","Kota Cimahi","Kabupaten Sumedang"],
+    "JATENG-DIY": ["Kota Semarang","Kota Yogyakarta","Kota Surakarta","Kabupaten Sleman","Kota Magelang","Kota Tegal","Kabupaten Banyumas","Kota Pekalongan"],
+    "JATIM": ["Kota Surabaya","Kota Malang","Kota Kediri","Kabupaten Sidoarjo","Kota Madiun","Kabupaten Jember","Kota Mojokerto","Kabupaten Banyuwangi"],
+    "BALINUSRA": ["Kota Denpasar","Kabupaten Badung","Kota Mataram","Kota Kupang","Kabupaten Sumbawa","Kabupaten Buleleng","Kabupaten Lombok Barat","Kabupaten Ende"],
+    "KALIMANTAN": ["Kota Balikpapan","Kota Samarinda","Kota Banjarmasin","Kota Pontianak","Kota Palangka Raya","Kabupaten Kutai Kartanegara","Kota Tarakan","Kota Banjarbaru"],
+    "SULAWESI": ["Kota Makassar","Kota Manado","Kota Palu","Kota Kendari","Kota Gorontalo","Kabupaten Bone","Kota Pare-Pare","Kabupaten Minahasa"],
+    "PUMA": ["Kota Jayapura","Kota Ambon","Kabupaten Merauke","Kota Sorong","Kabupaten Mimika","Kota Ternate","Kabupaten Jayawijaya","Kota Manokwari"]
+  };
+  const ALL_REGIONS = Object.keys(REGION_LABELS);
+
+  /* ================= OPERATOR IDENTITY (uniform logo + color across every card) ================= */
+  const OPERATORS = {
+    tsel: { name:'Telkomsel', short:'T', color:'#e30613' },
+    ioh:  { name:'IOH',       short:'I', color:'#f0ad2e' },
+    xl:   { name:'XLSmart',   short:'X', color:'#2a78d6' }
+  };
+  function opLogo(key, size){
+    const o = OPERATORS[key];
+    return '<span class="op-logo ' + size + '" style="background:' + o.color + ';" title="' + o.name + '">' + o.short + '</span>';
+  }
+  function opLegend(keys){
+    return '<div class="op-legend">' + keys.map(k => {
+      const o = OPERATORS[k];
+      return '<span class="op-legend-item"><span class="op-legend-swatch" style="background:' + o.color + ';"></span>' + o.name + '</span>';
+    }).join('') + '</div>';
+  }
+
+  /* ================= HADOOP SNAPSHOT (Meta Market Share / CSI-NPS / Network Experience Benchmark) =================
+     No live connection is possible from inside this sandboxed artifact (no outbound network calls are permitted).
+     Instead: run your Hive/Impala export job wherever it already has cluster access, on whatever schedule you like,
+     and drop the resulting JSON in here via "Load snapshot" below — read locally in the browser, no network call.
+     Expected shape (see the "Snapshot format" button in the UI for the full example):
+     { "generatedAt": ISO datetime, "rows": [ { area, region, city, week,
+         metaMarketSharePct, metaMarketSharePrevPct, metaShareHistory[8],
+         csiNpsScore, csiNpsPrevScore, csiNpsHistory[8],
+         networkExperienceBenchmarkScore, networkExperienceBenchmarkPrevScore, networkBenchmarkHistory[8] }, ... ] }
+     Rows may be filed at any grain (city, region, area, or "ALL" rollups) — the lookup below falls back from
+     city -> region -> area -> national for whatever grain your export actually covers.
+  */
+  let hadoopSnapshot = null;
+
+  const HADOOP_SCHEMA_EXAMPLE = {
+    generatedAt: "2026-07-10T09:32:00+07:00",
+    note: "One row per (area, region, city, week) combination your export covers. Use \"ALL\" for area/region/city to file a rollup row (e.g. a national row is area=ALL, region=ALL, city=ALL). week must match this dashboard's period format, e.g. \"W28-2026\".",
+    rows: [
+      {
+        area: "Area 3", region: "JATIM", city: "Kota Surabaya", week: "W28-2026",
+        metaMarketSharePct: 36.8, metaMarketSharePrevPct: 38.1,
+        metaShareHistory: [39.4,39.0,38.8,38.5,38.3,38.1,37.6,36.8],
+        csiNpsScore: 41.2, csiNpsPrevScore: 47.0,
+        csiNpsHistory: [48.5,48.0,47.6,47.2,47.0,44.5,42.0,41.2],
+        networkExperienceBenchmarkScore: 72.4, networkExperienceBenchmarkPrevScore: 75.9,
+        networkBenchmarkHistory: [77.5,77.0,76.4,76.0,75.9,74.6,73.2,72.4]
+      },
+      {
+        area: "ALL", region: "ALL", city: "ALL", week: "W28-2026",
+        metaMarketSharePct: 38.1, metaMarketSharePrevPct: 38.6,
+        metaShareHistory: [39.0,38.9,38.8,38.7,38.6,38.4,38.2,38.1],
+        csiNpsScore: 57.0, csiNpsPrevScore: 58.4,
+        csiNpsHistory: [59.0,58.8,58.6,58.4,58.4,58.0,57.4,57.0],
+        networkExperienceBenchmarkScore: 74.9, networkExperienceBenchmarkPrevScore: 75.6,
+        networkBenchmarkHistory: [76.2,76.0,75.9,75.8,75.6,75.4,75.1,74.9]
+      }
+    ]
+  };
+
+  function round1(n){ return Math.round(n*10)/10; }
+
+  function rawScope(){
+    return { area: fArea.value, region: fRegion.value, city: fCity.value, week: fWeek.value };
+  }
+
+  function findSnapshotRow(scope){
+    if(!hadoopSnapshot || !Array.isArray(hadoopSnapshot.rows)) return null;
+    const rows = hadoopSnapshot.rows;
+    const find = (a,r,c,w) => rows.find(x => x.area===a && x.region===r && x.city===c && x.week===w);
+    return find(scope.area, scope.region, scope.city, scope.week)
+        || find(scope.area, scope.region, 'ALL', scope.week)
+        || find(scope.area, 'ALL', 'ALL', scope.week)
+        || find('ALL', 'ALL', 'ALL', scope.week)
+        || rows.find(x => x.area==='ALL' && x.region==='ALL' && x.city==='ALL')
+        || null;
+  }
+
+  function walkTo(rng, end, steps, spread){
+    const arr = [end];
+    let v = end;
+    for(let i=1;i<steps;i++){ v = v - jitter(rng, 0, spread); arr.unshift(round1(v)); }
+    return arr;
+  }
+
+  function getCoreKPIs(scope, rng){
+    const row = findSnapshotRow(scope);
+    if(row){
+      const shareDelta = round1(row.metaMarketSharePct - (row.metaMarketSharePrevPct != null ? row.metaMarketSharePrevPct : row.metaMarketSharePct));
+      const npsDelta = round1(row.csiNpsScore - (row.csiNpsPrevScore != null ? row.csiNpsPrevScore : row.csiNpsScore));
+      const benchDelta = round1(row.networkExperienceBenchmarkScore - (row.networkExperienceBenchmarkPrevScore != null ? row.networkExperienceBenchmarkPrevScore : row.networkExperienceBenchmarkScore));
+      return {
+        source: 'hadoop', generatedAt: hadoopSnapshot.generatedAt,
+        metaShare: row.metaMarketSharePct, metaShareDelta: shareDelta, metaShareHistory: row.metaShareHistory,
+        csiNps: row.csiNpsScore, csiNpsDelta: npsDelta, csiNpsHistory: row.csiNpsHistory,
+        netBench: row.networkExperienceBenchmarkScore, netBenchDelta: benchDelta, netBenchHistory: row.networkBenchmarkHistory
+      };
+    }
+    const metaShare = round1(jitter(rng, 38.4, 3.2));
+    const metaShareDelta = round1(jitter(rng, -0.6, 1.1));
+    const csiNps = round1(jitter(rng, 58, 6));
+    const csiNpsDelta = round1(jitter(rng, -2.5, 2.5));
+    const netBench = round1(jitter(rng, 74, 6));
+    const netBenchDelta = round1(jitter(rng, -1.0, 2.0));
+    return {
+      source: 'modeled',
+      metaShare, metaShareDelta, metaShareHistory: walkTo(rng, metaShare, 8, 0.6),
+      csiNps, csiNpsDelta, csiNpsHistory: walkTo(rng, csiNps, 8, 1.2),
+      netBench, netBenchDelta, netBenchHistory: walkTo(rng, netBench, 8, 1.0)
+    };
+  }
+
+  function sparkline(history, accent){
+    if(!history || history.length < 2) return '';
+    const w = 96, h = 26, pad = 3;
+    const min = Math.min.apply(null, history), max = Math.max.apply(null, history);
+    const range = (max - min) || 1;
+    const pts = history.map((v,i) => {
+      const x = pad + (i/(history.length-1)) * (w - 2*pad);
+      const y = h - pad - ((v-min)/range) * (h - 2*pad);
+      return x.toFixed(1) + ',' + y.toFixed(1);
+    });
+    const last = pts[pts.length-1].split(',');
+    return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" class="spark">' +
+      '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + accent + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>' +
+      '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="4" fill="' + accent + '" stroke="#151a25" stroke-width="2"/>' +
+      '</svg>';
+  }
+
+  function kpiTile(label, value, unit, delta, source, history, accent, detailKey){
+    const deltaColor = delta == null ? 'var(--text-3)' : (delta >= 0 ? 'var(--good)' : 'var(--bad)');
+    const arrow = delta == null ? '' : (delta >= 0 ? '▲' : '▼');
+    const sourceChip = source === 'hadoop'
+      ? '<span class="kpi-source hadoop">● Hadoop snapshot</span>'
+      : '<span class="kpi-source modeled">◐ Modeled estimate</span>';
+    return '<div class="kpi-tile" data-detail="' + detailKey + '" style="--panel-accent:' + accent + '">' +
+        '<div class="kpi-top"><span class="kpi-label">' + label + '</span>' + sourceChip + '</div>' +
+        '<div class="kpi-mid">' +
+          '<span class="kpi-value num">' + value + unit + '</span>' +
+          (delta != null ? '<span class="kpi-delta num" style="color:' + deltaColor + '">' + arrow + ' ' + Math.abs(delta) + ' WoW</span>' : '') +
+        '</div>' +
+        '<div class="kpi-spark">' + sparkline(history, accent) + '</div>' +
+      '</div>';
+  }
+
+  let lastKPIs = null;
+  function renderCoreKPIs(kpis){
+    lastKPIs = kpis;
+    const row = document.getElementById('kpiRow');
+    row.innerHTML =
+      kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.source, kpis.metaShareHistory, 'var(--brand)', 'kpi-share') +
+      kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.source, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps') +
+      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.source, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench');
+
+    const status = document.getElementById('hbStatus');
+    if(kpis.source === 'hadoop'){
+      status.textContent = 'Hadoop snapshot loaded · generated ' + kpis.generatedAt;
+      status.classList.add('live');
+    } else {
+      status.textContent = 'Modeled estimate — no Hadoop snapshot loaded';
+      status.classList.remove('live');
+    }
+  }
+
+  /* ================= SEEDED RANDOM ================= */
+  function xmur3(str){
+    let h = 1779033703 ^ str.length;
+    for(let i=0;i<str.length;i++){
+      h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+      h = (h << 13) | (h >>> 19);
+    }
+    return function(){
+      h = Math.imul(h ^ (h >>> 16), 2246822507);
+      h = Math.imul(h ^ (h >>> 13), 3266489909);
+      h ^= h >>> 16;
+      return h >>> 0;
+    };
+  }
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function rngFor(seedStr){
+    const seedFn = xmur3(seedStr);
+    return mulberry32(seedFn());
+  }
+  function jitter(rng, base, spread){ return base + (rng()*2 - 1) * spread; }
+
+  /* ================= ISO WEEK HELPERS ================= */
+  function isoWeek(d){
+    const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const day = (date.getUTCDay() + 6) % 7;
+    date.setUTCDate(date.getUTCDate() - day + 3);
+    const firstThursday = new Date(Date.UTC(date.getUTCFullYear(),0,4));
+    const week = 1 + Math.round(((date - firstThursday) / 86400000 - 3 + ((firstThursday.getUTCDay()+6)%7)) / 7);
+    return { year: date.getUTCFullYear(), week };
+  }
+  const today = new Date();
+  const curISO = isoWeek(today);
+
+  function buildWeekOptions(){
+    const opts = [];
+    for(let i=0;i<16;i++){
+      const d = new Date(today.getTime() - i*7*86400000);
+      const iso = isoWeek(d);
+      const label = "W" + String(iso.week).padStart(2,"0") + "-" + iso.year;
+      opts.push({ label: label, date: d });
+    }
+    return opts;
+  }
+
+  /* ================= LIVE PILL DATE (reflects the selected Week-Year filter) ================= */
+  const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function formatYMD(d){
+    return d.getFullYear() + '-' + MONTH_ABBR[d.getMonth()] + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function updateLiveDate(){
+    const selectedOpt = fWeek.options[fWeek.selectedIndex];
+    const d = (selectedOpt && selectedOpt.dataset.date) ? new Date(selectedOpt.dataset.date) : today;
+    document.getElementById('liveDate').textContent = formatYMD(d);
+  }
+
+  /* ================= POPULATE FILTERS ================= */
+  const fArea = document.getElementById('fArea');
+  const fRegion = document.getElementById('fRegion');
+  const fCity = document.getElementById('fCity');
+  const fWeek = document.getElementById('fWeek');
+
+  function opt(value, text){ const o = document.createElement('option'); o.value = value; o.textContent = text; return o; }
+
+  fArea.appendChild(opt('ALL','All Areas'));
+  Object.keys(AREA_MAP).forEach(a => fArea.appendChild(opt(a, a + ' (' + AREA_MAP[a].length + ' regions)')));
+
+  function populateRegions(){
+    fRegion.innerHTML = '';
+    fRegion.appendChild(opt('ALL','All Regions'));
+    const area = fArea.value;
+    const regions = area === 'ALL' ? ALL_REGIONS : AREA_MAP[area];
+    regions.forEach(r => fRegion.appendChild(opt(r, REGION_LABELS[r])));
+  }
+  function populateCities(){
+    fCity.innerHTML = '';
+    fCity.appendChild(opt('ALL','All Cities/Kab. (514 nationwide, BPS)'));
+    const region = fRegion.value;
+    let cities = [];
+    if(region === 'ALL'){
+      const area = fArea.value;
+      const regions = area === 'ALL' ? ALL_REGIONS : AREA_MAP[area];
+      regions.forEach(r => cities = cities.concat(CITY_MAP[r]));
+    } else {
+      cities = CITY_MAP[region] || [];
+    }
+    cities.forEach(c => fCity.appendChild(opt(c, c)));
+  }
+  buildWeekOptions().forEach((w,i) => {
+    const o = opt(w.label, w.label + (i===0 ? ' (current)' : ''));
+    o.dataset.date = w.date.toISOString();
+    fWeek.appendChild(o);
+  });
+
+  fArea.addEventListener('change', () => { populateRegions(); populateCities(); applyScope(); });
+  fRegion.addEventListener('change', () => { populateCities(); applyScope(); });
+  fCity.addEventListener('change', applyScope);
+  fWeek.addEventListener('change', applyScope);
+
+  populateRegions();
+  populateCities();
+
+  /* ================= SCOPE-DEPENDENT CONTENT ================= */
+  function scopeKey(){
+    return [fArea.value, fRegion.value, fCity.value, fWeek.value].join('|');
+  }
+  function scopeLabel(){
+    const area = fArea.value === 'ALL' ? 'All Areas' : fArea.value;
+    const region = fRegion.value === 'ALL' ? 'All Regions' : REGION_LABELS[fRegion.value];
+    const city = fCity.value === 'ALL' ? 'All Cities' : fCity.value;
+    return { area, region, city, week: fWeek.value };
+  }
+  function regionNarrativeName(){
+    const s = scopeLabel();
+    if(s.city !== 'All Cities') return s.city + ' (' + s.region + ')';
+    if(s.region !== 'All Regions') return s.region;
+    if(s.area !== 'All Areas') return s.area;
+    return 'the national footprint';
+  }
+
+  const PRODUCT_SENTIMENT = [
+    { name:'Combo Sakti 30GB', driver:'price', base:56 },
+    { name:'Unlimited Malam', driver:'experience', base:75 },
+    { name:'Roaming Asia 5GB', driver:'quota', base:69 },
+    { name:'Combo Sakti 60GB', driver:'price', base:61 },
+    { name:'Bebas Puas Harian', driver:'quota', base:71 },
+    { name:'Ketengan Data 2GB', driver:'experience', base:65 }
+  ];
+  const DRIVER_META = {
+    price: { label:'Price', color:'var(--warn)' },
+    quota: { label:'Quota', color:'var(--data)' },
+    experience: { label:'Experience', color:'var(--violet)' }
+  };
+
+  const PROBE_ROWS = [
+    { tier:"Combo Sakti 5GB / 30D", tsel:15000, ioh:14000, xl:16000 },
+    { tier:"Combo Sakti 15GB / 30D", tsel:35000, ioh:33000, xl:37000 },
+    { tier:"Combo Sakti 30GB / 30D", tsel:88000, ioh:73000, xl:85000 },
+    { tier:"Unlimited Malam (night)", tsel:29000, ioh:25000, xl:28000 },
+    { tier:"Combo Sakti 60GB / 30D", tsel:140000, ioh:129000, xl:133000 },
+    { tier:"Roaming Asia 5GB / 7D", tsel:120000, ioh:135000, xl:110000 }
+  ];
+
+  function fmtRp(n){ return "Rp " + n.toLocaleString('id-ID'); }
+
+  function statusFor(tsel, ioh, xl){
+    const min = Math.min(tsel, ioh, xl), max = Math.max(tsel, ioh, xl);
+    if(tsel === min) return {cls:'cheapest', text:'CHEAPEST'};
+    if(tsel === max) return {cls:'expensive', text:'MOST EXPENSIVE'};
+    const gap = (tsel - min) / min;
+    if(gap > 0.10) return {cls:'exposed', text:'EXPOSED'};
+    return {cls:'parity', text:'NEAR PARITY'};
+  }
+
+  function renderProbeTable(){
+    const body = document.getElementById('probeBody');
+    body.innerHTML = '';
+    PROBE_ROWS.forEach(row => {
+      const st = statusFor(row.tsel, row.ioh, row.xl);
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + row.tier + '</td>' +
+        '<td class="price">' + fmtRp(row.tsel) + '</td>' +
+        '<td class="price">' + fmtRp(row.ioh) + '</td>' +
+        '<td class="price">' + fmtRp(row.xl) + '</td>' +
+        '<td><span class="status-tag ' + st.cls + '">' + st.text + '</span></td>';
+      body.appendChild(tr);
+    });
+  }
+
+  /* ================= PRODUCT MOVEMENT & SENTIMENT (ported from the "Product Movement & Sentiment" artifact) ================= */
+  const VALIDITY_BUCKETS = [
+    { label:'≤ 1 day', tsel:[], ioh:[
+        { name:'Freedom X1 700MB', spec:'Rp4,550 · 700MB · 1 day' },
+        { name:'Freedom X1 1GB', spec:'Rp5,950 · 1GB · 1 day' }
+      ], xl:[] },
+    { label:'2–3 days', tsel:[], ioh:[
+        { name:'Freedom Internet 1GB', spec:'Rp7,000 · 1GB · 2 days' },
+        { name:'Freedom X1 2GB', spec:'Rp7,700 · 2GB · 3 days' },
+        { name:'Freedom Internet 1.5GB', spec:'Rp11,900 · 1.5GB · 3 days' }
+      ], xl:[] },
+    { label:'5–7 days',
+      tsel:[ { name:'Paket Bola Gembira Tier 1', spec:'Rp25,000 · 300MB · 7 days', flag:'new' } ],
+      ioh:[
+        { name:'Freedom Apps Entertainment 3GB', spec:'Rp14,000 · 3GB (apps) · 7 days' },
+        { name:'Freedom Internet 3.5GB', spec:'Rp19,600 · 3.5GB · 5 days' },
+        { name:'Freedom X1 5GB', spec:'Rp16,800 · 5GB · 7 days' },
+        { name:'Freedom Internet 7GB', spec:'Rp28,000 · 7GB · 7 days' }
+      ],
+      xl:[ { name:'Xtra Combo Mini (YouTube bonus)', spec:'Bundled · bonus quota · 7 days (base price n/a)' } ] },
+    { label:'30 days',
+      tsel:[ { name:'RoaMAX Pesta Bola', spec:'Rp650,000 · 155GB + 50 tokens · 30 days — roaming, premium tier', flag:'new' } ],
+      ioh:[
+        { name:'Freedom Internet 3GB/30hr', spec:'~Rp32,200–35,000 · 3GB · 30 days' },
+        { name:'Freedom Internet × ICONNET', spec:'Free w/ subscription · 12GB + 10,000 min · 30 days — Jabodetabek only', flag:'new' }
+      ],
+      xl:[ { name:'Xtra Combo Flex (M–XXXL)', spec:'Rp38,000–120,000 · quota undisclosed · 30 days' } ] },
+    { label:'60+ days',
+      tsel:[ { name:'Paket Bola Gembira Tier 2', spec:'Rp85,000 · 5.5GB · 60 days', flag:'new' } ],
+      ioh:[], xl:[] }
+  ];
+  function renderValidityTable(){
+    const body = document.getElementById('validityBody');
+    if(!body) return;
+    body.innerHTML = '';
+    VALIDITY_BUCKETS.forEach(row => {
+      const tr = document.createElement('tr');
+      let html = '<td class="bucket-label">' + row.label + '</td>';
+      ['tsel','ioh','xl'].forEach(bk => {
+        const items = row[bk];
+        if(!items || items.length === 0){
+          html += '<td><span class="empty-cell">— no comparable product</span></td>';
+        } else {
+          html += '<td>' + items.map(it =>
+            '<div class="pline-group"><div class="pline"><b>' + it.name + (it.flag === 'new' ? '<span class="badge-new">new</span>' : '') + '</b><span>' + it.spec + '</span></div></div>'
+          ).join('') + '</td>';
+        }
+      });
+      tr.innerHTML = html;
+      body.appendChild(tr);
+    });
+  }
+
+  function renderMiniBars(containerId, data, fmt, maxOverride){
+    const container = document.getElementById(containerId);
+    if(!container) return;
+    container.innerHTML = '';
+    const max = maxOverride || Math.max.apply(null, data.map(d => d.value === null ? 0 : d.value));
+    data.forEach(d => {
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+      const opName = OPERATORS[d.key].name;
+      let inner = '<div class="bar-row-head"><span class="op-logo xs" style="background:' + OPERATORS[d.key].color + ';">' + OPERATORS[d.key].short + '</span><span class="name">' + opName + '</span><span class="count">' + (d.value === null ? 'not disclosed' : fmt(d.value)) + '</span></div>';
+      if(d.value === null){
+        inner += '<div class="price-track undisclosed"><span>quota not published</span></div>';
+      } else {
+        inner += '<div class="price-track"><div class="price-fill ' + d.key + '" style="width:' + ((d.value/max)*100) + '%;"></div></div>';
+      }
+      row.innerHTML = inner;
+      container.appendChild(row);
+    });
+  }
+
+  const COST_ROWS = [
+    { key:'ioh', perDay:'Rp4,550', perGb:'Rp6,500', hl:false },
+    { key:'tsel', perDay:'Rp3,571', perGb:'Rp83,333', hl:true },
+    { key:'xl', perDay:'Rp1,267', perGb:'n/a (quota undisclosed)', hl:false }
+  ];
+  function renderCostTable(){
+    const bodyEl = document.getElementById('costTableBody');
+    if(!bodyEl) return;
+    bodyEl.innerHTML = '';
+    COST_ROWS.forEach(r => {
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + opLogo(r.key, 'xs') + ' ' + OPERATORS[r.key].name + '</td>' +
+        '<td class="price">' + r.perDay + '</td>' +
+        '<td class="price"' + (r.hl ? ' style="color:var(--bad);"' : '') + '>' + r.perGb + '</td>';
+      bodyEl.appendChild(tr);
+    });
+  }
+
+  const SENTIMENT_TSEL_PRODUCTS = [
+    { name:'Bola Gembira — activation/how-to posts', negative:27, neutral:2, positive:1 },
+    { name:'Bola Gembira — match-hype/fan posts', negative:55, neutral:40, positive:52 },
+    { name:'RoaMAX Pesta Bola', negative:3, neutral:0, positive:3 },
+    { name:'Halo Optima × iPhone 17e', negative:5, neutral:2, positive:4 },
+    { name:'Loyalty Poin top-up', negative:7, neutral:4, positive:8 }
+  ];
+  function renderProductSentimentStack(){
+    const container = document.getElementById('sentTselStack');
+    if(!container) return;
+    container.innerHTML = '';
+    const maxTotal = Math.max.apply(null, SENTIMENT_TSEL_PRODUCTS.map(d => d.negative + d.neutral + d.positive));
+    SENTIMENT_TSEL_PRODUCTS.forEach(d => {
+      const total = d.negative + d.neutral + d.positive;
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+      const head = document.createElement('div');
+      head.className = 'bar-row-head';
+      head.innerHTML = '<span class="name">' + d.name + '</span><span class="count">' + total + (total < 15 ? ' (small n)' : '') + '</span>';
+      row.appendChild(head);
+      const track = document.createElement('div');
+      track.className = 'stack-track';
+      const segments = [
+        { cls:'critical', value:d.negative, label:'Negative' },
+        { cls:'neutral-seg', value:d.neutral, label:'Neutral' },
+        { cls:'good', value:d.positive, label:'Positive' }
+      ];
+      let offsetPct = 0;
+      const trackWidthPct = (total / maxTotal) * 100;
+      segments.forEach(seg => {
+        if(seg.value === 0) return;
+        const segWidthPct = (seg.value / total) * trackWidthPct;
+        const el = document.createElement('div');
+        el.className = 'stack-seg ' + seg.cls;
+        el.style.left = offsetPct + '%';
+        el.style.width = segWidthPct + '%';
+        const pct = Math.round((seg.value / total) * 100);
+        el.title = d.name + ' — ' + seg.label + ': ' + seg.value + ' (' + pct + '%)';
+        track.appendChild(el);
+        offsetPct += segWidthPct;
+      });
+      row.appendChild(track);
+      container.appendChild(row);
+    });
+  }
+
+  const SCORECARD_DIMS = [
+    { label:'Line-up breadth', tsel:2, ioh:4, xl:5 },
+    { label:'Price competitiveness', tsel:2, ioh:5, xl:3 },
+    { label:'Commercial momentum', tsel:5, ioh:2, xl:1 },
+    { label:'Product sentiment', tsel:2, ioh:null, xl:null }
+  ];
+  function renderScorecard(){
+    const sc = document.getElementById('scorecardGrid');
+    if(!sc) return;
+    sc.innerHTML = '';
+    sc.appendChild(document.createElement('div'));
+    ['tsel','ioh','xl'].forEach(bk => {
+      const h = document.createElement('div');
+      h.className = 'sc-head brandcol';
+      h.innerHTML = opLogo(bk, 'xs') + OPERATORS[bk].name;
+      sc.appendChild(h);
+    });
+    SCORECARD_DIMS.forEach(d => {
+      const label = document.createElement('div');
+      label.className = 'sc-dim';
+      label.textContent = d.label;
+      sc.appendChild(label);
+      ['tsel','ioh','xl'].forEach(bk => {
+        const cell = document.createElement('div');
+        const score = d[bk];
+        if(score === null){
+          cell.innerHTML = '<span class="na">no data</span>';
+        } else {
+          const meter = document.createElement('div');
+          meter.className = 'meter';
+          for(let i=1;i<=5;i++){
+            const seg = document.createElement('div');
+            seg.className = 'seg' + (i <= score ? ' on-' + bk : '');
+            meter.appendChild(seg);
+          }
+          cell.appendChild(meter);
+        }
+        sc.appendChild(cell);
+      });
+    });
+  }
+
+  const EXEC_LINE = [
+    { key:'tsel', text:'Most active, least disciplined — the campaign engine is running, but execution is bleeding trust.' },
+    { key:'ioh', text:'Best value story in the market, told to no one — quiet on news, loud on price.' },
+    { key:'xl', text:'Broadest catalog on paper, invisible in practice — and asleep on new launches.' }
+  ];
+  function renderExecLine(){
+    const el = document.getElementById('execLine');
+    if(!el) return;
+    el.innerHTML = EXEC_LINE.map(e =>
+      '<div class="exec-card ' + e.key + '"><div class="exec-name">' + opLogo(e.key, 'xs') + OPERATORS[e.key].name + '</div><p>' + e.text + '</p></div>'
+    ).join('');
+  }
+
+  const PRIORITY_ITEMS = [
+    { chip:'act', tag:'act', tagLabel:'Act now', title:'Fix Bola Gembira activation', detail:'90% negative on activation posts vs. 37% on general hype posts — narrow, fixable, urgent while the World Cup is live.' },
+    { chip:'watch', tag:'watch', tagLabel:'Monitor', title:'Watch IOH’s ICONNET bundle', detail:'Jabodetabek-only, tied to home broadband — a narrow bundle, not a mass-market threat. Recheck in 2–4 weeks.' },
+    { chip:'low', tag:'low', tagLabel:'Low priority', title:'Matching IOH’s entry price', detail:'Rp4,550/1-day has been stable and public for a while — not a new move, so not worth reacting to today.' }
+  ];
+  function renderPrioritization(){
+    const container = document.getElementById('prioCompact');
+    if(!container) return;
+    container.innerHTML = PRIORITY_ITEMS.map((p, i) =>
+      '<div class="prio-row"><div class="prio-chip ' + p.chip + '">' + (i+1) + '</div><div style="flex:1"><h3>' + p.title + '</h3><p>' + p.detail + '</p></div><div class="prio-tag ' + p.tag + '">' + p.tagLabel + '</div></div>'
+    ).join('');
+
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const qsvg = document.getElementById('quadrantChart');
+    if(!qsvg) return;
+    qsvg.innerHTML = '';
+    const W = 300, H = 300, pad = 34;
+    function qLine(x1,y1,x2,y2){
+      const l = document.createElementNS(svgNS, 'line');
+      l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+      l.setAttribute('stroke', 'rgba(255,255,255,0.12)'); l.setAttribute('stroke-width', '1');
+      qsvg.appendChild(l);
+    }
+    qLine(pad, H-pad, W-pad, H-pad);
+    qLine(pad, pad, pad, H-pad);
+    qLine(pad, (H-pad+pad)/2, W-pad, (H-pad+pad)/2);
+    qLine((pad+W-pad)/2, pad, (pad+W-pad)/2, H-pad);
+    function qText(x, y, text, anchor, size){
+      const t = document.createElementNS(svgNS, 'text');
+      t.setAttribute('x', x); t.setAttribute('y', y);
+      t.setAttribute('text-anchor', anchor || 'middle');
+      t.setAttribute('font-size', size || '9');
+      t.setAttribute('fill', 'var(--text-3)');
+      t.textContent = text;
+      qsvg.appendChild(t);
+    }
+    qText(W/2, H-10, 'Urgency →', 'middle', 10);
+    qText(pad+34, H-pad-8, 'Deprioritize', 'middle', 9);
+    qText(W-pad-30, pad+14, 'Act now', 'middle', 9);
+    const points = [
+      { x:0.86, y:0.88, label:'1', color:'var(--bad)' },
+      { x:0.45, y:0.42, label:'2', color:'var(--warn)' },
+      { x:0.2, y:0.18, label:'3', color:'var(--text-3)' }
+    ];
+    points.forEach(p => {
+      const cx = pad + p.x * (W - 2*pad);
+      const cy = (H-pad) - p.y * (H - 2*pad);
+      const circle = document.createElementNS(svgNS, 'circle');
+      circle.setAttribute('cx', cx); circle.setAttribute('cy', cy); circle.setAttribute('r', 14);
+      circle.setAttribute('fill', p.color); circle.setAttribute('opacity', '0.92');
+      qsvg.appendChild(circle);
+      const label = document.createElementNS(svgNS, 'text');
+      label.setAttribute('x', cx); label.setAttribute('y', cy+4);
+      label.setAttribute('text-anchor', 'middle'); label.setAttribute('font-size', '12');
+      label.setAttribute('font-weight', '700'); label.setAttribute('fill', '#fff');
+      label.textContent = p.label;
+      qsvg.appendChild(label);
+    });
+  }
+
+  function renderProductMovementSection(){
+    renderValidityTable();
+    renderMiniBars('entryPriceBars', [
+      { key:'ioh', value:4550 }, { key:'tsel', value:25000 }, { key:'xl', value:38000 }
+    ], v => 'Rp' + v.toLocaleString('id-ID'));
+    renderMiniBars('validityDaysBars', [
+      { key:'ioh', value:1 }, { key:'tsel', value:7 }, { key:'xl', value:30 }
+    ], v => v + ' day' + (v > 1 ? 's' : ''), 30);
+    renderMiniBars('quotaBars', [
+      { key:'ioh', value:0.7 }, { key:'tsel', value:0.3 }, { key:'xl', value:null }
+    ], v => v + ' GB', 0.7);
+    renderCostTable();
+    renderProductSentimentStack();
+    renderScorecard();
+    renderExecLine();
+    renderPrioritization();
+  }
+
+  let lastSentimentVals = [];
+  function renderSentiment(rng){
+    const wrap = document.getElementById('sentimentList');
+    wrap.innerHTML = '';
+    lastSentimentVals = [];
+    const driverVals = { price:[], quota:[], experience:[] };
+    PRODUCT_SENTIMENT.forEach(t => {
+      const val = Math.max(30, Math.min(94, Math.round(jitter(rng, t.base, 9))));
+      const delta = Math.round(jitter(rng, t.driver === 'price' ? -3 : 0.5, 3) * 10) / 10;
+      driverVals[t.driver].push(val);
+      lastSentimentVals.push({ name:t.name, val:val, delta:delta, driver:t.driver });
+      const dm = DRIVER_META[t.driver];
+      const row = document.createElement('div');
+      row.className = 'sent-row';
+      row.innerHTML =
+        '<div class="sent-label">' + t.name + '</div>' +
+        '<span class="sent-driver" style="color:' + dm.color + ';border-color:' + dm.color + ';">' + dm.label + '</span>' +
+        '<div class="sent-track"><div class="sent-fill" style="width:' + val + '%"></div></div>' +
+        '<div class="sent-val num">' + val + '%</div>' +
+        '<div class="sent-delta num" style="color:' + (delta >= 0 ? 'var(--good)' : 'var(--bad)') + '">' + (delta >= 0 ? '▲' : '▼') + Math.abs(delta) + '</div>';
+      wrap.appendChild(row);
+    });
+
+    let worstDriver = 'price', worstAvg = 999;
+    Object.keys(driverVals).forEach(d => {
+      const arr = driverVals[d];
+      const avg = arr.reduce((a,b) => a+b, 0) / arr.length;
+      if(avg < worstAvg){ worstAvg = avg; worstDriver = d; }
+    });
+    const dm = DRIVER_META[worstDriver];
+    document.getElementById('sentimentCallout').innerHTML =
+      '⚠ <div><b>Weakening trend:</b> <span style="color:' + dm.color + ';font-weight:700;">' + dm.label + '</span> is the dominant negative reaction driver across recently released packages — averaging ' + Math.round(worstAvg) + '% sentiment, the lowest of the three tracked drivers.</div>';
+  }
+
+  let lastBuzz = null;
+  let lastActions = [];
+  const TOP_CAMPAIGNS = {
+    tsel: 'Combo Sakti 30GB relaunch',
+    ioh:  'Freedom Internet price cut',
+    xl:   'Xtra Combo 5G bundle push'
+  };
+
+  /* ---- Highest buzz hashtag per operator, per social platform (same 7-day period) ---- */
+  const BUZZ_PLATFORMS = ['Instagram','TikTok','X (Twitter)','YouTube','Threads'];
+  const BUZZ_HASHTAGS = {
+    tsel: {
+      'Instagram':   { tag:'#ComboSaktiRelaunch',       vol:8400  },
+      'TikTok':      { tag:'#SaktiChallenge',           vol:15200 },
+      'X (Twitter)': { tag:'#SinyalTelkomselSurabaya',  vol:21600, neg:true },
+      'YouTube':     { tag:'#ComboSaktiUnbox',          vol:3100  },
+      'Threads':     { tag:'#TelkomselGangguan',        vol:5300,  neg:true }
+    },
+    ioh: {
+      'Instagram':   { tag:'#FreedomInternetHemat',     vol:9700  },
+      'TikTok':      { tag:'#DiskonFreedomInternet',    vol:12400 },
+      'X (Twitter)': { tag:'#FreedomInternet30GB',      vol:10800 },
+      'YouTube':     { tag:'#FreedomInternetReview',    vol:2600  },
+      'Threads':     { tag:'#IOHPromo',                 vol:3900  }
+    },
+    xl: {
+      'Instagram':   { tag:'#XtraCombo5G',              vol:5100  },
+      'TikTok':      { tag:'#XtraComboChallenge',       vol:6800  },
+      'X (Twitter)': { tag:'#XLSmart5G',                vol:4700  },
+      'YouTube':     { tag:'#XtraComboUnbox',           vol:1900  },
+      'Threads':     { tag:'#XLSmartPromo',             vol:2200  }
+    }
+  };
+
+  /* ---- Top engaging post/topic per operator this period ---- */
+  const BUZZ_ENGAGEMENT = {
+    tsel: { platform:'TikTok',    tag:'#SaktiChallenge',          likes:84000, comments:6200, shares:15400, views:2100000, reach:3400000 },
+    ioh:  { platform:'Instagram', tag:'#FreedomInternetHemat',    likes:41000, comments:3100, shares:5200,  views:980000,  reach:1600000 },
+    xl:   { platform:'TikTok',    tag:'#XtraComboChallenge',      likes:22000, comments:1800, shares:3100,  views:540000,  reach:890000  }
+  };
+
+  /* ---- 8-week buzz volume trend per operator (total weekly mentions, thousands) ---- */
+  const BUZZ_WEEKLY_TREND = {
+    tsel: [19.2, 18.8, 19.5, 20.1, 19.8, 20.6, 21.4, 24.8],
+    ioh:  [13.1, 13.6, 14.0, 14.8, 15.3, 16.0, 16.9, 17.8],
+    xl:   [10.2, 10.5, 10.1, 10.6, 10.9, 10.7, 11.0, 11.3]
+  };
+
+  function fmtK(n){
+    if(n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+    if(n >= 1000) return (n/1000).toFixed(1) + 'K';
+    return String(n);
+  }
+  function buzzWeekLabels(){
+    const labels = [];
+    for(let i=7;i>=0;i--){
+      const d = new Date(today.getTime() - i*7*86400000);
+      labels.push('W' + String(isoWeek(d).week).padStart(2,'0'));
+    }
+    return labels;
+  }
+  function buzzHashtagTableHTML(cls){
+    const rows = BUZZ_PLATFORMS.map(p => {
+      const cells = ['tsel','ioh','xl'].map(k => {
+        const h = BUZZ_HASHTAGS[k][p];
+        return '<td><div class="bh-tag' + (h.neg ? ' bh-tag-neg' : '') + '">' + h.tag + '</div><div class="bh-vol">' + h.vol.toLocaleString('id-ID') + ' mentions</div></td>';
+      }).join('');
+      return '<tr><td class="name-cell">' + p + '</td>' + cells + '</tr>';
+    }).join('');
+    return '<table class="' + cls + '"><thead><tr><th>Platform</th><th>TSEL</th><th>IOH</th><th>XL</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }
+  function buzzEngagementHTML(){
+    return ['tsel','ioh','xl'].map(k => {
+      const e = BUZZ_ENGAGEMENT[k];
+      const engRate = (((e.likes + e.comments + e.shares) / e.reach) * 100).toFixed(1);
+      return '<div class="engage-row">' + opLogo(k, 'sm') +
+        '<div class="eg-main"><div class="eg-plat">' + e.platform + '</div><div class="eg-tag">' + e.tag + '</div></div>' +
+        '<div class="engage-stats">' +
+          '<span>❤ <b>' + fmtK(e.likes) + '</b></span>' +
+          '<span>💬 <b>' + fmtK(e.comments) + '</b></span>' +
+          '<span>🔁 <b>' + fmtK(e.shares) + '</b></span>' +
+          '<span>👁 <b>' + fmtK(e.views) + '</b></span>' +
+        '</div>' +
+        '<div class="engage-rate">' + engRate + '%<div class="eg-reach">' + fmtK(e.reach) + ' reach</div></div>' +
+      '</div>';
+    }).join('');
+  }
+  function buzzWeeklyTrendHTML(){
+    const weeks = buzzWeekLabels();
+    return '<div>' +
+      '<div class="metric-col-title">Total weekly mentions (K)</div>' +
+      multiLineChart(BUZZ_WEEKLY_TREND, 560, 130, '8-week buzz trend by operator') +
+      '<div style="display:flex;justify-content:space-between;margin-top:4px;">' +
+        weeks.map(w => '<span style="font-size:9px;color:var(--text-3);">' + w + '</span>').join('') +
+      '</div>' +
+    '</div>';
+  }
+  function renderBuzzExtras(){
+    const legendTrendEl = document.getElementById('buzzLegendTrend');
+    if(legendTrendEl) legendTrendEl.innerHTML = opLegend(['tsel','ioh','xl']);
+    const trendEl = document.getElementById('buzzWeeklyTrend');
+    if(trendEl) trendEl.innerHTML = buzzWeeklyTrendHTML();
+
+    const gridEl = document.getElementById('buzzHashtagGrid');
+    if(gridEl) gridEl.innerHTML = buzzHashtagTableHTML('mini-table');
+    const hashtagCalloutEl = document.getElementById('buzzHashtagCallout');
+    if(hashtagCalloutEl){
+      const negEntry = Object.keys(BUZZ_HASHTAGS.tsel).map(p => BUZZ_HASHTAGS.tsel[p]).find(h => h.neg);
+      hashtagCalloutEl.innerHTML = negEntry
+        ? '⚠ <div>Telkomsel\'s top hashtags on X and Threads are complaint-driven (e.g. <b>' + negEntry.tag + '</b>), not campaign buzz — linked to the Surabaya Timur network incident in Alerts.</div>'
+        : '';
+    }
+
+    const engEl = document.getElementById('buzzEngagement');
+    if(engEl) engEl.innerHTML = buzzEngagementHTML();
+    const engCalloutEl = document.getElementById('buzzEngagementCallout');
+    if(engCalloutEl){
+      const rateOf = k => { const e = BUZZ_ENGAGEMENT[k]; return (e.likes + e.comments + e.shares) / e.reach; };
+      const leaderKey = ['tsel','ioh','xl'].reduce((a,b) => rateOf(a) >= rateOf(b) ? a : b);
+      const leader = OPERATORS[leaderKey];
+      const rate = (rateOf(leaderKey) * 100).toFixed(1);
+      engCalloutEl.innerHTML = '📈 <div><b>' + leader.name + '</b> leads on engagement rate this period at <b>' + rate + '%</b>, via its ' + BUZZ_ENGAGEMENT[leaderKey].platform + ' post.</div>';
+    }
+  }
+
+  function renderBuzzChart(rng){
+    const days = ['Sen','Sel','Rab','Kam','Jum','Sab','Min-ini'];
+    const legend = document.getElementById('buzzLegend');
+    const groups = document.getElementById('buzzGroups');
+    const labels = document.getElementById('buzzLabels');
+    groups.innerHTML = ''; labels.innerHTML = '';
+    legend.innerHTML = opLegend(['tsel','ioh','xl']);
+
+    const opKeys = ['tsel','ioh','xl'];
+    const spikeMult = { tsel:1.6, ioh:2.4, xl:1.4 };
+    const baseVal = { tsel: jitter(rng,3200,450), ioh: jitter(rng,2600,420), xl: jitter(rng,2100,380) };
+    const series = {};
+    opKeys.forEach(k => {
+      const vals = [];
+      for(let i=0;i<6;i++){ vals.push(Math.max(200, Math.round(baseVal[k] + jitter(rng,0,350)))); }
+      vals.push(Math.max(200, Math.round(baseVal[k] * spikeMult[k] * jitter(rng,1,0.12))));
+      series[k] = vals;
+    });
+
+    const allVals = [].concat(series.tsel, series.ioh, series.xl);
+    const max = Math.max.apply(null, allVals);
+    let peak = { key:null, day:-1, val:-1 };
+
+    for(let i=0;i<7;i++){
+      const col = document.createElement('div');
+      col.className = 'buzz-group';
+      opKeys.forEach(k => {
+        const v = series[k][i];
+        if(v > peak.val) peak = { key:k, day:i, val:v };
+        const h = Math.max(6, Math.round((v/max) * 128));
+        const bar = document.createElement('div');
+        bar.className = 'buzz-bar';
+        bar.style.height = h + 'px';
+        bar.style.background = OPERATORS[k].color;
+        bar.title = OPERATORS[k].name + ' · ' + days[i] + ' · ' + v.toLocaleString('id-ID') + ' mentions';
+        col.appendChild(bar);
+      });
+      groups.appendChild(col);
+      const lab = document.createElement('span');
+      lab.textContent = days[i];
+      if(i === 6) lab.className = 'today';
+      labels.appendChild(lab);
+    }
+
+    if(peak.key){
+      const barEl = groups.children[peak.day].children[opKeys.indexOf(peak.key)];
+      const tag = document.createElement('span');
+      tag.className = 'bv';
+      tag.textContent = peak.val.toLocaleString('id-ID');
+      barEl.appendChild(tag);
+    }
+
+    const totals = {}, peaks = {};
+    opKeys.forEach(k => {
+      totals[k] = series[k].reduce((a,b) => a+b, 0);
+      peaks[k] = Math.max.apply(null, series[k]);
+    });
+
+    document.getElementById('buzzHighlights').innerHTML = opKeys.map(k => {
+      const o = OPERATORS[k];
+      return '<div class="buzz-highlight">' + opLogo(k, 'sm') +
+        '<div class="bh-text"><b>' + o.name + '</b> most-buzzed: ' + TOP_CAMPAIGNS[k] + '</div>' +
+        '<div class="bh-peak">' + peaks[k].toLocaleString('id-ID') + ' peak</div>' +
+      '</div>';
+    }).join('');
+
+    const leaderKey = opKeys.reduce((a,b) => totals[a] >= totals[b] ? a : b);
+    const leader = OPERATORS[leaderKey];
+    const nextBest = Math.max.apply(null, opKeys.filter(k => k !== leaderKey).map(k => totals[k]));
+    const lead = Math.round(((totals[leaderKey] - nextBest) / nextBest) * 100);
+    document.getElementById('buzzCallout').innerHTML =
+      '📢 <div><b>' + leader.name + '</b> leads 7-day buzz volume' + (lead > 0 ? ' (+' + lead + '% vs. next closest)' : '') + ', driven by <b>' + TOP_CAMPAIGNS[leaderKey] + '</b>.</div>';
+    lastBuzz = { days: days, series: series, totals: totals, peaks: peaks, leaderKey: leaderKey };
+    renderBuzzExtras();
+  }
+
+  function renderSynthesis(rng, kpis){
+    const s = scopeLabel();
+    const place = regionNarrativeName();
+    const share = kpis.metaShare;
+    const delta = kpis.metaShareDelta;
+    const deltaCls = delta >= 0 ? 'hl-pos' : 'hl-neg';
+    const deltaArrow = delta >= 0 ? '▲' : '▼';
+    const outlets = Math.round(jitter(rng, 14, 5));
+    const npsDelta = kpis.csiNpsDelta;
+    const npsCls = npsDelta <= 0 ? 'hl-neg' : 'hl-pos';
+    const npsPhrase = Math.abs(npsDelta) + '-point ' + (npsDelta <= 0 ? 'drop' : 'gain') + ' in CSI-NPS score';
+    const complaintPct = Math.round(jitter(rng, 64, 18));
+    const priceCut = Math.round(jitter(rng, 18, 4));
+    const benchCls = kpis.netBenchDelta <= 0 ? 'hl-neg' : 'hl-pos';
+
+    document.getElementById('synthScopeChip').textContent = s.city !== 'All Cities' ? s.city : (s.region !== 'All Regions' ? s.region : (s.area !== 'All Areas' ? s.area : 'National view')) ;
+
+    const narrative = document.getElementById('synthNarrative');
+    narrative.innerHTML =
+      'Telkomsel market share in <b>' + place + '</b> stands at <b>' + share + '%</b> ' +
+      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + Math.abs(delta) + 'pt WoW</span>' +
+      (kpis.source === 'hadoop' ? ', sourced from the latest Hadoop Meta Market Share extract' : ', modeled pending a live Hadoop snapshot') + '). ' +
+      'Cross-signal review points to three converging drivers: a <b>RETINA field outlet scan</b> confirms IOH opened ' +
+      '<b class="num-cite">' + outlets + ' new outlets/kiosks</b> in the scoped area over the past 3 weeks as part of a network densification push; ' +
+      'this coincides with a <span class="' + npsCls + '">' + npsPhrase + '</span>' +
+      ' (Network Experience Benchmark <span class="' + benchCls + '">' + (kpis.netBenchDelta >= 0 ? '▲' : '▼') + ' ' + Math.abs(kpis.netBenchDelta) + '</span> to <b>' + kpis.netBench + '</b>) ' +
+      'and a <span class="hl-neg">' + complaintPct + '% spike in complaint volume</span>, following a service-quality incident flagged in VOC data. ' +
+      'Simultaneously, the <b>Probe pricing RPA</b> detected IOH cutting its 30GB flagship SKU price by <b class="num-cite">' + priceCut + '%</b> shortly before this scan, ' +
+      'undercutting Telkomsel\'s equivalent package. ' +
+      'The combination of <span class="hl-neg">network disruption, aggressive competitor pricing, and physical footprint expansion</span> is assessed as the primary driver of share movement in this scope.';
+
+    const actions = [
+      { p:'p1', fn:'Marketing', horizon:'24–48h', text:'Deploy a matched-value counter-offer on the exposed 30GB tier in ' + place + ' to close the Rp 15,000 price gap before it compounds share loss.' },
+      { p:'p1', fn:'Network', horizon:'24h', text:'Dispatch a rapid-response crew to the flagged service-quality site; publish a customer-facing ETA to blunt the complaint spike.' },
+      { p:'p2', fn:'Sales', horizon:'7 days', text:'Reinforce field sales presence and product availability at outlets within 2km of newly opened competitor kiosks in the scoped area.' },
+      { p:'p2', fn:'Marketing', horizon:'2–3 weeks', text:'Brief a price-narrative campaign reframing value beyond headline price, targeting the price/value sentiment segment specifically.' },
+      { p:'p3', fn:'Network', horizon:'30–60 days', text:'Fold the affected sites into the 5G/4G capacity roadmap to prevent recurrence and close the gap with XL on adjacent corridors.' }
+    ];
+    lastActions = actions;
+    const list = document.getElementById('actionList');
+    list.innerHTML = '';
+    actions.forEach((a, actionIdx) => {
+      const el = document.createElement('div');
+      el.className = 'action-item';
+      el.dataset.detail = 'action-' + actionIdx;
+      el.innerHTML =
+        '<span class="prio ' + a.p + '">' + a.p.toUpperCase() + '</span>' +
+        '<span class="fn">' + a.fn + '</span>' +
+        '<span class="action-text">' + a.text + ' <span class="horizon">· ' + a.horizon + '</span></span>' +
+        '<span></span>';
+      list.appendChild(el);
+    });
+  }
+
+  function updateScopeLine(){
+    const s = scopeLabel();
+    document.getElementById('scopeLine').innerHTML =
+      'Scope: <b>' + s.area + '</b> · <b>' + s.region + '</b> · <b>' + s.city + '</b> · <b>' + s.week + '</b> — all panels below reflect this filter.';
+  }
+
+  function renderExecSummary(kpis){
+    const s = scopeLabel();
+    const place = regionNarrativeName();
+    const share = kpis.metaShare;
+    const delta = kpis.metaShareDelta;
+    const deltaCls = delta >= 0 ? 'hl-pos' : 'hl-neg';
+    const deltaArrow = delta >= 0 ? '▲' : '▼';
+
+    document.getElementById('execScopeChip').textContent =
+      s.city !== 'All Cities' ? s.city : (s.region !== 'All Regions' ? s.region : (s.area !== 'All Areas' ? s.area : 'National view'));
+
+    // whichever KPI moved the most negatively this week is called out as the headline drag
+    const drags = [
+      { label:'CSI-NPS', delta:kpis.csiNpsDelta, note:'customer satisfaction and advocacy' },
+      { label:'Network Experience Benchmark', delta:kpis.netBenchDelta, note:'network quality perception' }
+    ];
+    const worst = drags.reduce((a,b) => b.delta < a.delta ? b : a);
+    const headline = worst.delta < 0
+      ? 'The clearest drag this period is <b>' + worst.label + '</b> (' + worst.delta + '), tied to ' + worst.note + '.'
+      : 'No single metric is sharply negative this period — the picture is broadly stable.';
+
+    document.getElementById('execSummaryText').innerHTML =
+      'Telkomsel market share in <b>' + place + '</b> stands at <b>' + share + '%</b> ' +
+      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + Math.abs(delta) + 'pt WoW</span>). ' +
+      headline + ' A prioritized action list and the full cross-signal narrative are one click away in <b>Overview</b>.';
+  }
+
+  function applyScope(){
+    const rng = rngFor(scopeKey());
+    updateScopeLine();
+    updateLiveDate();
+    const kpis = getCoreKPIs(rawScope(), rng);
+    renderCoreKPIs(kpis);
+    renderExecSummary(kpis);
+    renderSynthesis(rng, kpis);
+    renderSentiment(rng);
+    renderBuzzChart(rng);
+  }
+
+  /* ================= HADOOP SNAPSHOT LOADER WIRING ================= */
+  const hadoopFileInput = document.getElementById('hadoopFile');
+  const hbClearBtn = document.getElementById('hbClearBtn');
+  const hbFormatBtn = document.getElementById('hbFormatBtn');
+  const hbFormat = document.getElementById('hbFormat');
+
+  hadoopFileInput.addEventListener('change', () => {
+    const file = hadoopFileInput.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(reader.result);
+        if(!parsed || !Array.isArray(parsed.rows)) throw new Error('missing "rows" array');
+        hadoopSnapshot = parsed;
+        hbClearBtn.style.display = '';
+        applyScope();
+      } catch(err){
+        document.getElementById('hbStatus').textContent = 'Could not load snapshot: ' + err.message;
+        document.getElementById('hbStatus').classList.remove('live');
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  hbClearBtn.addEventListener('click', () => {
+    hadoopSnapshot = null;
+    hadoopFileInput.value = '';
+    hbClearBtn.style.display = 'none';
+    applyScope();
+  });
+
+  hbFormatBtn.addEventListener('click', () => {
+    const showing = hbFormat.style.display !== 'none';
+    if(showing){ hbFormat.style.display = 'none'; return; }
+    hbFormat.textContent = JSON.stringify(HADOOP_SCHEMA_EXAMPLE, null, 2);
+    hbFormat.style.display = 'block';
+  });
+
+  /* ================= MACRO TICKER ================= */
+  const MACRO = [
+    { name:'BI Rate', val:'6.00%', dir:'flat', source:'Bank Indonesia', release:'BI-Rate Decision — Board of Governors Meeting' },
+    { name:'USD/IDR', val:'Rp 15,850', dir:'down', source:'Bank Indonesia (JISDOR)', release:'Jakarta Interbank Spot Dollar Rate' },
+    { name:'Inflation (YoY)', val:'2.68%', dir:'up', source:'Badan Pusat Statistik (BPS)', release:'Consumer Price Index Release' },
+    { name:'GDP Growth (YoY)', val:'5.11%', dir:'up', source:'Badan Pusat Statistik (BPS)', release:'Quarterly GDP Growth Release' },
+    { name:'IHSG/JCI', val:'7,412.6', dir:'up', source:'Bursa Efek Indonesia (IDX)', release:'Jakarta Composite Index — Daily Close' },
+    { name:'Consumer Confidence', val:'123.4', dir:'down', source:'Bank Indonesia', release:'Consumer Confidence Survey' },
+    { name:'Smartphone Penetration', val:'78.3%', dir:'up', source:'APJII', release:'Indonesia Internet & Smartphone Penetration Survey' },
+    { name:'Industry Mobile ARPU', val:'Rp 42,100', dir:'flat', source:'GSMA Intelligence', release:'Indonesia Mobile Market ARPU Benchmark' },
+    { name:'Telco FDI Sentiment', val:'Cautiously Positive', dir:'flat', source:'Kementerian Investasi/BKPM', release:'Telecom Sector Investment Sentiment Brief' },
+    { name:'Fuel Price (Pertalite)', val:'Rp 10,000/L', dir:'up', source:'PT Pertamina (Persero)', release:'Retail Fuel Price Announcement' }
+  ];
+  const DIR_ARROW = { up:'▲', down:'▼', flat:'●' };
+  function buildMacroTrack(){
+    const track = document.getElementById('macroTrack');
+    const frag = document.createDocumentFragment();
+    for(let rep=0; rep<2; rep++){
+      MACRO.forEach((m, i) => {
+        const el = document.createElement('div');
+        el.className = 'macro-item';
+        el.dataset.detail = 'macro-' + i;
+        el.innerHTML =
+          '<span class="m-name">' + m.name + '</span>' +
+          '<span class="m-val">' + m.val + '</span>' +
+          '<span class="dir ' + m.dir + '">' + DIR_ARROW[m.dir] + '</span>';
+        frag.appendChild(el);
+      });
+    }
+    track.appendChild(frag);
+  }
+
+  /* ================= VOC TICKER ================= */
+  const VOC = [
+    { platform:'X', sent:'negative', quote:'Sinyal Telkomsel di daerah gue makin ngedrop pas jam kerja, padahal biayanya paling mahal se-Indonesia.', eng:'1.2K', time:'12m lalu' },
+    { platform:'Google Reviews', sent:'positive', quote:'Pelayanan GraPARI Surabaya cepat banget, staff-nya ramah dan solutif, top!', eng:'86', time:'34m lalu' },
+    { platform:'TikTok', sent:'negative', quote:'Paket XL sekarang lebih murah dari Telkomsel buat kuota gede, mending pindah aja deh.', eng:'4.7K', time:'51m lalu' },
+    { platform:'Facebook', sent:'positive', quote:'Alhamdulillah jaringan Telkomsel di kampung udah masuk 4G, makasih ya min!', eng:'312', time:'1j lalu' },
+    { platform:'Kaskus', sent:'negative', quote:'Ada yang ngerasa ga sih harga paketan Telkomsel makin mahal dibanding IOH belakangan ini?', eng:'58', time:'2j lalu' },
+    { platform:'X', sent:'positive', quote:'Telkomsel emang paling stabil buat gaming online, dari dulu ga pernah lag parah.', eng:'2.1K', time:'2j lalu' },
+    { platform:'Google Reviews', sent:'neutral', quote:'Sinyal Telkomsel di outlet ini kadang naik turun, tapi masih lebih baik dari provider lain di sini.', eng:'44', time:'3j lalu' },
+    { platform:'TikTok', sent:'negative', quote:'IOH lagi gencar promo 2x kuota, worth it banget dibanding paketan Telkomsel yang segitu-segitu aja.', eng:'6.3K', time:'3j lalu' },
+    { platform:'X', sent:'negative', quote:'Min tolong dong, dari semalem susah banget internetan di Surabaya Timur, udah restart HP tetep aja.', eng:'890', time:'4j lalu' },
+    { platform:'Facebook', sent:'positive', quote:'Layanan CS Telkomsel via WhatsApp responsif banget, masalah kuota kepotong kelar dalam 10 menit.', eng:'201', time:'5j lalu' },
+    { platform:'Kaskus', sent:'neutral', quote:'Menurut agan-agan sekalian, worth it ga upgrade ke paket unlimited malam Telkomsel yang baru?', eng:'37', time:'6j lalu' },
+    { platform:'X', sent:'negative', quote:'Udah 3 hari sinyal Telkomsel di Jatim byar-pet, giliran komplain jawabannya template semua.', eng:'1.5K', time:'7j lalu' }
+  ];
+  function buildVocTrack(){
+    const track = document.getElementById('vocTrack');
+    const frag = document.createDocumentFragment();
+    for(let rep=0; rep<2; rep++){
+      VOC.forEach((v, i) => {
+        const el = document.createElement('div');
+        el.className = 'voc-item';
+        el.dataset.detail = 'voc-' + i;
+        el.innerHTML =
+          '<div class="voc-top"><span class="voc-platform">' + v.platform + '</span><span class="voc-sent ' + v.sent + '">' + v.sent + '</span></div>' +
+          '<div class="voc-quote">“' + v.quote + '”</div>' +
+          '<div class="voc-meta">' + v.eng + ' engagements · ' + v.time + '</div>';
+        frag.appendChild(el);
+      });
+    }
+    track.appendChild(frag);
+  }
+
+  /* ================= ALERTS ================= */
+  const ALERT_CATEGORY_META = {
+    'Product':          { color:'var(--violet)' },
+    'Network':          { color:'var(--data)' },
+    'Customer Journey': { color:'var(--good)' },
+    'Event':            { color:'var(--warn)' },
+    'Campaign':         { color:'var(--brand)' }
+  };
+  const ALERTS = [
+    { id:'promo', category:'Campaign', sev:'critical', title:'IOH counter-promo detected — 30GB tier −18%', sources:['Probe RPA','Pricing SKU feed'], sla:'SLA 4h', time:'38m ago',
+      desc:'Automated price crawl confirms a national 18% cut on IOH\'s flagship 30GB package, undercutting the equivalent Telkomsel SKU by Rp 15,000.',
+      linkedActionIndex:0, linkedActionLabel:'P1 · Counter-offer on exposed 30GB tier',
+      news:[
+        { source:'Kontan.co.id', date:'2026-07-14', headline:'IOH pangkas harga paket data 30GB, perang tarif kian ketat' },
+        { source:'Selular.ID', date:'2026-07-15', headline:'Diskon Freedom Internet 30GB jadi Rp73 ribu, netizen ramai bandingkan dengan Telkomsel' }
+      ] },
+    { id:'outage', category:'Network', sev:'critical', title:'Network outage — Surabaya Timur cluster', sources:['NOC feed','VOC · X'], sla:'SLA 2h', time:'1h 15m ago',
+      desc:'Intermittent 4G/5G service across 6 BTS sites since last night; complaint volume in the area up 64% and rising.',
+      linkedActionIndex:1, linkedActionLabel:'P1 · Rapid-response crew to flagged site',
+      news:[
+        { source:'Detik Jatim', date:'2026-07-15', headline:'Sinyal Telkomsel byar-pet di Surabaya Timur, warga keluhkan gangguan semalaman' },
+        { source:'Kompas.com', date:'2026-07-16', headline:'Telkomsel selidiki gangguan jaringan di sejumlah titik Surabaya Timur' }
+      ] },
+    { id:'hiring', category:'Event', sev:'high', title:'IOH field hiring signal — Jatim & Jateng', sources:['RETINA scan','LinkedIn/job boards'], sla:'SLA 3 days', time:'6h ago',
+      desc:'RETINA outlet scan plus public job postings indicate IOH is recruiting ~40 additional field sales roles across East & Central Java.',
+      linkedActionIndex:2, linkedActionLabel:'P2 · Reinforce field sales near competitor kiosks',
+      news:[
+        { source:'Bisnis.com', date:'2026-07-10', headline:'IOH perkuat tim sales lapangan di Jawa Timur dan Jawa Tengah' }
+      ] }
+  ];
+  function renderAlerts(){
+    const wrap = document.getElementById('alertList');
+    wrap.innerHTML = '';
+    ALERTS.forEach(a => {
+      const el = document.createElement('div');
+      el.className = 'alert-item';
+      el.dataset.detail = 'alert-' + a.id;
+      const catColor = (ALERT_CATEGORY_META[a.category] || {}).color || 'var(--text-3)';
+      el.innerHTML =
+        '<div class="sev-dot ' + a.sev + '"></div>' +
+        '<div class="alert-body">' +
+          '<div class="alert-title-row">' +
+            '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
+              '<span class="alert-cat" style="color:' + catColor + ';border-color:' + catColor + ';">' + a.category + '</span>' +
+              '<span class="alert-title">' + a.title + '</span>' +
+            '</div>' +
+            '<span class="alert-time">' + a.time + '</span>' +
+          '</div>' +
+          '<div class="alert-desc">' + a.desc + '</div>' +
+          '<div class="chip-row">' + a.sources.map(s => '<span class="chip">' + s + '</span>').join('') + '</div>' +
+          '<button class="alert-link-btn" type="button" data-goto-action="' + a.linkedActionIndex + '">🔗 Linked: ' + a.linkedActionLabel + '</button>' +
+          '<div class="alert-foot"><span class="sla-tag">' + a.sla + '</span><button class="btn btn-sm btn-accent" data-prompt="Susun rencana respons lengkap untuk alert: ' + a.title + '. Sertakan pihak yang perlu terlibat dan target waktu penyelesaian.">Respond</button></div>' +
+        '</div>';
+      wrap.appendChild(el);
+    });
+  }
+
+  /* ================= COMPETITOR MOVEMENT ================= */
+  const COMPETITORS = [
+    { key:'ioh', fullName:'IOH (Indosat Ooredoo Hutchison)', tag:'Aggressive pricing + field expansion posture', risk:'high', acts:['Price cut','Outlet expansion','Hiring surge'], action:'Analyze',
+      highlights:['30GB tier cut 18% (Rp 89K → Rp 73K), 36h before this scan','+14 outlets/kiosks opened in scoped area in 3 weeks','~40 field sales roles hired across Java'] },
+    { key:'xl', fullName:'XLSmart (XL Axiata + Smartfren)', tag:'Accelerating 5G rollout in urban corridors', risk:'medium', acts:['5G rollout','Bundle refresh'], action:'Monitor',
+      highlights:['5G live in 6 new JABAR/JATIM corridors','Mid-tier bundle refresh launched this week','Speed benchmark gap vs. Telkomsel widening'] }
+  ];
+  function renderCompetitors(){
+    const wrap = document.getElementById('competitorList');
+    wrap.innerHTML = '';
+    COMPETITORS.forEach(c => {
+      const el = document.createElement('div');
+      el.className = 'comp-row';
+      el.dataset.detail = 'comp-' + c.key;
+      el.innerHTML =
+        opLogo(c.key, 'lg') +
+        '<div class="comp-info">' +
+          '<div class="cname">' + c.fullName + '</div>' +
+          '<div class="ctag">' + c.tag + '</div>' +
+          '<div class="pill-row"><span class="risk ' + c.risk + '">' + c.risk.toUpperCase() + ' RISK</span>' + c.acts.map(a => '<span class="act-pill">' + a + '</span>').join('') + '</div>' +
+          '<ul class="comp-highlights">' + c.highlights.map(h => '<li>' + h + '</li>').join('') + '</ul>' +
+        '</div>' +
+        '<button class="btn btn-sm" data-prompt="Berikan analisis mendalam tentang pergerakan kompetitor ' + c.fullName + ' termasuk implikasinya terhadap pangsa pasar Telkomsel.">' + c.action + '</button>';
+      wrap.appendChild(el);
+    });
+  }
+
+  /* ================= STRATEGIC RECOMMENDATIONS ================= */
+  const RECS = [
+    { horizon:'Immediate · P1 · 24–72h', title:'Launch matched counter-promo on exposed 30GB tier', color:'var(--bad)',
+      body:'Probe RPA confirmed IOH cut its flagship 30GB SKU by 18% (Rp 89,000 → Rp 73,000), 36 hours before this scan, flipping the tier from near-parity to exposed. VOC volume on the price/value topic mentioning IOH is up sharply in the same window.',
+      sources:['Probe RPA','VOC'], kpi:'Target: close price gap to ≤5% within 72h; hold 30GB tier share loss under 0.3pt.',
+      prompt:'Buat rencana taktis lengkap untuk counter-promo tier 30GB, termasuk struktur harga, target wilayah, dan estimasi dampak terhadap margin.',
+      news:[
+        { source:'Kontan.co.id', date:'2026-07-14', headline:'IOH pangkas harga paket data 30GB, perang tarif kian ketat' },
+        { source:'Selular.ID', date:'2026-07-15', headline:'Diskon Freedom Internet 30GB jadi Rp73 ribu, netizen ramai bandingkan dengan Telkomsel' }
+      ],
+      gtm:[
+        'Channel: push a time-boxed bonus-quota offer (not a straight price cut) via the MyTelkomsel app and GraPARI point-of-sale, protecting blended ARPU while closing the perceived gap.',
+        'Targeting: geo-fence the offer to the exposed corridor only, using existing segmentation, rather than moving price nationally.',
+        'Messaging: frame as "more data, same price" rather than a discount, to avoid signaling a price war.',
+        'Field enablement: brief GraPARI and authorized dealers same-day with a one-page battlecard versus the IOH offer.',
+        'Measurement: track tier-level net adds and churn daily for 14 days; auto-expire the offer if the gap closes via a national move instead.'
+      ] },
+    { horizon:'Medium-term · P2 · 45–60 days', title:'Accelerate 5G rollout to close the gap with XL', color:'var(--data)',
+      body:'Network benchmark data shows XLSmart\'s 5G download speed advantage widening in urban corridors of JABAR and JATIM. Sentiment on network quality trails coverage sentiment by 5pts, suggesting speed perception — not availability — is the gap.',
+      sources:['Network benchmark','Product sentiment'], kpi:'Target: cut XL 5G speed-perception gap by 40% in scoped corridors within one quarter.',
+      prompt:'Susun rencana percepatan rollout 5G untuk menutup gap kecepatan dengan XL, termasuk prioritas lokasi berdasarkan data benchmark jaringan.',
+      news:[
+        { source:'Selular.ID', date:'2026-07-08', headline:'XL Axiata perkuat jaringan 5G di koridor Jabar dan Jatim' },
+        { source:'Tek.id', date:'2026-07-11', headline:'Hasil benchmark: kecepatan unduh 5G XL unggul tipis di area urban' }
+      ],
+      gtm:[
+        'Prioritization: sequence 5G densification by corridor using Network Experience Benchmark data, starting where XL\'s speed lead is widest (JABAR, JATIM urban clusters).',
+        'Partnership: evaluate co-location or spectrum-sharing options to compress build timelines versus a full new-site build.',
+        'Marketing tie-in: pair each completed upgrade with a local "network upgraded here" campaign, turning capex into a visible brand moment.',
+        'Governance: report rollout progress at the monthly strategy review, per the Model &amp; accuracy governance cadence.',
+        'Measurement: track the Network Experience Benchmark gap to XL monthly in the scoped corridors until it closes by the 40% target.'
+      ] },
+    { horizon:'Medium-term · P2 · 4–6 weeks', title:'Run a brand campaign to reset the price narrative', color:'var(--violet)',
+      body:'Price/value is the weakest of six tracked sentiment topics and has declined for three consecutive weeks, while VOC shows repeated direct price comparisons to IOH and XL. A value-reframing campaign can arrest the narrative before it hardens into churn.',
+      sources:['Product sentiment','VOC'], kpi:'Target: lift price/value sentiment by 8pts within 6 weeks without a national price cut.',
+      prompt:'Rancang konsep kampanye brand untuk mereset narasi harga Telkomsel dibanding kompetitor, lengkap dengan pesan utama dan channel distribusi.',
+      news:[
+        { source:'Marketeers.com', date:'2026-07-12', headline:'Publik ramai bandingkan tarif data Telkomsel vs kompetitor di media sosial' }
+      ],
+      gtm:[
+        'Positioning: reframe the message from "price per GB" to "reliability per rupiah," leaning on the Network Experience Benchmark lead Telkomsel still holds nationally.',
+        'Channel mix: short-form video (TikTok / Instagram Reels) using real network-quality comparisons, seeded on the same platforms where negative price comparisons are trending per VOC.',
+        'Proof points: feature the GraPARI responsiveness and network-stability quotes already surfacing positively in VOC as social proof.',
+        'Timing: launch inside the current sentiment-tracking window so the campaign\'s effect is measurable before the next Synthesis cycle.',
+        'Measurement: track price/value sentiment weekly; target +8pts within 6 weeks.'
+      ] },
+    { horizon:'Medium-term · P2/P3 · this quarter', title:'Invest in gaming & upload-experience quality', color:'#2a78d6',
+      body:'Mention-volume analysis shows gaming and content-upload complaints clustering in the same regions as the network-quality sentiment dip. This is a differentiated experience play against IOH\'s price-led and XL\'s coverage-led positioning.',
+      sources:['Buzz','Network benchmark'], kpi:'Target: reduce gaming-latency complaints by 25% and lift network-quality sentiment 4pts in one quarter.',
+      prompt:'Buat business case untuk investasi peningkatan kualitas gaming dan upload experience, termasuk estimasi biaya dan dampak terhadap retensi pelanggan.',
+      news:[
+        { source:'Jagat Review', date:'2026-07-09', headline:'Gamer keluhkan lag saat memakai jaringan Telkomsel di beberapa wilayah' },
+        { source:'Dailysocial.id', date:'2026-07-13', headline:'Komunitas gaming ramai bahas kualitas jaringan operator saat live-stream' }
+      ],
+      gtm:[
+        'Diagnosis: cross-reference gaming/upload complaint clusters against network-quality sentiment data to confirm root-cause sites before committing capex.',
+        'Quick win: prioritize QoS/latency tuning (not just bandwidth) on the flagged cell sites, since gaming complaints are latency-sensitive, not throughput-sensitive.',
+        'Proof point: partner with a gaming-community creator for a transparent before/after latency test, published on the same platforms where complaints are clustering.',
+        'Packaging: explore a gaming-oriented add-on (low-latency routing) as a differentiator versus IOH\'s price-led and XL\'s coverage-led plays.',
+        'Measurement: track gaming-latency complaint volume and network-quality sentiment in the flagged regions monthly against the 25%/4pt targets.'
+      ] },
+    { horizon:'Immediate · P1 · 24h', title:'Contain the Surabaya Timur outage', color:'var(--bad)',
+      body:'NOC feed confirms intermittent service across 6 BTS sites since last night; VOC shows an 890-engagement complaint thread on X and complaint volume up 64% in the affected cluster. Left unaddressed, this compounds the region\'s existing share pressure.',
+      sources:['NOC feed','VOC · X','RETINA'], kpi:'Target: full restoration within 24h; publish customer-facing ETA within 2h.',
+      prompt:'Susun rencana tanggap darurat untuk gangguan jaringan Surabaya Timur, termasuk komunikasi pelanggan dan eskalasi ke tim NOC.',
+      news:[
+        { source:'Detik Jatim', date:'2026-07-15', headline:'Sinyal Telkomsel byar-pet di Surabaya Timur, warga keluhkan gangguan semalaman' },
+        { source:'Kompas.com', date:'2026-07-16', headline:'Telkomsel selidiki gangguan jaringan di sejumlah titik Surabaya Timur' }
+      ],
+      gtm:[
+        'Restore: dispatch the crew with spares pre-staged for the known fault pattern at these sites; target restoration inside the 2h SLA.',
+        'Proactive comms: publish a status update with a concrete ETA via the Telkomsel Care X account and an in-app banner for affected postal codes — not a generic apology.',
+        'Retention save: auto-credit affected subscribers with a goodwill data bonus once restored, converting a negative moment into a retention touch.',
+        'Escalation: if the SLA is missed, escalate to the CMO war-room channel per the Decision-log obligation in Governance.',
+        'Measurement: monitor the complaint thread\'s sentiment and volume hourly until it returns to baseline.'
+      ] },
+    { horizon:'Longer-term · P3 · 2–3 quarters', title:'Expand enterprise & B2B account penetration', color:'var(--good)',
+      body:'Macro signals show telco FDI sentiment cautiously positive and industry ARPU flat, suggesting consumer-tier growth is capped while enterprise connectivity spend is rising. RETINA field scans show limited Telkomsel enterprise-account presence outside JABOTABEK.',
+      sources:['Macro indicators','RETINA'], kpi:'Target: grow enterprise/B2B account base by 15% outside JABOTABEK within 3 quarters.',
+      prompt:'Buat proposal ekspansi akun enterprise dan B2B di luar JABOTABEK, termasuk target segmen dan proyeksi pendapatan.',
+      news:[
+        { source:'Bisnis.com', date:'2026-07-05', headline:'Permintaan konektivitas enterprise tumbuh di tengah perlambatan pasar konsumen' },
+        { source:'Investor.id', date:'2026-07-10', headline:'Sentimen FDI sektor telekomunikasi tetap positif meski ARPU konsumen stagnan' }
+      ],
+      gtm:[
+        'Segment: prioritize mid-market enterprise accounts outside JABOTABEK where RETINA shows the thinnest current Telkomsel presence.',
+        'Offer: package dedicated connectivity plus account management as a bundle, rather than competing purely on price against smaller regional ISPs.',
+        'Channel: stand up a dedicated enterprise field-sales motion in the prioritized regions, distinct from the consumer GraPARI channel.',
+        'Partnership: explore co-selling with regional system integrators already serving the target enterprise segments.',
+        'Measurement: track enterprise/B2B account growth outside JABOTABEK quarterly against the 15%-in-3-quarters target.'
+      ] }
+  ];
+  function renderRecs(){
+    const grid = document.getElementById('recGrid');
+    grid.innerHTML = '';
+    RECS.forEach((r, recIdx) => {
+      const el = document.createElement('div');
+      el.className = 'rec-card';
+      el.dataset.detail = 'rec-' + recIdx;
+      el.style.setProperty('--panel-accent', r.color);
+      el.innerHTML =
+        '<div class="rec-top"><span class="eyebrow" style="color:' + r.color + '">' + r.horizon + '</span></div>' +
+        '<div class="rec-title">' + r.title + '</div>' +
+        '<div class="rec-rationale">' + r.body + '</div>' +
+        '<div class="chip-row">' + r.sources.map(s => '<span class="chip">' + s + '</span>').join('') + '</div>' +
+        '<div class="kpi-line">' + r.kpi + '</div>' +
+        '<button class="btn btn-accent btn-sm" data-prompt="' + r.prompt.replace(/"/g,'&quot;') + '">Send detailed brief to AI</button>';
+      grid.appendChild(el);
+    });
+  }
+
+  /* ================= GOVERNANCE ================= */
+  const GOV = [
+    { icon:'🔒', title:'Access policy', color:'var(--brand)', text:'Restricted to CMO, VP Marketing, and designated regional marketing leads. Access is provisioned individually and logged; no shared credentials.' },
+    { icon:'🗓', title:'Review cadence', color:'var(--data)', text:'Reviewed weekly in the Tuesday CMO sync and re-validated monthly against RETINA, Probe, and network benchmark source systems.' },
+    { icon:'🗂', title:'Data handling rules', color:'var(--violet)', text:'No screenshots or exports outside approved channels. Downstream sharing requires redaction of city-level and outlet-level detail.' },
+    { icon:'⚠', title:'AI-output disclaimer', color:'var(--warn)', text:'Narratives, synthesis, and recommendations are AI-generated decision support. They must be validated against source systems before being acted upon.' },
+    { icon:'📝', title:'Decision-log obligation', color:'var(--good)', text:'Any action taken on the basis of this dashboard must be logged in the Marketing Decision Register within 48 hours, citing the triggering panel.' },
+    { icon:'📊', title:'Model & accuracy governance', color:'#2a78d6', text:'Forecasting and synthesis models are revalidated quarterly against realized outcomes; material drift triggers automatic model review.' }
+  ];
+  function renderGov(){
+    const grid = document.getElementById('govGrid');
+    grid.innerHTML = '';
+    GOV.forEach((g, govIdx) => {
+      const el = document.createElement('div');
+      el.className = 'gov-card';
+      el.dataset.detail = 'gov-' + govIdx;
+      el.innerHTML =
+        '<h3><span class="gov-icon" style="background:' + g.color + '22;">' + g.icon + '</span>' + g.title + '</h3>' +
+        '<p>' + g.text + '</p>';
+      grid.appendChild(el);
+    });
+  }
+
+  /* ================= AI QUESTION ENGINE ================= */
+  function aiAnswerFor(question){
+    const s = scopeLabel();
+    const place = regionNarrativeName();
+    const q = question.toLowerCase();
+    const rng = rngFor(scopeKey() + '|' + question);
+
+    if(/area.*declin|declin.*area|wilayah.*turun|turun.*wilayah/.test(q)){
+      const worst = CITIES_LOSING_SHARE[0];
+      return 'On regional performance: ' + worst.name + ' (' + worst.region + ') is the sharpest decliner this cycle — share down ' + Math.abs(worst.mom) + 'pt MoM and ' + Math.abs(worst.yoy) + 'pt YoY. The same pattern repeats in CSI-NPS and the Network Experience Benchmark: JATIM and KALIMANTAN are consistently the two weakest regions across all three KPIs. See the Meta Market Share deep-dive for the full city-by-city list.';
+    }
+    if(/rank|overtak|improved over/.test(q)){
+      const npsLast = NPS_TREND_MONTHLY.tsel[NPS_TREND_MONTHLY.tsel.length-1];
+      const iohNpsLast = NPS_TREND_MONTHLY.ioh[NPS_TREND_MONTHLY.ioh.length-1];
+      const benchLast = BENCH_TREND_MONTHLY.tsel[BENCH_TREND_MONTHLY.tsel.length-1];
+      const xlBenchLast = BENCH_TREND_MONTHLY.xl[BENCH_TREND_MONTHLY.xl.length-1];
+      const crossovers = [];
+      if(iohNpsLast > npsLast) crossovers.push('IOH\'s CSI-NPS (' + iohNpsLast + ') has just edged past Telkomsel\'s (' + npsLast + ') after a 12-month climb');
+      if(xlBenchLast > benchLast) crossovers.push('XLSmart\'s Network Experience Benchmark (' + xlBenchLast + ') now leads Telkomsel\'s (' + benchLast + '), driven by its 5G rollout');
+      if(crossovers.length){
+        return 'On competitive rank: ' + crossovers.join('; ') + '. Both crossovers concentrate in JABAR/JATIM urban corridors — see the CSI-NPS and Network Experience Benchmark deep-dives for the region-by-region detail.';
+      }
+      return 'On competitive rank: Telkomsel still leads all three tracked KPIs nationally this period, though XLSmart\'s Network Experience Benchmark trend is the fastest-closing gap to watch.';
+    }
+    if(/harga|price|promo|murah|mahal/.test(q)){
+      return 'On pricing: Probe\'s RPA scan (12 storefronts, 1,240 SKUs, refreshed every 6 hours) shows IOH cut its 30GB flagship SKU 18% just before this scan, leaving Telkomsel exposed on that tier in ' + place + '. XLSmart remains near parity across most mid-tier packages. Recommend reviewing the counter-promo brief in the Synthesis panel above before any national price move.';
+    }
+    if(/jaringan|network|sinyal|outage|gangguan/.test(q)){
+      return 'On network: the NOC feed and VOC both flag an active incident (Surabaya Timur cluster, 6 BTS sites, complaints up 64%). Network-quality sentiment in ' + place + ' trails coverage sentiment by several points, consistent with a speed/reliability perception gap rather than an availability gap — see the Product sentiment panel for the live split.';
+    }
+    if(/sentimen|sentiment|nps|csi|kepuasan/.test(q)){
+      return 'On sentiment: price/value is currently the weakest of the six tracked topics for ' + place + ' and has declined three weeks running, while network quality and coverage remain comparatively strong. This pattern points to a narrative problem more than a product-quality problem — see the brand-campaign recommendation in Strategic recommendations.';
+    }
+    if(/kompetitor|competitor|ioh|indosat|xl|smartfren/.test(q)){
+      return 'On competitors: IOH is currently the higher-risk actor — pairing an 18% price cut with active field outlet expansion and an estimated 40-role field sales hiring push across Java. XLSmart\'s activity is more network-led, focused on 5G rollout in urban corridors. Full detail is in the Competitor movement panel.';
+    }
+    if(/share|pangsa|market/.test(q)){
+      const share = Math.round(jitter(rng, 38.4, 3.2)*10)/10;
+      return 'On market share: Telkomsel is tracking at approximately ' + share + '% in ' + place + ' for ' + s.week + '. The Synthesis panel above attributes recent movement to a combination of competitor field expansion, a service-quality incident, and an undercutting price move — cross-confirmed across RETINA, Probe, and VOC.';
+    }
+    return 'Based on RETINA, Probe, VOC and network benchmark data currently scoped to ' + place + ' (' + s.week + '): the dominant signal this period is competitive price pressure from IOH compounding a live network incident in East Java. See the Synthesis, Pricing–Product Probe, and Active alerts panels for full detail, or ask a more specific question about pricing, network, sentiment, or competitors.';
+  }
+
+  const askInput = document.getElementById('askInput');
+  const askBtn = document.getElementById('askBtn');
+  const aiAnswer = document.getElementById('aiAnswer');
+  const aiAnswerText = document.getElementById('aiAnswerText');
+  const suggestRowEl = document.getElementById('suggestRow');
+
+  function runAsk(question){
+    if(!question || !question.trim()) return;
+    askInput.value = question;
+    if(suggestRowEl) suggestRowEl.classList.remove('show');
+    aiAnswer.classList.remove('show');
+    aiAnswerText.textContent = 'Analyzing across RETINA, Probe, VOC and benchmark datasets…';
+    aiAnswer.classList.add('show');
+    document.getElementById('controlBar').scrollIntoView({ behavior:'smooth', block:'start' });
+    setTimeout(() => {
+      aiAnswerText.textContent = aiAnswerFor(question);
+    }, 550);
+  }
+  askBtn.addEventListener('click', () => runAsk(askInput.value));
+  askInput.addEventListener('keydown', e => { if(e.key === 'Enter') runAsk(askInput.value); });
+
+  /* suggested questions only appear while the Ask input is focused/clicked */
+  if(suggestRowEl){
+    askInput.addEventListener('focus', () => { suggestRowEl.classList.add('show'); });
+    askInput.addEventListener('blur', () => {
+      // delay so a click on a suggestion chip (which blurs the input first) still registers
+      setTimeout(() => { suggestRowEl.classList.remove('show'); }, 150);
+    });
+  }
+
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-prompt]');
+    if(btn){ runAsk(btn.getAttribute('data-prompt')); }
+  });
+
+  /* ================= FOOTER TIMESTAMP ================= */
+  function setFooterTime(){
+    const d = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    document.getElementById('footRefresh').textContent =
+      d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ' WIB';
+  }
+
+
+  /* ================= SIDEBAR NAVIGATION ================= */
+  const SECTIONS = [
+    { id:'overview', label:'Overview', icon:'◆' },
+    { id:'pricing', label:'Pricing Probe', icon:'Rp' },
+    { id:'alerts', label:'Alerts', icon:'!', flag:true, count:3 },
+    { id:'sentiment', label:'Product Sentiment', icon:'\u263a' },
+    { id:'competitor', label:'Competitor & Buzz', icon:'\u25c8' },
+    { id:'recs', label:'Recommendations', icon:'\u2605', count:6 },
+    { id:'governance', label:'Governance', icon:'\u00a7' }
+  ];
+  const sidebarNav = document.getElementById('sidebar');
+  SECTIONS.forEach((s, secIdx) => {
+    const btn = document.createElement('button');
+    btn.className = 'navbtn' + (secIdx === 0 ? ' active' : '') + (s.flag ? ' alert-flag' : '');
+    btn.type = 'button';
+    btn.title = s.label;
+    btn.dataset.target = s.id;
+    btn.innerHTML = '<span class="n-icon">' + s.icon + '</span><span class="n-label">' + s.label + '</span>' + (s.count ? '<span class="n-count">' + s.count + '</span>' : '');
+    sidebarNav.appendChild(btn);
+  });
+  function goToSection(id){
+    const targetBtn = Array.from(sidebarNav.querySelectorAll('.navbtn')).find(b => b.dataset.target === id);
+    if(!targetBtn) return;
+    sidebarNav.querySelectorAll('.navbtn').forEach(b => b.classList.remove('active'));
+    targetBtn.classList.add('active');
+    document.querySelectorAll('.panel-group').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+  sidebarNav.addEventListener('click', e => {
+    const btn = e.target.closest('.navbtn');
+    if(!btn) return;
+    goToSection(btn.dataset.target);
+  });
+  document.getElementById('execViewOverviewBtn').addEventListener('click', () => {
+    goToSection('overview');
+    document.getElementById('panel-overview').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+
+  /* an alert's "Linked action" button jumps to Overview and opens that action's own detail modal */
+  document.addEventListener('click', e => {
+    const gotoBtn = e.target.closest('[data-goto-action]');
+    if(!gotoBtn) return;
+    goToSection('overview');
+    openModal('action-' + gotoBtn.dataset.gotoAction);
+  });
+
+  /* ================= SIDEBAR MINIMIZE/EXPAND TOGGLE ================= */
+  const layoutEl = document.querySelector('.layout');
+  const sidebarToggleBtn = document.getElementById('sidebarToggle');
+  sidebarToggleBtn.addEventListener('click', () => {
+    const minimized = layoutEl.classList.toggle('sidebar-min');
+    sidebarToggleBtn.classList.toggle('collapsed', minimized);
+    sidebarToggleBtn.setAttribute('aria-expanded', String(!minimized));
+    sidebarToggleBtn.title = minimized ? 'Expand sections sidebar' : 'Minimize sections sidebar';
+  });
+
+  /* ================= EXECUTIVE SUMMARY / ASK AI CARD HIDE-UNHIDE ================= */
+  document.querySelectorAll('.card-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      if(!target) return;
+      const willHide = target.style.display !== 'none';
+      target.style.display = willHide ? 'none' : '';
+      btn.classList.toggle('collapsed', willHide);
+      btn.setAttribute('aria-expanded', String(!willHide));
+      const label = btn.dataset.label || 'card';
+      btn.title = willHide ? ('Show ' + label) : ('Hide ' + label);
+    });
+  });
+
+  /* ================= CARD DETAIL MODAL ================= */
+  function kpiHistoryTable(history, unit){
+    if(!history || !history.length) return '';
+    const rows = history.map((v,i) => {
+      const weeksAgo = history.length - 1 - i;
+      const label = weeksAgo === 0 ? 'This week' : weeksAgo + ' wk ago';
+      return '<div class="detail-row"><span class="dk">' + label + '</span><span class="dv">' + v + unit + '</span></div>';
+    }).join('');
+    return '<div class="detail-table">' + rows + '</div>';
+  }
+
+  /* ---- KPI deep-dives: monthly national trend, Area/Region table, cities losing ground ---- */
+  const MARKET_BY_REGION = {
+    'SUMBAGUT':            { val:41.2, wow: 0.2, mom: 0.6, yoy: 1.4 },
+    'SUMBAGTENG':         { val:37.5, wow:-0.1, mom: 0.3, yoy: 0.8 },
+    'SUMBAGSEL':          { val:39.8, wow: 0.3, mom: 0.9, yoy: 1.1 },
+    'JAKARTA-BANTEN':     { val:35.6, wow:-0.2, mom:-0.4, yoy: 0.5 },
+    'EASTERN JABOTABEK':  { val:36.9, wow: 0.0, mom: 0.2, yoy: 0.9 },
+    'JABAR':              { val:38.4, wow: 0.1, mom: 0.5, yoy: 1.2 },
+    'JATENG-DIY':         { val:40.1, wow: 0.2, mom: 0.7, yoy: 1.6 },
+    'JATIM':              { val:36.8, wow:-0.6, mom:-1.4, yoy:-0.7 },
+    'BALINUSRA':          { val:37.2, wow:-0.1, mom:-0.3, yoy: 0.4 },
+    'KALIMANTAN':         { val:34.9, wow:-0.3, mom:-0.8, yoy:-0.2 },
+    'SULAWESI':           { val:38.7, wow: 0.2, mom: 0.6, yoy: 1.0 },
+    'PUMA':               { val:42.5, wow: 0.4, mom: 1.1, yoy: 2.0 }
+  };
+  const CITIES_LOSING_SHARE = [
+    { name:'Kota Surabaya',   region:'JATIM',       val:34.1, mom:-1.8, yoy:-1.2 },
+    { name:'Kota Malang',     region:'JATIM',       val:37.9, mom:-0.9, yoy:-0.3 },
+    { name:'Kota Mojokerto',  region:'JATIM',       val:38.2, mom:-0.6, yoy:-0.4 },
+    { name:'Kota Balikpapan', region:'KALIMANTAN',  val:33.6, mom:-1.1, yoy:-0.5 },
+    { name:'Kota Samarinda',  region:'KALIMANTAN',  val:35.0, mom:-0.7, yoy:-0.2 }
+  ];
+  const SHARE_TREND_MONTHLY = {
+    tsel: [39.4,39.2,39.0,38.9,38.7,38.6,38.4,38.2,38.0,37.8,37.6,37.4],
+    ioh:  [27.5,27.6,27.8,27.9,28.1,28.3,28.5,28.7,28.9,29.2,29.5,29.8],
+    xl:   [22.8,22.9,22.7,22.9,23.0,22.8,23.1,23.0,23.2,23.1,23.3,23.4]
+  };
+
+  const NPS_BY_REGION = {
+    'SUMBAGUT':            { val:60.5, wow: 0.3, mom: 0.8, yoy: 1.9 },
+    'SUMBAGTENG':         { val:57.8, wow:-0.1, mom: 0.2, yoy: 0.6 },
+    'SUMBAGSEL':          { val:59.2, wow: 0.2, mom: 0.6, yoy: 1.0 },
+    'JAKARTA-BANTEN':     { val:55.4, wow:-0.3, mom:-0.6, yoy: 0.2 },
+    'EASTERN JABOTABEK':  { val:56.8, wow: 0.0, mom: 0.1, yoy: 0.7 },
+    'JABAR':              { val:58.0, wow: 0.1, mom: 0.4, yoy: 1.1 },
+    'JATENG-DIY':         { val:61.0, wow: 0.3, mom: 0.9, yoy: 2.0 },
+    'JATIM':              { val:51.2, wow:-1.4, mom:-3.1, yoy:-2.6 },
+    'BALINUSRA':          { val:57.9, wow:-0.1, mom:-0.2, yoy: 0.5 },
+    'KALIMANTAN':         { val:54.0, wow:-0.4, mom:-1.0, yoy:-0.4 },
+    'SULAWESI':           { val:58.5, wow: 0.2, mom: 0.5, yoy: 0.9 },
+    'PUMA':               { val:62.0, wow: 0.4, mom: 1.2, yoy: 2.3 }
+  };
+  const CITIES_LOSING_NPS = [
+    { name:'Kota Surabaya',   region:'JATIM',       val:48.5, mom:-3.5, yoy:-3.0 },
+    { name:'Kota Malang',     region:'JATIM',       val:53.8, mom:-1.6, yoy:-0.5 },
+    { name:'Kota Mojokerto',  region:'JATIM',       val:54.5, mom:-1.1, yoy:-0.6 },
+    { name:'Kota Balikpapan', region:'KALIMANTAN',  val:52.0, mom:-1.8, yoy:-0.7 },
+    { name:'Kota Samarinda',  region:'KALIMANTAN',  val:53.5, mom:-1.0, yoy:-0.3 }
+  ];
+  const NPS_TREND_MONTHLY = {
+    tsel: [61.5,61.0,60.6,60.1,59.6,59.2,58.7,58.3,57.8,57.4,57.0,56.6],
+    ioh:  [52.0,52.4,52.9,53.3,53.8,54.2,54.7,55.1,55.6,56.0,56.5,56.9],
+    xl:   [55.0,55.1,54.9,55.2,55.0,55.3,55.1,55.4,55.2,55.5,55.3,55.6]
+  };
+
+  const BENCH_BY_REGION = {
+    'SUMBAGUT':            { val:77.0, wow: 0.2, mom: 0.5, yoy: 1.0 },
+    'SUMBAGTENG':         { val:74.5, wow: 0.0, mom: 0.3, yoy: 0.6 },
+    'SUMBAGSEL':          { val:76.0, wow: 0.1, mom: 0.4, yoy: 0.8 },
+    'JAKARTA-BANTEN':     { val:73.8, wow:-0.2, mom:-0.5, yoy:-0.3 },
+    'EASTERN JABOTABEK':  { val:75.0, wow: 0.0, mom: 0.1, yoy: 0.4 },
+    'JABAR':              { val:75.6, wow: 0.1, mom: 0.3, yoy: 0.7 },
+    'JATENG-DIY':         { val:77.5, wow: 0.2, mom: 0.6, yoy: 1.2 },
+    'JATIM':              { val:71.2, wow:-0.9, mom:-2.0, yoy:-2.4 },
+    'BALINUSRA':          { val:74.9, wow:-0.1, mom:-0.2, yoy: 0.1 },
+    'KALIMANTAN':         { val:72.5, wow:-0.3, mom:-0.7, yoy:-0.5 },
+    'SULAWESI':           { val:75.8, wow: 0.1, mom: 0.4, yoy: 0.6 },
+    'PUMA':               { val:78.2, wow: 0.3, mom: 0.8, yoy: 1.5 }
+  };
+  const CITIES_LOSING_BENCH = [
+    { name:'Kota Surabaya',   region:'JATIM',       val:68.5, mom:-2.4, yoy:-2.9 },
+    { name:'Kota Malang',     region:'JATIM',       val:72.8, mom:-1.0, yoy:-0.6 },
+    { name:'Kota Mojokerto',  region:'JATIM',       val:73.2, mom:-0.8, yoy:-0.5 },
+    { name:'Kota Balikpapan', region:'KALIMANTAN',  val:70.5, mom:-1.3, yoy:-0.8 },
+    { name:'Kota Samarinda',  region:'KALIMANTAN',  val:71.8, mom:-0.9, yoy:-0.4 }
+  ];
+  const BENCH_TREND_MONTHLY = {
+    tsel: [76.5,76.2,76.0,75.8,75.6,75.4,75.2,75.0,74.8,74.6,74.4,74.2],
+    ioh:  [68.0,68.3,68.5,68.8,69.0,69.3,69.6,69.9,70.2,70.5,70.8,71.0],
+    xl:   [72.0,72.5,73.1,73.6,74.2,74.8,75.3,75.9,76.4,77.0,77.5,78.0]
+  };
+
+  function monthlyTrendMonths(){
+    const labels = [];
+    for(let i=11;i>=0;i--){
+      const d = new Date(today.getFullYear(), today.getMonth()-i, 1);
+      labels.push(MONTH_ABBR[d.getMonth()]);
+    }
+    return labels;
+  }
+  function multiLineChart(seriesMap, width, height, ariaLabel){
+    const pad = 8;
+    const allVals = [].concat(seriesMap.tsel, seriesMap.ioh, seriesMap.xl);
+    const min = Math.min.apply(null, allVals), max = Math.max.apply(null, allVals);
+    const range = (max - min) || 1;
+    function pathFor(vals, color){
+      const pts = vals.map((v,i) => {
+        const x = pad + (i/(vals.length-1)) * (width - 2*pad);
+        const y = height - pad - ((v-min)/range) * (height - 2*pad);
+        return x.toFixed(1) + ',' + y.toFixed(1);
+      });
+      const last = pts[pts.length-1].split(',');
+      return '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+             '<circle cx="' + last[0] + '" cy="' + last[1] + '" r="4" fill="' + color + '" stroke="#10141d" stroke-width="2"/>';
+    }
+    return '<svg width="100%" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" preserveAspectRatio="none" class="trend-chart" role="img" aria-label="' + ariaLabel + '">' +
+      '<line x1="' + pad + '" y1="' + (height-pad) + '" x2="' + (width-pad) + '" y2="' + (height-pad) + '" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>' +
+      pathFor(seriesMap.tsel, OPERATORS.tsel.color) +
+      pathFor(seriesMap.ioh, OPERATORS.ioh.color) +
+      pathFor(seriesMap.xl, OPERATORS.xl.color) +
+      '</svg>';
+  }
+  function buildMonthlyTrendSection(seriesMap, label){
+    const months = monthlyTrendMonths();
+    return '<div>' +
+      '<div class="modal-section-label">' + label + '</div>' +
+      opLegend(['tsel','ioh','xl']) +
+      multiLineChart(seriesMap, 620, 100, label) +
+      '<div style="display:flex;justify-content:space-between;margin-top:4px;">' +
+        months.map(m => '<span style="font-size:9px;color:var(--text-3);">' + m + '</span>').join('') +
+      '</div>' +
+    '</div>';
+  }
+  function buildAreaRegionTable(dataByRegion, unit, valueLabel){
+    return Object.keys(AREA_MAP).map(areaName => {
+      const rows = AREA_MAP[areaName].map(r => {
+        const d = dataByRegion[r];
+        const wowCls = d.wow >= 0 ? 'delta-up' : 'delta-down';
+        const momCls = d.mom >= 0 ? 'delta-up' : 'delta-down';
+        const yoyCls = d.yoy >= 0 ? 'delta-up' : 'delta-down';
+        return '<tr><td class="name-cell">' + REGION_LABELS[r] + '</td><td>' + d.val + unit + '</td>' +
+          '<td class="' + wowCls + '">' + (d.wow>=0?'▲':'▼') + Math.abs(d.wow) + '</td>' +
+          '<td class="' + momCls + '">' + (d.mom>=0?'▲':'▼') + Math.abs(d.mom) + '</td>' +
+          '<td class="' + yoyCls + '">' + (d.yoy>=0?'▲':'▼') + Math.abs(d.yoy) + '</td></tr>';
+      }).join('');
+      return '<div class="area-group-label">' + areaName + '</div>' +
+        '<table class="mkt-table"><thead><tr><th>Region</th><th>' + valueLabel + '</th><th>WoW</th><th>MoM</th><th>YoY</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    }).join('');
+  }
+  function buildCitiesLosingTable(cities, unit, valueLabel){
+    const rows = cities.map(c =>
+      '<tr><td class="name-cell">' + c.name + '<div style="font-size:9.5px;color:var(--text-3);font-weight:400;">' + REGION_LABELS[c.region] + '</div></td>' +
+      '<td>' + c.val + unit + '</td>' +
+      '<td class="delta-down">▼' + Math.abs(c.mom) + '</td>' +
+      '<td class="delta-down">▼' + Math.abs(c.yoy) + '</td></tr>'
+    ).join('');
+    return '<table class="mkt-table"><thead><tr><th>City</th><th>' + valueLabel + '</th><th>MoM</th><th>YoY</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }
+
+  function buildKpiModal(metric){
+    if(!lastKPIs) return { eyebrow:'Core KPI', title:'No data yet', body:'<p>Apply a filter to load data.</p>' };
+    const src = lastKPIs.source === 'hadoop'
+      ? 'Sourced from the loaded Hadoop snapshot for the current filter scope.'
+      : 'Modeled estimate — load a Hadoop snapshot above (see the control bar) for real figures.';
+    if(metric === 'share'){
+      return { eyebrow:'Core KPI · Meta Market Share', title:'Meta Market Share — ' + lastKPIs.metaShare + '%',
+        body:
+          '<p>Blended market share, recomputed for the active Area/Region/City/Week filter. ' + src + '</p>' +
+          buildMonthlyTrendSection(SHARE_TREND_MONTHLY, 'Monthly market share trend — national (TSEL vs IOH vs XLSmart)') +
+          '<div><div class="modal-section-label">Latest position by Area &amp; Region</div>' + buildAreaRegionTable(MARKET_BY_REGION, '%', 'Share') + '</div>' +
+          '<div><div class="modal-section-label">Cities losing share (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_SHARE, '%', 'Share') + '</div>'
+      };
+    }
+    if(metric === 'nps'){
+      return { eyebrow:'Core KPI · CSI-NPS Score', title:'CSI-NPS Score — ' + lastKPIs.csiNps,
+        body:
+          '<p>Blended Customer Satisfaction Index + Net Promoter Score for the active scope. ' + src + '</p>' +
+          buildMonthlyTrendSection(NPS_TREND_MONTHLY, 'Monthly CSI-NPS trend — national (TSEL vs IOH vs XLSmart)') +
+          '<div><div class="modal-section-label">Latest position by Area &amp; Region</div>' + buildAreaRegionTable(NPS_BY_REGION, '', 'Score') + '</div>' +
+          '<div><div class="modal-section-label">Cities losing ground (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_NPS, '', 'Score') + '</div>'
+      };
+    }
+    return { eyebrow:'Core KPI · Network Experience Benchmark', title:'Network Experience Benchmark — ' + lastKPIs.netBench,
+      body:
+        '<p>Third-party / crowdsourced network quality benchmark score for the active scope. ' + src + '</p>' +
+        buildMonthlyTrendSection(BENCH_TREND_MONTHLY, 'Monthly Network Experience Benchmark trend — national (TSEL vs IOH vs XLSmart)') +
+        '<div><div class="modal-section-label">Latest position by Area &amp; Region</div>' + buildAreaRegionTable(BENCH_BY_REGION, '', 'Score') + '</div>' +
+        '<div><div class="modal-section-label">Cities losing ground (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_BENCH, '', 'Score') + '</div>'
+    };
+  }
+
+  function buildBuzzModal(){
+    if(!lastBuzz) return { eyebrow:'Buzz', title:'No data yet', body:'<p>Apply a filter to load data.</p>' };
+    const rows = lastBuzz.days.map((d,i) =>
+      '<div class="detail-row"><span class="dk">' + d + '</span><span class="dv">T ' + lastBuzz.series.tsel[i].toLocaleString('id-ID') + ' · I ' + lastBuzz.series.ioh[i].toLocaleString('id-ID') + ' · X ' + lastBuzz.series.xl[i].toLocaleString('id-ID') + '</span></div>'
+    ).join('');
+    const leader = OPERATORS[lastBuzz.leaderKey];
+    return { eyebrow:'Buzz · daily breakdown', title:'Buzz — 7 day operator comparison',
+      body:'<p>Daily brand/campaign mention counts across all platforms — Telkomsel (T) vs. IOH (I) vs. XLSmart (X). <b>' + leader.name + '</b> leads this week\'s total volume.</p>' + '<div class="detail-table">' + rows + '</div>' };
+  }
+  function buildBuzzTrendModal(){
+    const weeks = buzzWeekLabels();
+    return { eyebrow:'Buzz · weekly trend', title:'Buzz — 8 week operator comparison',
+      body:'<p>Total weekly mention volume (thousands), all platforms combined. IOH\'s steady climb tracks its Freedom Internet price-cut push; Telkomsel\'s latest-week spike is a mix of the Combo Sakti relaunch and complaint volume from the Surabaya Timur network outage.</p>' +
+        opLegend(['tsel','ioh','xl']) +
+        multiLineChart(BUZZ_WEEKLY_TREND, 620, 110, '8-week buzz trend by operator') +
+        '<div style="display:flex;justify-content:space-between;margin-top:4px;">' +
+          weeks.map(w => '<span style="font-size:9px;color:var(--text-3);">' + w + '</span>').join('') +
+        '</div>' };
+  }
+  function buildBuzzHashtagModal(){
+    return { eyebrow:'Buzz · platform comparison', title:'Highest buzz hashtag by platform',
+      body:'<p>The single highest-volume hashtag per operator on each platform, same 7-day window. Hashtags in red are net-negative sentiment (complaints), not campaign buzz.</p>' +
+        buzzHashtagTableHTML('mkt-table') +
+        '<p style="color:var(--text-3);font-size:11.5px;margin-top:10px;">Illustrative demo data for this mockup — platform APIs are not connected; in production this would refresh from each network\'s social-listening feed.</p>' };
+  }
+  function buildBuzzEngagementModal(){
+    const rateOf = k => { const e = BUZZ_ENGAGEMENT[k]; return (e.likes + e.comments + e.shares) / e.reach; };
+    const leaderKey = ['tsel','ioh','xl'].reduce((a,b) => rateOf(a) >= rateOf(b) ? a : b);
+    const leader = OPERATORS[leaderKey];
+    return { eyebrow:'Buzz · engagement', title:'Top post engagement per operator',
+      body:'<p>Each operator\'s single highest-engaging post this period. <b>' + leader.name + '</b> has the strongest engagement rate (interactions ÷ reach) of the three.</p>' +
+        buzzEngagementHTML() +
+        '<p style="color:var(--text-3);font-size:11.5px;margin-top:10px;">Illustrative demo data for this mockup — not linked to live platform APIs.</p>' };
+  }
+
+  const GOV_CONTACT = {
+    'Access policy':'Contact: IT Security &amp; Access Management.',
+    'Review cadence':'Contact: Market Intelligence &amp; Competitive Strategy Unit.',
+    'Data handling rules':'Contact: Data Governance Office.',
+    'AI-output disclaimer':'Contact: Market Intelligence &amp; Competitive Strategy Unit.',
+    'Decision-log obligation':'Contact: Marketing Operations.',
+    'Model & accuracy governance':'Contact: Data Science &amp; Analytics.'
+  };
+
+  function recOwnerCadence(horizon){
+    if(horizon.indexOf('P1') !== -1) return { owner:'On-call CMO war-room lead', cadence:'Daily check-in until resolved' };
+    if(horizon.indexOf('P2') !== -1) return { owner:'Relevant functional VP (Marketing / Network / Sales)', cadence:'Weekly review in the Tuesday CMO sync' };
+    return { owner:'Relevant functional lead', cadence:'Reviewed at the monthly strategy review' };
+  }
+
+  /* ---- Synthesis action-list deep-dive: rationale + tactical go-to-market steps, indexed to match the fixed 5-action template in renderSynthesis ---- */
+  const ACTION_DETAILS = [
+    {
+      detail: 'Probe RPA confirmed IOH cut its 30GB flagship SKU 18%, undercutting Telkomsel by Rp 15,000 on a like-for-like basis. This tier is the most price-elastic in the portfolio — left unmatched, the gap keeps bleeding subscribers in the exposed corridor and compounds the CSI-NPS and complaint pressure already visible there.',
+      gtm: [
+        'Channel: push a time-boxed bonus-quota offer (not a straight price cut) via the MyTelkomsel app and GraPARI point-of-sale, protecting blended ARPU while closing the perceived gap.',
+        'Targeting: geo-fence the offer to the exposed corridor only, using existing segmentation, rather than moving price nationally.',
+        'Messaging: frame as "more data, same price" rather than a discount, to avoid signaling a price war.',
+        'Field enablement: brief GraPARI and authorized dealers same-day with a one-page battlecard versus the IOH offer.',
+        'Measurement: track tier-level net adds and churn daily for 14 days; auto-expire the offer if the gap closes via a national move instead.'
+      ]
+    },
+    {
+      detail: 'The NOC feed confirms intermittent 4G/5G service across 6 BTS sites since last night, with an 890-engagement complaint thread on X and complaint volume up 64%. Left unaddressed through another news cycle, this becomes the dominant driver of both CSI-NPS and Network Experience Benchmark decline in the affected region.',
+      gtm: [
+        'Restore: dispatch the crew with spares pre-staged for the known fault pattern at these sites; target restoration inside the 2h SLA.',
+        'Proactive comms: publish a status update with a concrete ETA via the Telkomsel Care X account and an in-app banner for affected postal codes — not a generic apology.',
+        'Retention save: auto-credit affected subscribers with a goodwill data bonus once restored, converting a negative moment into a retention touch.',
+        'Escalation: if the SLA is missed, escalate to the CMO war-room channel per the Decision-log obligation in Governance.',
+        'Measurement: monitor the complaint thread’s sentiment and volume hourly until it returns to baseline.'
+      ]
+    },
+    {
+      detail: 'RETINA field scans show IOH opened new outlets/kiosks in the scoped area over the past 3 weeks as part of a network densification push, competing directly for walk-in acquisition traffic in the same micro-markets Telkomsel already serves.',
+      gtm: [
+        'Deploy: assign field reps to a 2km radius around each newly identified competitor kiosk, prioritized by RETINA-flagged outlet density.',
+        'Offer: equip reps with a starter-pack bundle (SIM + first-month bonus quota) priced to win first-time acquisition, not just retention.',
+        'Distribution: audit SIM stock and voucher denominations at existing Telkomsel outlets in the same radius; resupply within 48h if gaps are found.',
+        'Incentive: run a short-term field-sales SPIFF tied to net adds in the contested micro-markets only.',
+        'Measurement: track gross adds and outlet-level sell-through weekly against the same radius the prior month.'
+      ]
+    },
+    {
+      detail: 'Price/value is the weakest of the tracked sentiment drivers and has declined for three consecutive weeks, with VOC showing repeated direct price comparisons to IOH and XL. This is a narrative problem as much as a pricing one — matching every competitor move nationally isn’t sustainable, so the story needs to shift to value.',
+      gtm: [
+        'Positioning: reframe the message from "price per GB" to "reliability per rupiah," leaning on the Network Experience Benchmark lead Telkomsel still holds nationally.',
+        'Channel mix: short-form video (TikTok / Instagram Reels) using real network-quality comparisons, seeded on the same platforms where negative price comparisons are trending per VOC.',
+        'Proof points: feature the GraPARI responsiveness and network-stability quotes already surfacing positively in VOC as social proof.',
+        'Timing: launch inside the current sentiment-tracking window so the campaign’s effect is measurable before the next Synthesis cycle.',
+        'Measurement: track price/value sentiment weekly; target +8pts within 6 weeks, per the linked Strategic Recommendation.'
+      ]
+    },
+    {
+      detail: 'The service-quality incident is a symptom of a broader capacity gap that is also showing up as XLSmart’s 5G rollout narrows Telkomsel’s Network Experience Benchmark lead in adjacent corridors. A one-time fix does not prevent recurrence.',
+      gtm: [
+        'Planning: fold the affected sites into the next capacity/5G densification sprint, prioritized ahead of lower-risk corridors.',
+        'Sequencing: coordinate rollout timing with Marketing so a capacity upgrade in a contested corridor is paired with a local "network upgraded here" campaign, turning infrastructure spend into a marketing moment.',
+        'Partnership: assess co-location or spectrum refarming options to accelerate the timeline versus a full new-site build.',
+        'Governance: report progress at the monthly strategy review, per the Model &amp; accuracy governance cadence.',
+        'Measurement: track the Network Experience Benchmark for the affected corridor monthly until it returns above the pre-incident baseline.'
+      ]
+    }
+  ];
+
+  function getModalContent(key){
+    if(key === 'kpi-share') return buildKpiModal('share');
+    if(key === 'kpi-nps') return buildKpiModal('nps');
+    if(key === 'kpi-netbench') return buildKpiModal('netbench');
+    if(key === 'synthesis'){
+      return { eyebrow:'Synthesis · methodology', title:'How this narrative is built',
+        body:'<p>Regenerated whenever the Area/Region/City/Week filter changes, cross-referencing four systems: <b>RETINA</b> (field outlet scans), <b>Probe</b> (competitor pricing RPA), <b>VOC</b> (social/review listening), and the <b>Network Experience Benchmark</b> (crowdsourced network quality). Figures are AI-synthesized decision support \u2014 validate against source systems before acting (see Governance).</p>' };
+    }
+    if(key.indexOf('action-') === 0){
+      const actionIdx = parseInt(key.slice(7), 10);
+      const a = lastActions[actionIdx];
+      const d = ACTION_DETAILS[actionIdx];
+      if(!a || !d) return null;
+      const prioLabel = { p1:'Immediate · P1', p2:'Near-term · P2', p3:'Longer-term · P3' }[a.p] || a.p.toUpperCase();
+      return { eyebrow: prioLabel + ' · ' + a.fn + ' · ' + a.horizon, title: a.text,
+        body:
+          '<p>' + d.detail + '</p>' +
+          '<p><b>Tactical go-to-market strategy:</b></p>' +
+          '<ul class="detail-list">' + d.gtm.map(g => '<li>' + g + '</li>').join('') + '</ul>'
+      };
+    }
+    if(key === 'pricing'){
+      return { eyebrow:'Pricing–Product Probe · methodology', title:'How this scan is built',
+        body:'<p>An RPA crawler checks 12 competitor apps/storefronts every 6 hours across 1,240 tracked SKUs, comparing Telkomsel against IOH and XLSmart on matched package tiers. A row is tagged <b>exposed</b> when Telkomsel sits more than 10% above the cheapest competitor on that tier, <b>most expensive</b> when Telkomsel is the highest of the three, <b>cheapest</b> when lowest, and <b>near parity</b> otherwise.</p>' +
+          '<div class="detail-table"><div class="detail-row"><span class="dk">Apps/storefronts covered</span><span class="dv">12</span></div><div class="detail-row"><span class="dk">SKUs tracked</span><span class="dv">1,240</span></div><div class="detail-row"><span class="dk">Crawl frequency</span><span class="dv">Every 6 hours</span></div></div>' };
+    }
+    if(key === 'pm-validity'){
+      return { eyebrow:'Product movement · methodology', title:'How the validity-tier comparison is built',
+        body:'<p>Official website line-ups for all three operators are re-crawled and aligned by validity window (not by price), so a 7-day package always sits next to other 7-day packages regardless of headline price. "—" means no publicly comparable product exists at that validity tier for that operator; rows flagged <b>new</b> launched within the current 30-day window.</p>' +
+          '<div class="detail-table"><div class="detail-row"><span class="dk">Re-crawl cadence</span><span class="dv">Every re-crawl cycle (last: 14 Jul)</span></div><div class="detail-row"><span class="dk">Canonical sources</span><span class="dv">telkomsel.com · ioh.co.id · xlsmart.co.id</span></div></div>' };
+    }
+    if(key === 'pm-entryprice'){
+      return { eyebrow:'Entry price · methodology', title:'Why cost-per-day changes the ranking',
+        body:'<p>The cheapest sticker price and the cheapest package are not the same thing. Normalizing each operator’s lowest published price to cost-per-day and cost-per-GB often flips the ranking — a 30-day package with a high sticker price can be cheaper per day than a 1-day package with a low one.</p>' +
+          '<div class="detail-table"><div class="detail-row"><span class="dk">Caveat</span><span class="dv">Telkomsel figure is a seasonal add-on, not the gated base rate</span></div><div class="detail-row"><span class="dk">Caveat</span><span class="dv">XLSmart starter-tier quota is undisclosed</span></div></div>' };
+    }
+    if(key === 'pm-sentiment'){
+      return { eyebrow:'Official-post sentiment · methodology', title:'Why IOH and XLSmart show "not measurable"',
+        body:'<p>Telkomsel is the only operator with product-specific posts on its own account this window, so its sentiment is measured directly. For IOH and XLSmart, public hashtags tied to their named products were additionally searched for organic reaction beyond the official account — but the top results were reseller/installer promos, not customer posts, and the few official-looking posts had comments closed or were inaccessible. That is reported as <b>not measurable</b> rather than backfilled with a guess.</p>' };
+    }
+    if(key === 'pm-positioning'){
+      return { eyebrow:'Competitive positioning · methodology', title:'How the 1–5 scorecard is scored',
+        body:'<p>Each dimension is scored 1–5 from what is publicly verifiable right now — line-up breadth (number of distinct product families), price competitiveness (entry price vs. the other two), commercial momentum (new launches in the last 30 days), and product sentiment (where measurable). A dimension shows <b>no data</b> rather than an assumed score when the underlying signal is not measurable.</p>' };
+    }
+    if(key === 'pm-prioritization'){
+      return { eyebrow:'Prioritization · methodology', title:'How Act now / Monitor / Low priority is decided',
+        body:'<p>Each competitor or internal signal is plotted on Impact (how much it could move share or perception) against Urgency (how time-sensitive a response is). Only signals in the upper-right quadrant get an <b>Act now</b> tag; narrow or slow-moving signals are tagged <b>Monitor</b> or <b>Low priority</b> instead of triggering an immediate response.</p>' +
+          '<div class="detail-table"><div class="detail-row"><span class="dk">This cycle’s call</span><span class="dv">Fix the internal campaign first</span></div></div>' };
+    }
+    if(key === 'sentiment'){
+      const list = lastSentimentVals.map(s => '<div class="detail-row"><span class="dk">' + s.name + '</span><span class="dv">' + s.val + '% · ' + DRIVER_META[s.driver].label + '</span></div>').join('');
+      return { eyebrow:'Product sentiment · methodology', title:'How the driver tag is computed',
+        body:'<p>Each recently released package is scored on VOC-derived sentiment (0–100%) and tagged with its dominant reaction driver \u2014 <b>Price</b>, <b>Quota</b>, or <b>Experience</b> \u2014 the plurality topic among negative/neutral mentions referencing that SKU. The lowest-scoring driver across all six products drives the callout on the card.</p><div class="detail-table">' + list + '</div>' };
+    }
+    if(key.indexOf('alert-') === 0){
+      const alertId = key.slice(6);
+      const a = ALERTS.find(x => x.id === alertId);
+      if(!a) return null;
+      const newsHtml = (a.news || []).map(n =>
+        '<div class="news-item"><div class="news-meta"><span class="news-source">' + n.source + '</span><span class="news-date">' + n.date + '</span></div><div class="news-headline">' + n.headline + '</div></div>'
+      ).join('');
+      return { eyebrow:'Active alert · ' + a.category + ' · ' + a.sev, title:a.title,
+        body:'<p>' + a.desc + '</p><div class="detail-table"><div class="detail-row"><span class="dk">SLA</span><span class="dv" style="color:var(--bad);">' + a.sla.replace('SLA ','') + '</span></div><div class="detail-row"><span class="dk">Sources</span><span class="dv">' + a.sources.join(' · ') + '</span></div></div>' +
+          '<p><b>Linked action:</b> <span class="chip">' + a.linkedActionLabel + '</span> — see Overview for the full rationale and go-to-market steps.</p>' +
+          (newsHtml ? '<p><b>Supporting news:</b></p><div class="news-list">' + newsHtml + '</div>' +
+            '<p style="color:var(--text-3);font-size:11px;">Illustrative demo data — headlines shown here are for mockup purposes and are not linked to a live external article.</p>' : '') +
+          '<p><b>Escalation path:</b> unresolved critical alerts past SLA auto-escalate to the CMO war-room channel; actions taken must be logged per the Decision-log obligation in Governance.</p>' };
+    }
+    if(key.indexOf('comp-') === 0){
+      const compKey = key.slice(5);
+      const c = COMPETITORS.find(x => x.key === compKey);
+      if(!c) return null;
+      return { eyebrow:'Competitor profile · ' + c.risk + ' risk', title:c.fullName,
+        body:'<p>Posture: ' + c.tag + '.</p><ul class="detail-list">' + c.highlights.map(h => '<li>' + h + '</li>').join('') + '</ul>' +
+          '<p><b>Risk-level definitions:</b> <b>High</b> \u2014 active price or network moves directly eroding Telkomsel share within 30 days. <b>Medium</b> \u2014 directional moves (rollout, hiring, bundle refresh) with a longer runway to impact. <b>Low</b> \u2014 monitored, no material near-term signal.</p>' };
+    }
+    if(key.indexOf('macro-') === 0){
+      const macroIdx = parseInt(key.slice(6), 10);
+      const m = MACRO[macroIdx];
+      if(!m) return null;
+      const dirWord = m.dir === 'up' ? 'up' : (m.dir === 'down' ? 'down' : 'unchanged');
+      return { eyebrow: 'Macro indicator · ' + dirWord + ' vs. last release', title: m.name + ' — ' + m.val,
+        body:
+          '<div class="detail-table">' +
+            '<div class="detail-row"><span class="dk">Source</span><span class="dv">' + m.source + '</span></div>' +
+            '<div class="detail-row"><span class="dk">Release</span><span class="dv">' + m.release + '</span></div>' +
+            '<div class="detail-row"><span class="dk">As of</span><span class="dv">' + formatYMD(today) + '</span></div>' +
+          '</div>' +
+          '<p style="color:var(--text-3);font-size:11.5px;">Illustrative demo data for this mockup — not linked to a live external article. In production this card would deep-link to the publisher’s official release.</p>'
+      };
+    }
+    if(key.indexOf('voc-') === 0){
+      const vocIdx = parseInt(key.slice(4), 10);
+      const v = VOC[vocIdx];
+      if(!v) return null;
+      const sentColor = v.sent === 'positive' ? 'var(--good)' : (v.sent === 'negative' ? 'var(--bad)' : 'var(--warn)');
+      return { eyebrow: 'VOC · ' + v.platform, title: 'Voice of customer',
+        body:
+          '<p>“' + v.quote + '”</p>' +
+          '<div class="detail-table">' +
+            '<div class="detail-row"><span class="dk">Platform</span><span class="dv">' + v.platform + '</span></div>' +
+            '<div class="detail-row"><span class="dk">Sentiment</span><span class="dv" style="color:' + sentColor + ';text-transform:capitalize;">' + v.sent + '</span></div>' +
+            '<div class="detail-row"><span class="dk">Engagement</span><span class="dv">' + v.eng + '</span></div>' +
+            '<div class="detail-row"><span class="dk">Posted</span><span class="dv">' + v.time + '</span></div>' +
+          '</div>' +
+          '<p style="color:var(--text-3);font-size:11.5px;">Illustrative demo data for this mockup — not a real post. In production this card would deep-link to the original social post or review (handle/permalink withheld here for privacy).</p>'
+      };
+    }
+    if(key === 'buzz') return buildBuzzModal();
+    if(key === 'buzz-trend') return buildBuzzTrendModal();
+    if(key === 'buzz-hashtags') return buildBuzzHashtagModal();
+    if(key === 'buzz-engagement') return buildBuzzEngagementModal();
+    if(key.indexOf('rec-') === 0){
+      const recIdx = parseInt(key.slice(4), 10);
+      const r = RECS[recIdx];
+      if(!r) return null;
+      const oc = recOwnerCadence(r.horizon);
+      const newsHtml = (r.news || []).map(n =>
+        '<div class="news-item"><div class="news-meta"><span class="news-source">' + n.source + '</span><span class="news-date">' + n.date + '</span></div><div class="news-headline">' + n.headline + '</div></div>'
+      ).join('');
+      return { eyebrow:r.horizon, title:r.title,
+        body:
+          '<p><b>Key finding:</b> ' + r.body + '</p>' +
+          (newsHtml ? '<p><b>Related published news:</b></p><div class="news-list">' + newsHtml + '</div>' +
+            '<p style="color:var(--text-3);font-size:11px;">Illustrative demo data \u2014 headlines shown here are for mockup purposes and are not linked to a live external article.</p>' : '') +
+          '<p><b>Data available:</b></p>' +
+          '<div class="chip-row">' + r.sources.map(s => '<span class="chip">' + s + '</span>').join('') + '</div>' +
+          '<div class="callout" style="margin-top:10px;">\ud83c\udfaf ' + r.kpi + '</div>' +
+          '<div class="detail-table"><div class="detail-row"><span class="dk">Owner</span><span class="dv">' + oc.owner + '</span></div><div class="detail-row"><span class="dk">Cadence</span><span class="dv">' + oc.cadence + '</span></div></div>' +
+          (r.gtm && r.gtm.length ? '<p style="margin-top:14px;"><b>Key go-to-market strategy:</b></p><ul class="detail-list">' + r.gtm.map(g => '<li>' + g + '</li>').join('') + '</ul>' : '') };
+    }
+    if(key.indexOf('gov-') === 0){
+      const govIdx = parseInt(key.slice(4), 10);
+      const g = GOV[govIdx];
+      if(!g) return null;
+      return { eyebrow:'Governance', title:g.title,
+        body:'<p>' + g.text + '</p><p style="color:var(--text-3);font-size:12px;">' + (GOV_CONTACT[g.title] || '') + '</p>' };
+    }
+    return null;
+  }
+
+  function openModal(key){
+    const d = getModalContent(key);
+    if(!d) return;
+    document.getElementById('modalEyebrow').textContent = d.eyebrow;
+    document.getElementById('modalTitle').textContent = d.title;
+    document.getElementById('modalBody').innerHTML = d.body;
+    document.querySelector('.modal-box').classList.toggle('wide', key === 'kpi-share' || key === 'kpi-nps' || key === 'kpi-netbench');
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+  function closeModal(){
+    document.getElementById('modalOverlay').classList.remove('show');
+  }
+  document.addEventListener('click', e => {
+    if(e.target.closest('#modalClose') || e.target.id === 'modalOverlay'){ closeModal(); return; }
+    if(e.target.closest('button, a, input, select, label')) return;
+    const card = e.target.closest('[data-detail]');
+    if(card){ openModal(card.dataset.detail); }
+  });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+  /* ================= INIT ================= */
+  buildMacroTrack();
+  buildVocTrack();
+  renderProbeTable();
+  renderProductMovementSection();
+  renderAlerts();
+  renderCompetitors();
+  renderRecs();
+  renderGov();
+  setFooterTime();
+  applyScope();
+  document.getElementById('panel-' + SECTIONS[0].id).classList.add('active');
+
+})();
+</script>
+</body>
+</html>

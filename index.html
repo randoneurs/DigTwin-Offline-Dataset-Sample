@@ -801,7 +801,7 @@
             <button class="suggest-chip" type="button" data-prompt="Where and on what metrics have competitors overtaken us in rank?">Where and on what metrics have competitors overtaken us in rank?</button>
           </div>
           <div class="ai-answer" id="aiAnswer">
-            <div class="tag">◆ AI response · grounded on RETINA, Probe, VOC &amp; benchmark datasets</div>
+            <div class="tag">◆ MarketSight response · grounded on RETINA, Probe, VOC &amp; benchmark datasets</div>
             <div id="aiAnswerText"></div>
           </div>
         </div>
@@ -2446,46 +2446,37 @@
   }
 
   /* ================= AI QUESTION ENGINE ================= */
-  function aiAnswerFor(question){
-    const s = scopeLabel();
-    const place = regionNarrativeName();
-    const q = question.toLowerCase();
-    const rng = rngFor(scopeKey() + '|' + question);
+  const MARKETSIGHT_API = 'https://marketsight-ruby.vercel.app/api/chat';
 
-    if(/area.*declin|declin.*area|wilayah.*turun|turun.*wilayah/.test(q)){
-      const worst = CITIES_LOSING_SHARE[0];
-      return 'On regional performance: ' + worst.name + ' (' + worst.region + ') is the sharpest decliner this cycle — share down ' + Math.abs(worst.mom) + 'pt MoM and ' + Math.abs(worst.yoy) + 'pt YoY. The same pattern repeats in CSI-NPS and the Network Experience Benchmark: JATIM and KALIMANTAN are consistently the two weakest regions across all three KPIs. See the Meta Market Share deep-dive for the full city-by-city list.';
-    }
-    if(/rank|overtak|improved over/.test(q)){
-      const npsLast = NPS_TREND_MONTHLY.tsel[NPS_TREND_MONTHLY.tsel.length-1];
-      const iohNpsLast = NPS_TREND_MONTHLY.ioh[NPS_TREND_MONTHLY.ioh.length-1];
-      const benchLast = BENCH_TREND_MONTHLY.tsel[BENCH_TREND_MONTHLY.tsel.length-1];
-      const xlBenchLast = BENCH_TREND_MONTHLY.xl[BENCH_TREND_MONTHLY.xl.length-1];
-      const crossovers = [];
-      if(iohNpsLast > npsLast) crossovers.push('IOH\'s CSI-NPS (' + iohNpsLast + ') has just edged past Telkomsel\'s (' + npsLast + ') after a 12-month climb');
-      if(xlBenchLast > benchLast) crossovers.push('XLSmart\'s Network Experience Benchmark (' + xlBenchLast + ') now leads Telkomsel\'s (' + benchLast + '), driven by its 5G rollout');
-      if(crossovers.length){
-        return 'On competitive rank: ' + crossovers.join('; ') + '. Both crossovers concentrate in JABAR/JATIM urban corridors — see the CSI-NPS and Network Experience Benchmark deep-dives for the region-by-region detail.';
-      }
-      return 'On competitive rank: Telkomsel still leads all three tracked KPIs nationally this period, though XLSmart\'s Network Experience Benchmark trend is the fastest-closing gap to watch.';
-    }
-    if(/harga|price|promo|murah|mahal/.test(q)){
-      return 'On pricing: Probe\'s RPA scan (12 storefronts, 1,240 SKUs, refreshed every 6 hours) shows IOH cut its 30GB flagship SKU 18% just before this scan, leaving Telkomsel exposed on that tier in ' + place + '. XLSmart remains near parity across most mid-tier packages. Recommend reviewing the counter-promo brief in the Synthesis panel above before any national price move.';
-    }
-    if(/jaringan|network|sinyal|outage|gangguan/.test(q)){
-      return 'On network: the NOC feed and VOC both flag an active incident (Surabaya Timur cluster, 6 BTS sites, complaints up 64%). Network-quality sentiment in ' + place + ' trails coverage sentiment by several points, consistent with a speed/reliability perception gap rather than an availability gap — see the Product sentiment panel for the live split.';
-    }
-    if(/sentimen|sentiment|nps|csi|kepuasan/.test(q)){
-      return 'On sentiment: price/value is currently the weakest of the six tracked topics for ' + place + ' and has declined three weeks running, while network quality and coverage remain comparatively strong. This pattern points to a narrative problem more than a product-quality problem — see the brand-campaign recommendation in Strategic recommendations.';
-    }
-    if(/kompetitor|competitor|ioh|indosat|xl|smartfren/.test(q)){
-      return 'On competitors: IOH is currently the higher-risk actor — pairing an 18% price cut with active field outlet expansion and an estimated 40-role field sales hiring push across Java. XLSmart\'s activity is more network-led, focused on 5G rollout in urban corridors. Full detail is in the Competitor movement panel.';
-    }
-    if(/share|pangsa|market/.test(q)){
-      const share = Math.round(jitter(rng, 38.4, 3.2)*10)/10;
-      return 'On market share: Telkomsel is tracking at approximately ' + share + '% in ' + place + ' for ' + s.week + '. The Synthesis panel above attributes recent movement to a combination of competitor field expansion, a service-quality incident, and an undercutting price move — cross-confirmed across RETINA, Probe, and VOC.';
-    }
-    return 'Based on RETINA, Probe, VOC and network benchmark data currently scoped to ' + place + ' (' + s.week + '): the dominant signal this period is competitive price pressure from IOH compounding a live network incident in East Java. See the Synthesis, Pricing–Product Probe, and Active alerts panels for full detail, or ask a more specific question about pricing, network, sentiment, or competitors.';
+  function dashboardContextText(){
+    const s = scopeLabel();
+    const pick = id => {
+      const el = document.getElementById(id);
+      return el ? el.textContent.trim().replace(/\s+/g, ' ') : '';
+    };
+    return [
+      'Scope: area=' + s.area + ', region=' + s.region + ', city=' + s.city + ', week=' + s.week,
+      'Executive summary: ' + pick('execSummaryText'),
+      'Synthesis: ' + pick('synthNarrative'),
+      'Active alerts: ' + pick('alertList'),
+      'Product sentiment: ' + pick('sentimentList'),
+      'Competitive scorecard: ' + pick('scorecardGrid'),
+      'Core KPIs: ' + pick('kpiRow')
+    ].filter(line => !/: $/.test(line)).join('\n');
+  }
+
+  function aiAnswerFor(question){
+    const prompt = dashboardContextText() + '\n\nQuestion: ' + question;
+    return fetch(MARKETSIGHT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: prompt })
+    })
+      .then(res => res.json().then(data => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => {
+        if(!ok) throw new Error(data.error || 'MarketSight returned an error.');
+        return data.reply;
+      });
   }
 
   const askInput = document.getElementById('askInput');
@@ -2499,12 +2490,12 @@
     askInput.value = question;
     if(suggestRowEl) suggestRowEl.classList.remove('show');
     aiAnswer.classList.remove('show');
-    aiAnswerText.textContent = 'Analyzing across RETINA, Probe, VOC and benchmark datasets…';
+    aiAnswerText.textContent = 'MarketSight is analyzing RETINA, Probe, VOC and benchmark datasets…';
     aiAnswer.classList.add('show');
     document.getElementById('controlBar').scrollIntoView({ behavior:'smooth', block:'start' });
-    setTimeout(() => {
-      aiAnswerText.textContent = aiAnswerFor(question);
-    }, 550);
+    aiAnswerFor(question)
+      .then(reply => { aiAnswerText.textContent = reply; })
+      .catch(err => { aiAnswerText.textContent = 'MarketSight is unavailable right now: ' + err.message; });
   }
   askBtn.addEventListener('click', () => runAsk(askInput.value));
   askInput.addEventListener('keydown', e => { if(e.key === 'Enter') runAsk(askInput.value); });

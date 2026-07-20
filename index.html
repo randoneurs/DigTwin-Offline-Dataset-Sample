@@ -191,10 +191,14 @@
   .ai-answer{
     display:none; margin-top:2px; padding:12px 14px; border-radius:10px;
     background:var(--surface-3); border:1px solid rgba(34,211,238,0.3);
-    font-size:12.8px; line-height:1.55; color:var(--text-2);
+    font-size:12.8px; line-height:1.4; color:var(--text-2);
   }
   .ai-answer.show{ display:block; animation:fadein .25s ease; }
   #aiAnswerText{ white-space:pre-wrap; }
+  #aiAnswerText .cat{
+    display:block; margin-top:8px; color:var(--data); font-weight:700;
+  }
+  #aiAnswerText .cat:first-child{ margin-top:0; }
   .ai-answer .tag{
     display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700;
     letter-spacing:0.08em; text-transform:uppercase; color:var(--data); margin-bottom:6px;
@@ -2480,6 +2484,20 @@
       });
   }
 
+  const MARKETSIGHT_CATEGORIES = ['Market', 'Network', 'Product', 'Customer Care', 'Events', 'Others'];
+
+  function escapeHtml(str){
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function formatMarketSightReply(text){
+    return text.split('\n').map(line =>
+      MARKETSIGHT_CATEGORIES.includes(line.trim())
+        ? '<strong class="cat">' + escapeHtml(line.trim()) + '</strong>'
+        : escapeHtml(line)
+    ).join('\n');
+  }
+
   const askInput = document.getElementById('askInput');
   const askBtn = document.getElementById('askBtn');
   const aiAnswer = document.getElementById('aiAnswer');
@@ -2495,7 +2513,7 @@
     aiAnswer.classList.add('show');
     document.getElementById('controlBar').scrollIntoView({ behavior:'smooth', block:'start' });
     aiAnswerFor(question)
-      .then(reply => { aiAnswerText.textContent = reply; })
+      .then(reply => { aiAnswerText.innerHTML = formatMarketSightReply(reply); })
       .catch(err => { aiAnswerText.textContent = 'MarketSight is unavailable right now: ' + err.message; });
   }
   askBtn.addEventListener('click', () => runAsk(askInput.value));

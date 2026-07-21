@@ -6,18 +6,17 @@ region_*.csv files land, then drop the resulting file into the dashboard.
 Usage:
   python3 scripts/build_snapshot.py \
       --date 20260628 --all-city all_city_operator_20260628.csv --region region_20260628.csv \
+      --wow-date 20260621 --wow-all-city all_city_operator_20260621.csv --wow-region region_20260621.csv \
       --prev-date 20260524 --prev-all-city all_city_operator_20260524.csv --prev-region region_20260524.csv \
       --yoy-date 20250629 --yoy-all-city all_city_operator_20250629.csv --yoy-region region_20250629.csv \
       --out snapshot_20260628.json
 
---prev-* and --yoy-* are each optional; when given, real month-over-month
-(MoM) / year-over-year (YoY) deltas and a chronological sparkline are computed
-instead of being left null. The two non-YoY sample exports this project ships
-(2026-05-24 and 2026-06-28) are about five weeks apart, so that comparison is
-treated as MoM rather than week-over-week. Every operator's own share (not
-just tsel's) is carried forward as shareByOperatorPrev/shareByOperatorYoy so
-the dashboard can show each competitor's own MoM/YoY change, not just
-Telkomsel's.
+--wow-*, --prev-*, and --yoy-* are each optional; when given, real week-over-
+week (WoW, exactly 7 days back) / month-over-month (MoM) / year-over-year
+(YoY) deltas and a chronological sparkline are computed instead of being left
+null. Every operator's own share (not just tsel's) is carried forward as
+shareByOperatorWow/Prev/Yoy so the dashboard can show each competitor's own
+change, not just Telkomsel's.
 """
 import argparse
 import csv
@@ -205,9 +204,9 @@ def build_share_lookup(all_city_path, region_path):
     return lookup
 
 
-def build_history(yoy_val, prev_val, current_val):
-    """Chronological [yoy, prev, current], dropping whichever of yoy/prev is missing."""
-    pts = [v for v in (yoy_val, prev_val) if v is not None]
+def build_history(yoy_val, prev_val, wow_val, current_val):
+    """Chronological [yoy, prev(MoM), wow, current], dropping whichever are missing."""
+    pts = [v for v in (yoy_val, prev_val, wow_val) if v is not None]
     pts.append(current_val)
     return pts if len(pts) >= 2 else None
 
@@ -216,21 +215,28 @@ def build(args):
     d = parse_yyyymmdd(args.date)
     week = iso_week_label(d)
 
+    wow_share_by_key = build_share_lookup(args.wow_all_city, args.wow_region) if args.wow_date else {}
     prev_share_by_key = build_share_lookup(args.prev_all_city, args.prev_region) if args.prev_date else {}
     yoy_share_by_key = build_share_lookup(args.yoy_all_city, args.yoy_region) if args.yoy_date else {}
 
     def add_comparisons(row, key, share):
+        wow_share = wow_share_by_key.get(key)
         prev_share, yoy_share = prev_share_by_key.get(key), yoy_share_by_key.get(key)
+        wow = (wow_share or {}).get("tsel")
         prev, yoy = (prev_share or {}).get("tsel"), (yoy_share or {}).get("tsel")
+        if wow is not None:
+            row["metaMarketSharePrevWowPct"] = wow
         if prev is not None:
             row["metaMarketSharePrevPct"] = prev
         if yoy is not None:
             row["metaMarketSharePrevYoyPct"] = yoy
+        if wow_share is not None:
+            row["shareByOperatorWow"] = wow_share
         if prev_share is not None:
             row["shareByOperatorPrev"] = prev_share
         if yoy_share is not None:
             row["shareByOperatorYoy"] = yoy_share
-        history = build_history(yoy, prev, share["tsel"])
+        history = build_history(yoy, prev, wow, share["tsel"])
         if history:
             row["metaShareHistory"] = history
 
@@ -267,6 +273,8 @@ def build(args):
         "note": "Generated from META market-share exports via scripts/build_snapshot.py — do not hand-edit.",
         "rows": rows,
     }
+    if args.wow_date:
+        snapshot["comparedToDateWow"] = parse_yyyymmdd(args.wow_date).isoformat() + "T00:00:00+07:00"
     if args.prev_date:
         snapshot["comparedToDate"] = parse_yyyymmdd(args.prev_date).isoformat() + "T00:00:00+07:00"
     if args.yoy_date:
@@ -279,6 +287,9 @@ def main():
     ap.add_argument("--date", required=True, help="YYYYMMDD, matches the current CSVs' filename suffix")
     ap.add_argument("--all-city", required=True, help="path to all_city_operator_YYYYMMDD.csv")
     ap.add_argument("--region", required=True, help="path to region_YYYYMMDD.csv")
+    ap.add_argument("--wow-date", help="YYYYMMDD exactly 7 days prior, to compute real WoW deltas")
+    ap.add_argument("--wow-all-city", help="path to the prior week's all_city_operator CSV")
+    ap.add_argument("--wow-region", help="path to the prior week's region CSV")
     ap.add_argument("--prev-date", help="YYYYMMDD for the prior period, to compute real MoM deltas")
     ap.add_argument("--prev-all-city", help="path to the prior period's all_city_operator CSV")
     ap.add_argument("--prev-region", help="path to the prior period's region CSV")
@@ -291,6 +302,8 @@ def main():
                          "(default: snapshot_latest.json; pass '' to skip)")
     args = ap.parse_args()
 
+    if args.wow_date and not (args.wow_all_city and args.wow_region):
+        ap.error("--wow-date requires --wow-all-city and --wow-region")
     if args.prev_date and not (args.prev_all_city and args.prev_region):
         ap.error("--prev-date requires --prev-all-city and --prev-region")
     if args.yoy_date and not (args.yoy_all_city and args.yoy_region):

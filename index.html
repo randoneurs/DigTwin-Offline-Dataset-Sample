@@ -241,7 +241,7 @@
   .kpi-mid{ display:flex; align-items:baseline; gap:10px; margin-top:8px; flex-wrap:wrap; }
   .kpi-value{ font-size:26px; font-weight:700; }
   .kpi-delta{ font-size:12px; font-weight:700; }
-  .kpi-compare{ font-size:11px; color:var(--text-3); margin-top:4px; }
+  .kpi-compare{ font-size:11px; color:var(--text-3); margin-top:4px; line-height:1.5; }
   .kpi-spark{ margin-top:8px; opacity:0.92; }
   .kpi-spark svg{ display:block; }
 
@@ -677,6 +677,7 @@
   .modal-body ul.detail-list{ margin:0; padding-left:18px; display:flex; flex-direction:column; gap:5px; }
   .modal-box.wide{ max-width:700px; }
   .modal-body .modal-section-label{ font-size:11.5px; font-weight:700; color:var(--text-1); margin-bottom:6px; }
+  .modal-body .modal-source-tag{ font-size:10px; font-weight:600; font-family:var(--mono); color:var(--text-3); }
   .modal-body .trend-chart{ display:block; }
   .modal-body table.mkt-table{ width:100%; border-collapse:collapse; font-size:11.5px; font-family:var(--mono); margin-bottom:10px; table-layout:fixed; }
   .modal-body table.mkt-table th{
@@ -1299,88 +1300,103 @@
     const row = findSnapshotRow(scope);
     const hasShare = row && row.metaMarketSharePct != null;
 
-    // Synthesize a plausible {xl, ioh} pair plus their prior-period values from a single
-    // jittered delta each, so modeled cards can show the same Closest/Next-Closest
-    // Competitor comparison real hadoop rows show — clearly labeled "Modeled estimate".
-    function modeledCompetitors(rng, xlBase, iohBase, spread, deltaSpread){
-      const xlDelta = round1(jitter(rng, 0, deltaSpread)), iohDelta = round1(jitter(rng, 0, deltaSpread));
+    // Synthesize a plausible {xl, ioh} pair plus their prior-period and year-ago values
+    // from jittered deltas, so modeled cards can show the same per-competitor MoM/YoY
+    // comparison real hadoop rows show — clearly labeled "Modeled estimate".
+    function modeledCompetitors(rng, xlBase, iohBase, spread, momSpread, yoySpread){
+      const xlMom = round1(jitter(rng, 0, momSpread)), iohMom = round1(jitter(rng, 0, momSpread));
+      const xlYoy = round1(jitter(rng, 0, yoySpread)), iohYoy = round1(jitter(rng, 0, yoySpread));
       const xl = round1(jitter(rng, xlBase, spread)), ioh = round1(jitter(rng, iohBase, spread));
       return {
         current: { xl, ioh },
-        prev: { xl: round1(xl - xlDelta), ioh: round1(ioh - iohDelta) }
+        prev: { xl: round1(xl - xlMom), ioh: round1(ioh - iohMom) },
+        yoy: { xl: round1(xl - xlYoy), ioh: round1(ioh - iohYoy) }
       };
     }
 
-    let metaShare, metaShareDelta, metaShareDeltaYoy, metaShareHistory, metaShareSource, shareByOperator, shareByOperatorPrev;
+    let metaShare, metaShareDeltaWow, metaShareDelta, metaShareDeltaYoy, metaShareHistory, metaShareSource, shareByOperator, shareByOperatorPrev, shareByOperatorYoy;
     if(hasShare){
       metaShare = row.metaMarketSharePct;
+      metaShareDeltaWow = row.metaMarketSharePrevWowPct != null ? round1(row.metaMarketSharePct - row.metaMarketSharePrevWowPct) : null;
       metaShareDelta = round1(row.metaMarketSharePct - (row.metaMarketSharePrevPct != null ? row.metaMarketSharePrevPct : row.metaMarketSharePct));
       metaShareDeltaYoy = row.metaMarketSharePrevYoyPct != null ? round1(row.metaMarketSharePct - row.metaMarketSharePrevYoyPct) : null;
       metaShareHistory = row.metaShareHistory;
       metaShareSource = 'hadoop';
       shareByOperator = row.shareByOperator || null;
       shareByOperatorPrev = row.shareByOperatorPrev || null;
+      shareByOperatorYoy = row.shareByOperatorYoy || null;
     } else {
       metaShare = round1(jitter(rng, 38.4, 3.2));
+      metaShareDeltaWow = round1(jitter(rng, -0.3, 0.5));
       metaShareDelta = round1(jitter(rng, -0.6, 1.1));
       metaShareDeltaYoy = round1(jitter(rng, -1.5, 2.4));
       metaShareHistory = walkTo(rng, metaShare, 8, 0.6);
       metaShareSource = 'modeled';
-      const modeled = modeledCompetitors(rng, 24, 32, 4, 1.2);
+      const modeled = modeledCompetitors(rng, 24, 32, 4, 1.2, 2.2);
       shareByOperator = modeled.current;
       shareByOperatorPrev = modeled.prev;
+      shareByOperatorYoy = modeled.yoy;
     }
 
     const hasNps = row && row.csiNpsScore != null;
-    let csiNps, csiNpsDelta, csiNpsDeltaYoy, csiNpsHistory, csiNpsSource, csiNpsByOperator, csiNpsByOperatorPrev;
+    let csiNps, csiNpsDeltaWow, csiNpsDelta, csiNpsDeltaYoy, csiNpsHistory, csiNpsSource, csiNpsByOperator, csiNpsByOperatorPrev, csiNpsByOperatorYoy;
     if(hasNps){
       csiNps = row.csiNpsScore;
+      csiNpsDeltaWow = row.csiNpsPrevWowScore != null ? round1(row.csiNpsScore - row.csiNpsPrevWowScore) : null;
       csiNpsDelta = round1(row.csiNpsScore - (row.csiNpsPrevScore != null ? row.csiNpsPrevScore : row.csiNpsScore));
       csiNpsDeltaYoy = row.csiNpsPrevYoyScore != null ? round1(row.csiNpsScore - row.csiNpsPrevYoyScore) : null;
       csiNpsHistory = row.csiNpsHistory;
       csiNpsSource = 'hadoop';
       csiNpsByOperator = row.csiNpsByOperator || null;
       csiNpsByOperatorPrev = row.csiNpsByOperatorPrev || null;
+      csiNpsByOperatorYoy = row.csiNpsByOperatorYoy || null;
     } else {
       csiNps = round1(jitter(rng, 58, 6));
+      csiNpsDeltaWow = round1(jitter(rng, -1.0, 1.2));
       csiNpsDelta = round1(jitter(rng, -2.5, 2.5));
       csiNpsDeltaYoy = round1(jitter(rng, -4, 4));
       csiNpsHistory = walkTo(rng, csiNps, 8, 1.2);
       csiNpsSource = 'modeled';
-      const modeled = modeledCompetitors(rng, 55, 52, 7, 2.5);
+      const modeled = modeledCompetitors(rng, 55, 52, 7, 2.5, 4);
       csiNpsByOperator = modeled.current;
       csiNpsByOperatorPrev = modeled.prev;
+      csiNpsByOperatorYoy = modeled.yoy;
     }
 
     const hasBench = row && row.networkExperienceBenchmarkScore != null;
-    let netBench, netBenchDelta, netBenchDeltaYoy, netBenchHistory, netBenchSource, netBenchByOperator, netBenchByOperatorPrev;
+    let netBench, netBenchDeltaWow, netBenchDelta, netBenchDeltaYoy, netBenchHistory, netBenchSource, netBenchByOperator, netBenchByOperatorPrev, netBenchByOperatorYoy;
     if(hasBench){
       netBench = row.networkExperienceBenchmarkScore;
+      netBenchDeltaWow = row.networkExperienceBenchmarkPrevWowScore != null ? round1(row.networkExperienceBenchmarkScore - row.networkExperienceBenchmarkPrevWowScore) : null;
       netBenchDelta = round1(row.networkExperienceBenchmarkScore - (row.networkExperienceBenchmarkPrevScore != null ? row.networkExperienceBenchmarkPrevScore : row.networkExperienceBenchmarkScore));
       netBenchDeltaYoy = row.networkExperienceBenchmarkPrevYoyScore != null ? round1(row.networkExperienceBenchmarkScore - row.networkExperienceBenchmarkPrevYoyScore) : null;
       netBenchHistory = row.networkBenchmarkHistory;
       netBenchSource = 'hadoop';
       netBenchByOperator = row.netBenchByOperator || null;
       netBenchByOperatorPrev = row.netBenchByOperatorPrev || null;
+      netBenchByOperatorYoy = row.netBenchByOperatorYoy || null;
     } else {
       netBench = round1(jitter(rng, 74, 6));
+      netBenchDeltaWow = round1(jitter(rng, -0.5, 0.8));
       netBenchDelta = round1(jitter(rng, -1.0, 2.0));
       netBenchDeltaYoy = round1(jitter(rng, -3, 3));
       netBenchHistory = walkTo(rng, netBench, 8, 1.0);
       netBenchSource = 'modeled';
-      const modeled = modeledCompetitors(rng, 73, 70, 6, 2);
+      const modeled = modeledCompetitors(rng, 73, 70, 6, 2, 3.2);
       netBenchByOperator = modeled.current;
       netBenchByOperatorPrev = modeled.prev;
+      netBenchByOperatorYoy = modeled.yoy;
     }
 
     return {
       source: (hasShare || hasNps || hasBench) ? 'hadoop' : 'modeled',
       generatedAt: hadoopSnapshot ? hadoopSnapshot.generatedAt : null,
+      comparedToDateWow: hadoopSnapshot ? hadoopSnapshot.comparedToDateWow : null,
       comparedToDate: hadoopSnapshot ? hadoopSnapshot.comparedToDate : null,
       comparedToDateYoy: hadoopSnapshot ? hadoopSnapshot.comparedToDateYoy : null,
-      metaShare, metaShareDelta, metaShareDeltaYoy, metaShareHistory, metaShareSource, shareByOperator, shareByOperatorPrev,
-      csiNps, csiNpsDelta, csiNpsDeltaYoy, csiNpsHistory, csiNpsSource, csiNpsByOperator, csiNpsByOperatorPrev,
-      netBench, netBenchDelta, netBenchDeltaYoy, netBenchHistory, netBenchSource, netBenchByOperator, netBenchByOperatorPrev
+      metaShare, metaShareDeltaWow, metaShareDelta, metaShareDeltaYoy, metaShareHistory, metaShareSource, shareByOperator, shareByOperatorPrev, shareByOperatorYoy,
+      csiNps, csiNpsDeltaWow, csiNpsDelta, csiNpsDeltaYoy, csiNpsHistory, csiNpsSource, csiNpsByOperator, csiNpsByOperatorPrev, csiNpsByOperatorYoy,
+      netBench, netBenchDeltaWow, netBenchDelta, netBenchDeltaYoy, netBenchHistory, netBenchSource, netBenchByOperator, netBenchByOperatorPrev, netBenchByOperatorYoy
     };
   }
 
@@ -1422,7 +1438,7 @@
     return '<span class="kpi-delta num"' + compareTitle(suffix, source, comparedToDate) + ' style="color:' + color + '">' + arrow + ' ' + Math.abs(delta) + ' ' + suffix + '</span>';
   }
 
-  function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine, generatedAt, comparedToDate, deltaYoy, comparedToDateYoy){
+  function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine, generatedAt, comparedToDate, deltaYoy, comparedToDateYoy, deltaWow, comparedToDateWow){
     const sourceChip = source === 'hadoop'
       ? '<span class="kpi-source hadoop">● Hadoop snapshot</span>'
       : '<span class="kpi-source modeled">◐ Modeled estimate</span>';
@@ -1432,6 +1448,7 @@
         '</div>' +
         '<div class="kpi-mid">' +
           '<span class="kpi-value num">' + value + unit + '</span>' +
+          deltaPill(deltaWow, 'WoW', source, comparedToDateWow) +
           deltaPill(delta, 'MoM', source, comparedToDate) +
           deltaPill(deltaYoy, 'YoY', source, comparedToDateYoy) +
         '</div>' +
@@ -1440,28 +1457,29 @@
       '</div>';
   }
 
-  // Ranks the two tracked competitors (xl, ioh) by current value and shows each one's
-  // own MoM change — "Closest Competitor" is whichever is nearest Telkomsel's rank
-  // (i.e. the larger of the two), "Next Closest" the other one.
-  function competitorCompareLine(current, prev, unit, metricLabel){
+  // One entry per tracked competitor (xl, ioh), ranked by current value:
+  // "Name : value%  (▲d MoM | ▲d YoY)" joined with " | ".
+  function competitorCompareLine(current, prev, yoy, unit){
     if(!current) return '';
     const candidates = ['xl', 'ioh']
-      .map(k => ({ key: k, value: current[k] }))
+      .map(k => ({ key: k, name: OPERATORS[k].name, value: current[k] }))
       .filter(c => c.value != null);
     if(!candidates.length) return '';
     candidates.sort((a, b) => b.value - a.value);
 
-    const fmt = (c, label) => {
-      let momText = '';
+    const fmt = c => {
+      const changes = [];
       if(prev && prev[c.key] != null){
         const d = round1(c.value - prev[c.key]);
-        momText = ' (' + (d >= 0 ? '▲' : '▼') + Math.abs(d) + ' MoM)';
+        changes.push((d >= 0 ? '▲' : '▼') + Math.abs(d) + ' MoM');
       }
-      return label + ' ' + c.value + unit + ' ' + metricLabel + momText;
+      if(yoy && yoy[c.key] != null){
+        const d = round1(c.value - yoy[c.key]);
+        changes.push((d >= 0 ? '▲' : '▼') + Math.abs(d) + ' YoY');
+      }
+      return c.name + ' : ' + c.value + unit + (changes.length ? '  (' + changes.join(' | ') + ')' : '');
     };
-    const parts = [fmt(candidates[0], 'Closest Competitor')];
-    if(candidates[1]) parts.push(fmt(candidates[1], 'Next Closest Competitor'));
-    return parts.join(' | ');
+    return candidates.map(fmt).join(' | ');
   }
 
   let lastKPIs = null;
@@ -1469,9 +1487,9 @@
     lastKPIs = kpis;
     const row = document.getElementById('kpiRow');
     row.innerHTML =
-      kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.metaShareSource, kpis.metaShareHistory, 'var(--brand)', 'kpi-share', competitorCompareLine(kpis.shareByOperator, kpis.shareByOperatorPrev, '%', 'Market Share'), kpis.generatedAt, kpis.comparedToDate, kpis.metaShareDeltaYoy, kpis.comparedToDateYoy) +
-      kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.csiNpsSource, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps', competitorCompareLine(kpis.csiNpsByOperator, kpis.csiNpsByOperatorPrev, '', 'Score'), kpis.generatedAt, kpis.comparedToDate, kpis.csiNpsDeltaYoy, kpis.comparedToDateYoy) +
-      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.netBenchSource, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench', competitorCompareLine(kpis.netBenchByOperator, kpis.netBenchByOperatorPrev, '', 'Score'), kpis.generatedAt, kpis.comparedToDate, kpis.netBenchDeltaYoy, kpis.comparedToDateYoy);
+      kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.metaShareSource, kpis.metaShareHistory, 'var(--brand)', 'kpi-share', competitorCompareLine(kpis.shareByOperator, kpis.shareByOperatorPrev, kpis.shareByOperatorYoy, '%'), kpis.generatedAt, kpis.comparedToDate, kpis.metaShareDeltaYoy, kpis.comparedToDateYoy, kpis.metaShareDeltaWow, kpis.comparedToDateWow) +
+      kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.csiNpsSource, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps', competitorCompareLine(kpis.csiNpsByOperator, kpis.csiNpsByOperatorPrev, kpis.csiNpsByOperatorYoy, ''), kpis.generatedAt, kpis.comparedToDate, kpis.csiNpsDeltaYoy, kpis.comparedToDateYoy, kpis.csiNpsDeltaWow, kpis.comparedToDateWow) +
+      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.netBenchSource, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench', competitorCompareLine(kpis.netBenchByOperator, kpis.netBenchByOperatorPrev, kpis.netBenchByOperatorYoy, ''), kpis.generatedAt, kpis.comparedToDate, kpis.netBenchDeltaYoy, kpis.comparedToDateYoy, kpis.netBenchDeltaWow, kpis.comparedToDateWow);
 
     const status = document.getElementById('hbStatus');
     if(kpis.source === 'hadoop'){
@@ -2944,6 +2962,7 @@
     '</div>';
   }
   function deltaCell(delta){
+    if(delta == null) return '<td class="num">–</td>';
     const cls = delta >= 0 ? 'delta-up' : 'delta-down';
     return '<td class="num ' + cls + '">' + (delta >= 0 ? '▲' : '▼') + Math.abs(delta) + '</td>';
   }
@@ -2968,18 +2987,57 @@
     return '<table class="mkt-table"><thead><tr><th>City</th><th class="num">' + valueLabel + '</th><th class="num">WoW</th><th class="num">MoM</th><th class="num">YoY</th></tr></thead><tbody>' + rows + '</tbody></table>';
   }
 
+  // Real data straight from the loaded snapshot (region_YYYYMMDD.csv / all_city_operator_YYYYMMDD.csv
+  // via build_snapshot.py) — null when no snapshot is loaded, so callers fall back to modeled samples.
+  function snapshotDateTag(generatedAt){
+    if(!generatedAt) return '';
+    const d = new Date(generatedAt);
+    return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+  }
+  function realAreaRegionRows(){
+    if(!hadoopSnapshot) return null;
+    const rows = hadoopSnapshot.rows.filter(r => r.level === 'Region' && r.metaMarketSharePct != null);
+    if(rows.length < Object.keys(REGION_LABELS).length) return null;
+    const byRegion = {};
+    rows.forEach(r => {
+      byRegion[r.region] = {
+        val: r.metaMarketSharePct,
+        wow: r.metaMarketSharePrevWowPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevWowPct) : null,
+        mom: r.metaMarketSharePrevPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevPct) : null,
+        yoy: r.metaMarketSharePrevYoyPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevYoyPct) : null
+      };
+    });
+    return byRegion;
+  }
+  function realCitiesLosingRows(){
+    if(!hadoopSnapshot) return null;
+    const rows = hadoopSnapshot.rows.filter(r => r.level === 'City' && r.metaMarketSharePrevPct != null);
+    if(!rows.length) return null;
+    return rows.map(r => ({
+      name: r.city, region: r.region, val: r.metaMarketSharePct,
+      wow: r.metaMarketSharePrevWowPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevWowPct) : null,
+      mom: round1(r.metaMarketSharePct - r.metaMarketSharePrevPct),
+      yoy: r.metaMarketSharePrevYoyPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevYoyPct) : null
+    }));
+  }
+
   function buildKpiModal(metric){
     if(!lastKPIs) return { eyebrow:'Core KPI', title:'No data yet', body:'<p>Apply a filter to load data.</p>' };
     const srcFor = (metricSource) => metricSource === 'hadoop'
       ? 'Sourced from the loaded Hadoop snapshot for the current filter scope.'
       : 'Modeled estimate — load a Hadoop snapshot above (see the control bar) for real figures.';
     if(metric === 'share'){
+      const dateTag = snapshotDateTag(lastKPIs.generatedAt);
+      const realRegion = realAreaRegionRows();
+      const realCities = realCitiesLosingRows();
+      const regionTag = realRegion ? ' <span class="modal-source-tag">· region_' + dateTag + '.csv</span>' : '';
+      const citiesTag = realCities ? ' <span class="modal-source-tag">· all_city_operator_' + dateTag + '.csv</span>' : '';
       return { eyebrow:'Core KPI · Meta Market Share', title:'Meta Market Share — ' + lastKPIs.metaShare + '%',
         body:
           '<p>Blended market share, recomputed for the active Area/Region/City/Week filter. ' + srcFor(lastKPIs.metaShareSource) + '</p>' +
           buildMonthlyTrendSection(SHARE_TREND_MONTHLY, 'Monthly market share trend — national (TSEL vs IOH vs XLSmart)') +
-          '<div><div class="modal-section-label">Latest position by Area &amp; Region</div>' + buildAreaRegionTable(MARKET_BY_REGION, '%', 'Share') + '</div>' +
-          '<div><div class="modal-section-label">Cities losing share (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_SHARE, '%', 'Share') + '</div>'
+          '<div><div class="modal-section-label">Latest position by Area &amp; Region' + regionTag + '</div>' + buildAreaRegionTable(realRegion || MARKET_BY_REGION, '%', 'Share') + '</div>' +
+          '<div><div class="modal-section-label">Cities losing share (WoW, MoM &amp; YoY)' + citiesTag + '</div>' + buildCitiesLosingTable(realCities || CITIES_LOSING_SHARE, '%', 'Share') + '</div>'
       };
     }
     if(metric === 'nps'){

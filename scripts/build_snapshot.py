@@ -246,7 +246,10 @@ def main():
     ap.add_argument("--prev-date", help="YYYYMMDD for the prior period, to compute real WoW deltas")
     ap.add_argument("--prev-all-city", help="path to the prior period's all_city_operator CSV")
     ap.add_argument("--prev-region", help="path to the prior period's region CSV")
-    ap.add_argument("--out", required=True, help="output snapshot JSON path")
+    ap.add_argument("--out", required=True, help="output snapshot JSON path (dated archive copy)")
+    ap.add_argument("--latest-copy", default="snapshot_latest.json",
+                    help="also write here — this is the stable filename index.html auto-fetches on load "
+                         "(default: snapshot_latest.json; pass '' to skip)")
     args = ap.parse_args()
 
     if args.prev_date and not (args.prev_all_city and args.prev_region):
@@ -256,6 +259,11 @@ def main():
     with open(args.out, "w") as f:
         json.dump(snapshot, f, indent=2)
     print(f"wrote {args.out}: {len(snapshot['rows'])} rows")
+
+    if args.latest_copy:
+        with open(args.latest_copy, "w") as f:
+            json.dump(snapshot, f, indent=2)
+        print(f"wrote {args.latest_copy} (auto-fetched by index.html)")
 
 
 if __name__ == "__main__":

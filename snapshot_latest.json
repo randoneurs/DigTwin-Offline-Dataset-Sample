@@ -1,0 +1,2883 @@
+{
+  "generatedAt": "2026-06-28T00:00:00+07:00",
+  "note": "Generated from META market-share exports via scripts/build_snapshot.py \u2014 do not hand-edit.",
+  "rows": [
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Banda Aceh",
+      "week": "W26-2026",
+      "metaMarketSharePct": 71.17,
+      "shareByOperator": {
+        "tsel": 71.17,
+        "xlLegacy": 14.3,
+        "isat": 2.98,
+        "three": 14.2,
+        "smartfren": 2.24,
+        "xl": 16.49,
+        "ioh": 16.83
+      },
+      "metaMarketSharePrevPct": 70.83,
+      "metaShareHistory": [
+        70.83,
+        71.17
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Lhokseumawe",
+      "week": "W26-2026",
+      "metaMarketSharePct": 71.29,
+      "shareByOperator": {
+        "tsel": 71.29,
+        "xlLegacy": 18.36,
+        "isat": 1.85,
+        "three": 10.02,
+        "smartfren": 2.03,
+        "xl": 20.31,
+        "ioh": 11.99
+      },
+      "metaMarketSharePrevPct": 71.52,
+      "metaShareHistory": [
+        71.52,
+        71.29
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kabupaten Simalungun",
+      "week": "W26-2026",
+      "metaMarketSharePct": 55.84,
+      "shareByOperator": {
+        "tsel": 55.84,
+        "xlLegacy": 31.29,
+        "isat": 4.22,
+        "three": 8.55,
+        "smartfren": 4.77,
+        "xl": 35.86,
+        "ioh": 12.52
+      },
+      "metaMarketSharePrevPct": 55.88,
+      "metaShareHistory": [
+        55.88,
+        55.84
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kabupaten Deli Serdang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 44.58,
+      "shareByOperator": {
+        "tsel": 44.58,
+        "xlLegacy": 33.72,
+        "isat": 10.32,
+        "three": 12.98,
+        "smartfren": 3.64,
+        "xl": 37.18,
+        "ioh": 23.07
+      },
+      "metaMarketSharePrevPct": 44.56,
+      "metaShareHistory": [
+        44.56,
+        44.58
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kabupaten Langkat",
+      "week": "W26-2026",
+      "metaMarketSharePct": 50.91,
+      "shareByOperator": {
+        "tsel": 50.91,
+        "xlLegacy": 38.31,
+        "isat": 5.78,
+        "three": 8.67,
+        "smartfren": 1.42,
+        "xl": 39.55,
+        "ioh": 14.47
+      },
+      "metaMarketSharePrevPct": 49.9,
+      "metaShareHistory": [
+        49.9,
+        50.91
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Pematangsiantar",
+      "week": "W26-2026",
+      "metaMarketSharePct": 57.96,
+      "shareByOperator": {
+        "tsel": 57.96,
+        "xlLegacy": 32.03,
+        "isat": 3.49,
+        "three": 9.06,
+        "smartfren": 3.98,
+        "xl": 35.07,
+        "ioh": 12.41
+      },
+      "metaMarketSharePrevPct": 56.92,
+      "metaShareHistory": [
+        56.92,
+        57.96
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Medan",
+      "week": "W26-2026",
+      "metaMarketSharePct": 46.91,
+      "shareByOperator": {
+        "tsel": 46.91,
+        "xlLegacy": 27.66,
+        "isat": 11.53,
+        "three": 15.18,
+        "smartfren": 4.81,
+        "xl": 32.14,
+        "ioh": 26.43
+      },
+      "metaMarketSharePrevPct": 46.8,
+      "metaShareHistory": [
+        46.8,
+        46.91
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Binjai",
+      "week": "W26-2026",
+      "metaMarketSharePct": 49.19,
+      "shareByOperator": {
+        "tsel": 49.19,
+        "xlLegacy": 35.87,
+        "isat": 8.94,
+        "three": 10.39,
+        "smartfren": 1.74,
+        "xl": 36.73,
+        "ioh": 19.4
+      },
+      "metaMarketSharePrevPct": 48.87,
+      "metaShareHistory": [
+        48.87,
+        49.19
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Padang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 58.24,
+      "shareByOperator": {
+        "tsel": 58.24,
+        "xlLegacy": 27.51,
+        "isat": 4.4,
+        "three": 12.4,
+        "smartfren": 2.27,
+        "xl": 29.8,
+        "ioh": 16.74
+      },
+      "metaMarketSharePrevPct": 58.22,
+      "metaShareHistory": [
+        58.22,
+        58.24
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kabupaten Kampar",
+      "week": "W26-2026",
+      "metaMarketSharePct": 66.0,
+      "shareByOperator": {
+        "tsel": 66.0,
+        "xlLegacy": 20.51,
+        "isat": 8.38,
+        "three": 5.75,
+        "smartfren": 3.58,
+        "xl": 24.12,
+        "ioh": 13.99
+      },
+      "metaMarketSharePrevPct": 66.79,
+      "metaShareHistory": [
+        66.79,
+        66.0
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Pekanbaru",
+      "week": "W26-2026",
+      "metaMarketSharePct": 59.31,
+      "shareByOperator": {
+        "tsel": 59.31,
+        "xlLegacy": 19.01,
+        "isat": 7.67,
+        "three": 14.49,
+        "smartfren": 4.44,
+        "xl": 23.4,
+        "ioh": 22.04
+      },
+      "metaMarketSharePrevPct": 59.63,
+      "metaShareHistory": [
+        59.63,
+        59.31
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Dumai",
+      "week": "W26-2026",
+      "metaMarketSharePct": 63.81,
+      "shareByOperator": {
+        "tsel": 63.81,
+        "xlLegacy": 24.66,
+        "isat": 4.12,
+        "three": 7.71,
+        "smartfren": 3.87,
+        "xl": 28.03,
+        "ioh": 11.83
+      },
+      "metaMarketSharePrevPct": 64.95,
+      "metaShareHistory": [
+        64.95,
+        63.81
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kabupaten Bungo",
+      "week": "W26-2026",
+      "metaMarketSharePct": 57.09,
+      "shareByOperator": {
+        "tsel": 57.09,
+        "xlLegacy": 28.18,
+        "isat": 13.4,
+        "three": 5.45,
+        "smartfren": 1.26,
+        "xl": 29.1,
+        "ioh": 18.78
+      },
+      "metaMarketSharePrevPct": 57.37,
+      "metaShareHistory": [
+        57.37,
+        57.09
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Jambi",
+      "week": "W26-2026",
+      "metaMarketSharePct": 50.84,
+      "shareByOperator": {
+        "tsel": 50.84,
+        "xlLegacy": 18.35,
+        "isat": 15.09,
+        "three": 17.54,
+        "smartfren": 3.4,
+        "xl": 21.89,
+        "ioh": 32.33
+      },
+      "metaMarketSharePrevPct": 51.25,
+      "metaShareHistory": [
+        51.25,
+        50.84
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kabupaten Ogan Ilir",
+      "week": "W26-2026",
+      "metaMarketSharePct": 34.59,
+      "shareByOperator": {
+        "tsel": 34.59,
+        "xlLegacy": 27.38,
+        "isat": 22.79,
+        "three": 7.61,
+        "smartfren": 13.43,
+        "xl": 39.68,
+        "ioh": 29.79
+      },
+      "metaMarketSharePrevPct": 35.07,
+      "metaShareHistory": [
+        35.07,
+        34.59
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Palembang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 39.91,
+      "shareByOperator": {
+        "tsel": 39.91,
+        "xlLegacy": 26.2,
+        "isat": 13.83,
+        "three": 17.63,
+        "smartfren": 8.45,
+        "xl": 34.28,
+        "ioh": 31.08
+      },
+      "metaMarketSharePrevPct": 40.02,
+      "metaShareHistory": [
+        40.02,
+        39.91
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Prabumulih",
+      "week": "W26-2026",
+      "metaMarketSharePct": 39.92,
+      "shareByOperator": {
+        "tsel": 39.92,
+        "xlLegacy": 30.81,
+        "isat": 11.32,
+        "three": 12.41,
+        "smartfren": 10.8,
+        "xl": 41.68,
+        "ioh": 23.82
+      },
+      "metaMarketSharePrevPct": 39.88,
+      "metaShareHistory": [
+        39.88,
+        39.92
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Bengkulu",
+      "week": "W26-2026",
+      "metaMarketSharePct": 51.59,
+      "shareByOperator": {
+        "tsel": 51.59,
+        "xlLegacy": 18.85,
+        "isat": 19.29,
+        "three": 14.64,
+        "smartfren": 0.64,
+        "xl": 19.55,
+        "ioh": 33.65
+      },
+      "metaMarketSharePrevPct": 51.81,
+      "metaShareHistory": [
+        51.81,
+        51.59
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kabupaten Lampung Selatan",
+      "week": "W26-2026",
+      "metaMarketSharePct": 23.52,
+      "shareByOperator": {
+        "tsel": 23.52,
+        "xlLegacy": 27.73,
+        "isat": 30.58,
+        "three": 17.42,
+        "smartfren": 5.48,
+        "xl": 33.02,
+        "ioh": 47.32
+      },
+      "metaMarketSharePrevPct": 24.24,
+      "metaShareHistory": [
+        24.24,
+        23.52
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Bandar Lampung",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.78,
+      "shareByOperator": {
+        "tsel": 32.78,
+        "xlLegacy": 21.04,
+        "isat": 24.29,
+        "three": 21.76,
+        "smartfren": 5.23,
+        "xl": 26.1,
+        "ioh": 45.53
+      },
+      "metaMarketSharePrevPct": 33.23,
+      "metaShareHistory": [
+        33.23,
+        32.78
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Metro",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.01,
+      "shareByOperator": {
+        "tsel": 32.01,
+        "xlLegacy": 21.92,
+        "isat": 25.92,
+        "three": 16.8,
+        "smartfren": 9.04,
+        "xl": 29.8,
+        "ioh": 41.63
+      },
+      "metaMarketSharePrevPct": 31.67,
+      "metaShareHistory": [
+        31.67,
+        32.01
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Pangkalpinang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 44.6,
+      "shareByOperator": {
+        "tsel": 44.6,
+        "xlLegacy": 35.25,
+        "isat": 13.86,
+        "three": 6.62,
+        "smartfren": 4.68,
+        "xl": 39.2,
+        "ioh": 19.99
+      },
+      "metaMarketSharePrevPct": 44.64,
+      "metaShareHistory": [
+        44.64,
+        44.6
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Batam",
+      "week": "W26-2026",
+      "metaMarketSharePct": 59.37,
+      "shareByOperator": {
+        "tsel": 59.37,
+        "xlLegacy": 17.93,
+        "isat": 11.71,
+        "three": 11.83,
+        "smartfren": 2.29,
+        "xl": 20.13,
+        "ioh": 23.46
+      },
+      "metaMarketSharePrevPct": 59.76,
+      "metaShareHistory": [
+        59.76,
+        59.37
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Tanjungpinang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 60.08,
+      "shareByOperator": {
+        "tsel": 60.08,
+        "xlLegacy": 29.87,
+        "isat": 6.15,
+        "three": 5.65,
+        "smartfren": 1.35,
+        "xl": 30.8,
+        "ioh": 11.17
+      },
+      "metaMarketSharePrevPct": 60.38,
+      "metaShareHistory": [
+        60.38,
+        60.08
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Jakarta Selatan",
+      "week": "W26-2026",
+      "metaMarketSharePct": 38.39,
+      "shareByOperator": {
+        "tsel": 38.39,
+        "xlLegacy": 19.97,
+        "isat": 28.26,
+        "three": 12.59,
+        "smartfren": 5.17,
+        "xl": 24.93,
+        "ioh": 40.52
+      },
+      "metaMarketSharePrevPct": 38.22,
+      "metaShareHistory": [
+        38.22,
+        38.39
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Jakarta Timur",
+      "week": "W26-2026",
+      "metaMarketSharePct": 37.22,
+      "shareByOperator": {
+        "tsel": 37.22,
+        "xlLegacy": 18.68,
+        "isat": 26.91,
+        "three": 14.84,
+        "smartfren": 6.97,
+        "xl": 25.46,
+        "ioh": 41.31
+      },
+      "metaMarketSharePrevPct": 37.14,
+      "metaShareHistory": [
+        37.14,
+        37.22
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Jakarta Pusat",
+      "week": "W26-2026",
+      "metaMarketSharePct": 37.61,
+      "shareByOperator": {
+        "tsel": 37.61,
+        "xlLegacy": 19.35,
+        "isat": 27.16,
+        "three": 12.68,
+        "smartfren": 7.12,
+        "xl": 26.31,
+        "ioh": 39.5
+      },
+      "metaMarketSharePrevPct": 35.18,
+      "metaShareHistory": [
+        35.18,
+        37.61
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Jakarta Barat",
+      "week": "W26-2026",
+      "metaMarketSharePct": 33.52,
+      "shareByOperator": {
+        "tsel": 33.52,
+        "xlLegacy": 19.52,
+        "isat": 29.11,
+        "three": 14.79,
+        "smartfren": 7.35,
+        "xl": 26.69,
+        "ioh": 43.62
+      },
+      "metaMarketSharePrevPct": 35.96,
+      "metaShareHistory": [
+        35.96,
+        33.52
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Jakarta Utara",
+      "week": "W26-2026",
+      "metaMarketSharePct": 31.11,
+      "shareByOperator": {
+        "tsel": 31.11,
+        "xlLegacy": 21.22,
+        "isat": 29.81,
+        "three": 13.88,
+        "smartfren": 8.12,
+        "xl": 29.11,
+        "ioh": 43.27
+      },
+      "metaMarketSharePrevPct": 32.66,
+      "metaShareHistory": [
+        32.66,
+        31.11
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kabupaten Bogor",
+      "week": "W26-2026",
+      "metaMarketSharePct": 22.94,
+      "shareByOperator": {
+        "tsel": 22.94,
+        "xlLegacy": 22.09,
+        "isat": 36.36,
+        "three": 15.55,
+        "smartfren": 7.3,
+        "xl": 29.22,
+        "ioh": 51.42
+      },
+      "metaMarketSharePrevPct": 23.12,
+      "metaShareHistory": [
+        23.12,
+        22.94
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kabupaten Bandung",
+      "week": "W26-2026",
+      "metaMarketSharePct": 31.52,
+      "shareByOperator": {
+        "tsel": 31.52,
+        "xlLegacy": 33.78,
+        "isat": 16.98,
+        "three": 13.38,
+        "smartfren": 8.8,
+        "xl": 42.24,
+        "ioh": 30.09
+      },
+      "metaMarketSharePrevPct": 31.74,
+      "metaShareHistory": [
+        31.74,
+        31.52
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kabupaten Garut",
+      "week": "W26-2026",
+      "metaMarketSharePct": 34.85,
+      "shareByOperator": {
+        "tsel": 34.85,
+        "xlLegacy": 30.4,
+        "isat": 15.57,
+        "three": 17.48,
+        "smartfren": 7.19,
+        "xl": 37.27,
+        "ioh": 32.74
+      },
+      "metaMarketSharePrevPct": 35.21,
+      "metaShareHistory": [
+        35.21,
+        34.85
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kabupaten Sumedang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 39.0,
+      "shareByOperator": {
+        "tsel": 39.0,
+        "xlLegacy": 29.34,
+        "isat": 19.09,
+        "three": 10.36,
+        "smartfren": 7.03,
+        "xl": 36.18,
+        "ioh": 29.17
+      },
+      "metaMarketSharePrevPct": 39.12,
+      "metaShareHistory": [
+        39.12,
+        39.0
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kabupaten Karawang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 20.06,
+      "shareByOperator": {
+        "tsel": 20.06,
+        "xlLegacy": 23.8,
+        "isat": 40.73,
+        "three": 15.15,
+        "smartfren": 4.39,
+        "xl": 27.94,
+        "ioh": 55.42
+      },
+      "metaMarketSharePrevPct": 20.03,
+      "metaShareHistory": [
+        20.03,
+        20.06
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kabupaten Bekasi",
+      "week": "W26-2026",
+      "metaMarketSharePct": 30.61,
+      "shareByOperator": {
+        "tsel": 30.61,
+        "xlLegacy": 18.02,
+        "isat": 31.8,
+        "three": 16.08,
+        "smartfren": 8.24,
+        "xl": 26.03,
+        "ioh": 47.17
+      },
+      "metaMarketSharePrevPct": 29.99,
+      "metaShareHistory": [
+        29.99,
+        30.61
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Bogor",
+      "week": "W26-2026",
+      "metaMarketSharePct": 21.55,
+      "shareByOperator": {
+        "tsel": 21.55,
+        "xlLegacy": 20.23,
+        "isat": 35.9,
+        "three": 19.32,
+        "smartfren": 7.46,
+        "xl": 27.5,
+        "ioh": 54.75
+      },
+      "metaMarketSharePrevPct": 21.34,
+      "metaShareHistory": [
+        21.34,
+        21.55
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Sukabumi",
+      "week": "W26-2026",
+      "metaMarketSharePct": 16.88,
+      "shareByOperator": {
+        "tsel": 16.88,
+        "xlLegacy": 22.48,
+        "isat": 51.05,
+        "three": 10.58,
+        "smartfren": 2.77,
+        "xl": 25.78,
+        "ioh": 61.91
+      },
+      "metaMarketSharePrevPct": 16.74,
+      "metaShareHistory": [
+        16.74,
+        16.88
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Bandung",
+      "week": "W26-2026",
+      "metaMarketSharePct": 34.44,
+      "shareByOperator": {
+        "tsel": 34.44,
+        "xlLegacy": 26.95,
+        "isat": 17.51,
+        "three": 17.84,
+        "smartfren": 8.29,
+        "xl": 34.88,
+        "ioh": 35.13
+      },
+      "metaMarketSharePrevPct": 34.45,
+      "metaShareHistory": [
+        34.45,
+        34.44
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Cirebon",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.59,
+      "shareByOperator": {
+        "tsel": 32.59,
+        "xlLegacy": 26.93,
+        "isat": 10.75,
+        "three": 25.68,
+        "smartfren": 8.48,
+        "xl": 35.28,
+        "ioh": 36.12
+      },
+      "metaMarketSharePrevPct": 32.48,
+      "metaShareHistory": [
+        32.48,
+        32.59
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Bekasi",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.11,
+      "shareByOperator": {
+        "tsel": 32.11,
+        "xlLegacy": 18.29,
+        "isat": 27.45,
+        "three": 19.1,
+        "smartfren": 7.96,
+        "xl": 26.04,
+        "ioh": 46.13
+      },
+      "metaMarketSharePrevPct": 32.3,
+      "metaShareHistory": [
+        32.3,
+        32.11
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Depok",
+      "week": "W26-2026",
+      "metaMarketSharePct": 31.5,
+      "shareByOperator": {
+        "tsel": 31.5,
+        "xlLegacy": 20.3,
+        "isat": 25.66,
+        "three": 19.51,
+        "smartfren": 7.33,
+        "xl": 27.45,
+        "ioh": 44.86
+      },
+      "metaMarketSharePrevPct": 31.39,
+      "metaShareHistory": [
+        31.39,
+        31.5
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Cimahi",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.75,
+      "shareByOperator": {
+        "tsel": 32.75,
+        "xlLegacy": 22.98,
+        "isat": 20.46,
+        "three": 19.26,
+        "smartfren": 8.67,
+        "xl": 31.29,
+        "ioh": 39.41
+      },
+      "metaMarketSharePrevPct": 32.66,
+      "metaShareHistory": [
+        32.66,
+        32.75
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Tasikmalaya",
+      "week": "W26-2026",
+      "metaMarketSharePct": 41.52,
+      "shareByOperator": {
+        "tsel": 41.52,
+        "xlLegacy": 28.8,
+        "isat": 18.83,
+        "three": 12.33,
+        "smartfren": 3.45,
+        "xl": 31.99,
+        "ioh": 30.86
+      },
+      "metaMarketSharePrevPct": 41.95,
+      "metaShareHistory": [
+        41.95,
+        41.52
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kabupaten Banyumas",
+      "week": "W26-2026",
+      "metaMarketSharePct": 31.0,
+      "shareByOperator": {
+        "tsel": 31.0,
+        "xlLegacy": 18.94,
+        "isat": 29.46,
+        "three": 10.31,
+        "smartfren": 14.5,
+        "xl": 33.13,
+        "ioh": 39.41
+      },
+      "metaMarketSharePrevPct": 31.52,
+      "metaShareHistory": [
+        31.52,
+        31.0
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Magelang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 25.49,
+      "shareByOperator": {
+        "tsel": 25.49,
+        "xlLegacy": 18.49,
+        "isat": 38.66,
+        "three": 10.52,
+        "smartfren": 11.09,
+        "xl": 29.03,
+        "ioh": 48.28
+      },
+      "metaMarketSharePrevPct": 25.59,
+      "metaShareHistory": [
+        25.59,
+        25.49
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Surakarta",
+      "week": "W26-2026",
+      "metaMarketSharePct": 31.64,
+      "shareByOperator": {
+        "tsel": 31.64,
+        "xlLegacy": 17.55,
+        "isat": 27.88,
+        "three": 16.74,
+        "smartfren": 10.64,
+        "xl": 27.89,
+        "ioh": 44.32
+      },
+      "metaMarketSharePrevPct": 32.26,
+      "metaShareHistory": [
+        32.26,
+        31.64
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Semarang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 30.56,
+      "shareByOperator": {
+        "tsel": 30.56,
+        "xlLegacy": 16.46,
+        "isat": 21.61,
+        "three": 19.41,
+        "smartfren": 16.41,
+        "xl": 32.61,
+        "ioh": 40.62
+      },
+      "metaMarketSharePrevPct": 30.86,
+      "metaShareHistory": [
+        30.86,
+        30.56
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Pekalongan",
+      "week": "W26-2026",
+      "metaMarketSharePct": 18.82,
+      "shareByOperator": {
+        "tsel": 18.82,
+        "xlLegacy": 26.03,
+        "isat": 40.6,
+        "three": 12.35,
+        "smartfren": 7.46,
+        "xl": 33.4,
+        "ioh": 52.22
+      },
+      "metaMarketSharePrevPct": 18.81,
+      "metaShareHistory": [
+        18.81,
+        18.82
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Tegal",
+      "week": "W26-2026",
+      "metaMarketSharePct": 22.15,
+      "shareByOperator": {
+        "tsel": 22.15,
+        "xlLegacy": 28.44,
+        "isat": 23.89,
+        "three": 19.65,
+        "smartfren": 10.75,
+        "xl": 38.93,
+        "ioh": 42.99
+      },
+      "metaMarketSharePrevPct": 21.82,
+      "metaShareHistory": [
+        21.82,
+        22.15
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kabupaten Sleman",
+      "week": "W26-2026",
+      "metaMarketSharePct": 36.64,
+      "shareByOperator": {
+        "tsel": 36.64,
+        "xlLegacy": 19.36,
+        "isat": 20.56,
+        "three": 16.33,
+        "smartfren": 11.34,
+        "xl": 30.63,
+        "ioh": 36.49
+      },
+      "metaMarketSharePrevPct": 36.9,
+      "metaShareHistory": [
+        36.9,
+        36.64
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Yogyakarta",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.42,
+      "shareByOperator": {
+        "tsel": 32.42,
+        "xlLegacy": 19.49,
+        "isat": 19.69,
+        "three": 21.8,
+        "smartfren": 11.39,
+        "xl": 30.52,
+        "ioh": 41.0
+      },
+      "metaMarketSharePrevPct": 32.61,
+      "metaShareHistory": [
+        32.61,
+        32.42
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kabupaten Jember",
+      "week": "W26-2026",
+      "metaMarketSharePct": 48.04,
+      "shareByOperator": {
+        "tsel": 48.04,
+        "xlLegacy": 16.75,
+        "isat": 26.61,
+        "three": 7.09,
+        "smartfren": 4.76,
+        "xl": 21.48,
+        "ioh": 33.43
+      },
+      "metaMarketSharePrevPct": 47.79,
+      "metaShareHistory": [
+        47.79,
+        48.04
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kabupaten Banyuwangi",
+      "week": "W26-2026",
+      "metaMarketSharePct": 47.78,
+      "shareByOperator": {
+        "tsel": 47.78,
+        "xlLegacy": 25.83,
+        "isat": 19.79,
+        "three": 4.84,
+        "smartfren": 4.06,
+        "xl": 29.63,
+        "ioh": 24.62
+      },
+      "metaMarketSharePrevPct": 47.9,
+      "metaShareHistory": [
+        47.9,
+        47.78
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kabupaten Sidoarjo",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.06,
+      "shareByOperator": {
+        "tsel": 32.06,
+        "xlLegacy": 18.92,
+        "isat": 26.3,
+        "three": 17.0,
+        "smartfren": 9.58,
+        "xl": 28.34,
+        "ioh": 42.93
+      },
+      "metaMarketSharePrevPct": 32.36,
+      "metaShareHistory": [
+        32.36,
+        32.06
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Kediri",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.69,
+      "shareByOperator": {
+        "tsel": 32.69,
+        "xlLegacy": 16.57,
+        "isat": 41.68,
+        "three": 8.6,
+        "smartfren": 2.56,
+        "xl": 18.6,
+        "ioh": 51.02
+      },
+      "metaMarketSharePrevPct": 32.46,
+      "metaShareHistory": [
+        32.46,
+        32.69
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Malang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 41.57,
+      "shareByOperator": {
+        "tsel": 41.57,
+        "xlLegacy": 19.16,
+        "isat": 21.46,
+        "three": 13.96,
+        "smartfren": 7.45,
+        "xl": 26.37,
+        "ioh": 35.12
+      },
+      "metaMarketSharePrevPct": 41.48,
+      "metaShareHistory": [
+        41.48,
+        41.57
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Mojokerto",
+      "week": "W26-2026",
+      "metaMarketSharePct": 24.18,
+      "shareByOperator": {
+        "tsel": 24.18,
+        "xlLegacy": 18.63,
+        "isat": 45.18,
+        "three": 8.7,
+        "smartfren": 6.61,
+        "xl": 24.77,
+        "ioh": 54.25
+      },
+      "metaMarketSharePrevPct": 23.75,
+      "metaShareHistory": [
+        23.75,
+        24.18
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Madiun",
+      "week": "W26-2026",
+      "metaMarketSharePct": 36.78,
+      "shareByOperator": {
+        "tsel": 36.78,
+        "xlLegacy": 15.92,
+        "isat": 27.55,
+        "three": 16.39,
+        "smartfren": 6.42,
+        "xl": 21.58,
+        "ioh": 43.69
+      },
+      "metaMarketSharePrevPct": 37.39,
+      "metaShareHistory": [
+        37.39,
+        36.78
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Surabaya",
+      "week": "W26-2026",
+      "metaMarketSharePct": 37.48,
+      "shareByOperator": {
+        "tsel": 37.48,
+        "xlLegacy": 21.12,
+        "isat": 23.22,
+        "three": 13.19,
+        "smartfren": 9.04,
+        "xl": 29.9,
+        "ioh": 36.08
+      },
+      "metaMarketSharePrevPct": 37.53,
+      "metaShareHistory": [
+        37.53,
+        37.48
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kabupaten Tangerang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 28.99,
+      "shareByOperator": {
+        "tsel": 28.99,
+        "xlLegacy": 25.85,
+        "isat": 25.46,
+        "three": 15.04,
+        "smartfren": 8.56,
+        "xl": 34.16,
+        "ioh": 40.13
+      },
+      "metaMarketSharePrevPct": 29.45,
+      "metaShareHistory": [
+        29.45,
+        28.99
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Tangerang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 29.73,
+      "shareByOperator": {
+        "tsel": 29.73,
+        "xlLegacy": 21.49,
+        "isat": 24.75,
+        "three": 19.93,
+        "smartfren": 8.73,
+        "xl": 29.96,
+        "ioh": 44.16
+      },
+      "metaMarketSharePrevPct": 29.71,
+      "metaShareHistory": [
+        29.71,
+        29.73
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Cilegon",
+      "week": "W26-2026",
+      "metaMarketSharePct": 29.4,
+      "shareByOperator": {
+        "tsel": 29.4,
+        "xlLegacy": 38.75,
+        "isat": 10.94,
+        "three": 21.06,
+        "smartfren": 4.59,
+        "xl": 43.11,
+        "ioh": 31.64
+      },
+      "metaMarketSharePrevPct": 29.39,
+      "metaShareHistory": [
+        29.39,
+        29.4
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Serang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 22.98,
+      "shareByOperator": {
+        "tsel": 22.98,
+        "xlLegacy": 47.18,
+        "isat": 11.82,
+        "three": 18.28,
+        "smartfren": 4.45,
+        "xl": 51.47,
+        "ioh": 29.91
+      },
+      "metaMarketSharePrevPct": 23.2,
+      "metaShareHistory": [
+        23.2,
+        22.98
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Tangerang Selatan",
+      "week": "W26-2026",
+      "metaMarketSharePct": 35.08,
+      "shareByOperator": {
+        "tsel": 35.08,
+        "xlLegacy": 22.21,
+        "isat": 24.62,
+        "three": 14.92,
+        "smartfren": 7.15,
+        "xl": 29.29,
+        "ioh": 39.22
+      },
+      "metaMarketSharePrevPct": 35.09,
+      "metaShareHistory": [
+        35.09,
+        35.08
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kabupaten Badung",
+      "week": "W26-2026",
+      "metaMarketSharePct": 38.91,
+      "shareByOperator": {
+        "tsel": 38.91,
+        "xlLegacy": 27.65,
+        "isat": 20.45,
+        "three": 7.43,
+        "smartfren": 6.73,
+        "xl": 34.19,
+        "ioh": 27.68
+      },
+      "metaMarketSharePrevPct": 38.83,
+      "metaShareHistory": [
+        38.83,
+        38.91
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kabupaten Buleleng",
+      "week": "W26-2026",
+      "metaMarketSharePct": 24.28,
+      "shareByOperator": {
+        "tsel": 24.28,
+        "xlLegacy": 41.6,
+        "isat": 16.39,
+        "three": 4.58,
+        "smartfren": 14.93,
+        "xl": 56.66,
+        "ioh": 20.93
+      },
+      "metaMarketSharePrevPct": 24.22,
+      "metaShareHistory": [
+        24.22,
+        24.28
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kota Denpasar",
+      "week": "W26-2026",
+      "metaMarketSharePct": 41.79,
+      "shareByOperator": {
+        "tsel": 41.79,
+        "xlLegacy": 27.21,
+        "isat": 16.36,
+        "three": 12.56,
+        "smartfren": 5.44,
+        "xl": 32.48,
+        "ioh": 28.81
+      },
+      "metaMarketSharePrevPct": 42.15,
+      "metaShareHistory": [
+        42.15,
+        41.79
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kabupaten Lombok Barat",
+      "week": "W26-2026",
+      "metaMarketSharePct": 19.02,
+      "shareByOperator": {
+        "tsel": 19.02,
+        "xlLegacy": 73.21,
+        "isat": 3.66,
+        "three": 4.82,
+        "smartfren": 1.44,
+        "xl": 74.3,
+        "ioh": 8.57
+      },
+      "metaMarketSharePrevPct": 19.3,
+      "metaShareHistory": [
+        19.3,
+        19.02
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kabupaten Sumbawa",
+      "week": "W26-2026",
+      "metaMarketSharePct": 65.98,
+      "shareByOperator": {
+        "tsel": 65.98,
+        "xlLegacy": 29.36,
+        "isat": 4.47,
+        "three": 1.45,
+        "smartfren": 2.1,
+        "xl": 31.57,
+        "ioh": 5.73
+      },
+      "metaMarketSharePrevPct": 66.63,
+      "metaShareHistory": [
+        66.63,
+        65.98
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kota Mataram",
+      "week": "W26-2026",
+      "metaMarketSharePct": 25.2,
+      "shareByOperator": {
+        "tsel": 25.2,
+        "xlLegacy": 64.74,
+        "isat": 4.0,
+        "three": 7.78,
+        "smartfren": 1.66,
+        "xl": 66.4,
+        "ioh": 11.71
+      },
+      "metaMarketSharePrevPct": 25.29,
+      "metaShareHistory": [
+        25.29,
+        25.2
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kabupaten Ende",
+      "week": "W26-2026",
+      "metaMarketSharePct": 88.07,
+      "shareByOperator": {
+        "tsel": 88.07,
+        "xlLegacy": 4.04,
+        "isat": 4.5,
+        "three": 5.2,
+        "smartfren": 1.24,
+        "xl": 5.22,
+        "ioh": 9.74
+      },
+      "metaMarketSharePrevPct": 88.0,
+      "metaShareHistory": [
+        88.0,
+        88.07
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kota Kupang",
+      "week": "W26-2026",
+      "metaMarketSharePct": 78.49,
+      "shareByOperator": {
+        "tsel": 78.49,
+        "xlLegacy": 10.27,
+        "isat": 9.79,
+        "three": 3.78,
+        "smartfren": 1.4,
+        "xl": 11.73,
+        "ioh": 13.46
+      },
+      "metaMarketSharePrevPct": 78.82,
+      "metaShareHistory": [
+        78.82,
+        78.49
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "Kota Pontianak",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.32,
+      "shareByOperator": {
+        "tsel": 32.32,
+        "xlLegacy": 13.89,
+        "isat": 28.68,
+        "three": 27.68,
+        "smartfren": 1.83,
+        "xl": 15.71,
+        "ioh": 55.45
+      },
+      "metaMarketSharePrevPct": 32.45,
+      "metaShareHistory": [
+        32.45,
+        32.32
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "Kota Palangka Raya",
+      "week": "W26-2026",
+      "metaMarketSharePct": 65.69,
+      "shareByOperator": {
+        "tsel": 65.69,
+        "xlLegacy": 14.16,
+        "isat": 15.27,
+        "three": 8.92,
+        "smartfren": 0.58,
+        "xl": 14.84,
+        "ioh": 23.72
+      },
+      "metaMarketSharePrevPct": 65.76,
+      "metaShareHistory": [
+        65.76,
+        65.69
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "Kota Banjarmasin",
+      "week": "W26-2026",
+      "metaMarketSharePct": 33.18,
+      "shareByOperator": {
+        "tsel": 33.18,
+        "xlLegacy": 31.29,
+        "isat": 23.66,
+        "three": 11.73,
+        "smartfren": 5.31,
+        "xl": 36.19,
+        "ioh": 35.25
+      },
+      "metaMarketSharePrevPct": 33.2,
+      "metaShareHistory": [
+        33.2,
+        33.18
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "Kota Banjarbaru",
+      "week": "W26-2026",
+      "metaMarketSharePct": 37.9,
+      "shareByOperator": {
+        "tsel": 37.9,
+        "xlLegacy": 29.28,
+        "isat": 24.82,
+        "three": 9.24,
+        "smartfren": 3.04,
+        "xl": 32.39,
+        "ioh": 33.89
+      },
+      "metaMarketSharePrevPct": 37.94,
+      "metaShareHistory": [
+        37.94,
+        37.9
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "Kabupaten Kutai Kartanegara",
+      "week": "W26-2026",
+      "metaMarketSharePct": 63.43,
+      "shareByOperator": {
+        "tsel": 63.43,
+        "xlLegacy": 8.15,
+        "isat": 24.46,
+        "three": 7.11,
+        "smartfren": 0.88,
+        "xl": 8.98,
+        "ioh": 31.34
+      },
+      "metaMarketSharePrevPct": 62.48,
+      "metaShareHistory": [
+        62.48,
+        63.43
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "Kota Balikpapan",
+      "week": "W26-2026",
+      "metaMarketSharePct": 47.0,
+      "shareByOperator": {
+        "tsel": 47.0,
+        "xlLegacy": 16.63,
+        "isat": 25.65,
+        "three": 13.7,
+        "smartfren": 2.05,
+        "xl": 18.51,
+        "ioh": 38.98
+      },
+      "metaMarketSharePrevPct": 47.22,
+      "metaShareHistory": [
+        47.22,
+        47.0
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "Kota Samarinda",
+      "week": "W26-2026",
+      "metaMarketSharePct": 65.63,
+      "shareByOperator": {
+        "tsel": 65.63,
+        "xlLegacy": 13.03,
+        "isat": 17.19,
+        "three": 6.73,
+        "smartfren": 1.36,
+        "xl": 14.4,
+        "ioh": 23.86
+      },
+      "metaMarketSharePrevPct": 65.57,
+      "metaShareHistory": [
+        65.57,
+        65.63
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "Kota Tarakan",
+      "week": "W26-2026",
+      "metaMarketSharePct": 78.3,
+      "shareByOperator": {
+        "tsel": 78.3,
+        "xlLegacy": 3.44,
+        "isat": 10.64,
+        "three": 10.53,
+        "smartfren": 0.81,
+        "xl": 4.26,
+        "ioh": 21.27
+      },
+      "metaMarketSharePrevPct": 78.73,
+      "metaShareHistory": [
+        78.73,
+        78.3
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kabupaten Minahasa",
+      "week": "W26-2026",
+      "metaMarketSharePct": 49.62,
+      "shareByOperator": {
+        "tsel": 49.62,
+        "xlLegacy": 11.62,
+        "isat": 17.33,
+        "three": 21.89,
+        "smartfren": 4.86,
+        "xl": 16.08,
+        "ioh": 38.62
+      },
+      "metaMarketSharePrevPct": 49.31,
+      "metaShareHistory": [
+        49.31,
+        49.62
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kota Manado",
+      "week": "W26-2026",
+      "metaMarketSharePct": 56.96,
+      "shareByOperator": {
+        "tsel": 56.96,
+        "xlLegacy": 12.77,
+        "isat": 11.27,
+        "three": 19.88,
+        "smartfren": 4.44,
+        "xl": 17.0,
+        "ioh": 31.01
+      },
+      "metaMarketSharePrevPct": 57.02,
+      "metaShareHistory": [
+        57.02,
+        56.96
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kota Palu",
+      "week": "W26-2026",
+      "metaMarketSharePct": 59.61,
+      "shareByOperator": {
+        "tsel": 59.61,
+        "xlLegacy": 17.52,
+        "isat": 20.33,
+        "three": 6.96,
+        "smartfren": 1.29,
+        "xl": 18.81,
+        "ioh": 27.09
+      },
+      "metaMarketSharePrevPct": 59.97,
+      "metaShareHistory": [
+        59.97,
+        59.61
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kabupaten Bone",
+      "week": "W26-2026",
+      "metaMarketSharePct": 44.78,
+      "shareByOperator": {
+        "tsel": 44.78,
+        "xlLegacy": 26.88,
+        "isat": 13.95,
+        "three": 12.27,
+        "smartfren": 7.04,
+        "xl": 33.77,
+        "ioh": 26.05
+      },
+      "metaMarketSharePrevPct": 45.89,
+      "metaShareHistory": [
+        45.89,
+        44.78
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kota Makassar",
+      "week": "W26-2026",
+      "metaMarketSharePct": 36.83,
+      "shareByOperator": {
+        "tsel": 36.83,
+        "xlLegacy": 18.44,
+        "isat": 18.5,
+        "three": 16.64,
+        "smartfren": 15.12,
+        "xl": 33.2,
+        "ioh": 34.83
+      },
+      "metaMarketSharePrevPct": 36.54,
+      "metaShareHistory": [
+        36.54,
+        36.83
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kota Pare-Pare",
+      "week": "W26-2026",
+      "metaMarketSharePct": 47.12,
+      "shareByOperator": {
+        "tsel": 47.12,
+        "xlLegacy": 18.8,
+        "isat": 14.7,
+        "three": 10.41,
+        "smartfren": 13.64,
+        "xl": 33.35,
+        "ioh": 24.12
+      },
+      "metaMarketSharePrevPct": 47.63,
+      "metaShareHistory": [
+        47.63,
+        47.12
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kota Kendari",
+      "week": "W26-2026",
+      "metaMarketSharePct": 69.94,
+      "shareByOperator": {
+        "tsel": 69.94,
+        "xlLegacy": 16.19,
+        "isat": 9.6,
+        "three": 7.72,
+        "smartfren": 1.48,
+        "xl": 17.78,
+        "ioh": 17.17
+      },
+      "metaMarketSharePrevPct": 70.72,
+      "metaShareHistory": [
+        70.72,
+        69.94
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kota Gorontalo",
+      "week": "W26-2026",
+      "metaMarketSharePct": 61.61,
+      "shareByOperator": {
+        "tsel": 61.61,
+        "xlLegacy": 14.29,
+        "isat": 9.98,
+        "three": 18.13,
+        "smartfren": 1.25,
+        "xl": 15.37,
+        "ioh": 27.81
+      },
+      "metaMarketSharePrevPct": 61.86,
+      "metaShareHistory": [
+        61.86,
+        61.61
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Ambon",
+      "week": "W26-2026",
+      "metaMarketSharePct": 91.14,
+      "shareByOperator": {
+        "tsel": 91.14,
+        "xlLegacy": 0.27,
+        "isat": 8.66,
+        "three": 1.8,
+        "smartfren": 0.08,
+        "xl": 0.35,
+        "ioh": 10.29
+      },
+      "metaMarketSharePrevPct": 91.19,
+      "metaShareHistory": [
+        91.19,
+        91.14
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Ternate",
+      "week": "W26-2026",
+      "metaMarketSharePct": 95.62,
+      "shareByOperator": {
+        "tsel": 95.62,
+        "xlLegacy": 0.39,
+        "isat": 2.82,
+        "three": 1.45,
+        "smartfren": 0.09,
+        "xl": 0.46,
+        "ioh": 4.19
+      },
+      "metaMarketSharePrevPct": 96.16,
+      "metaShareHistory": [
+        96.16,
+        95.62
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Manokwari",
+      "week": "W26-2026",
+      "metaMarketSharePct": 94.85,
+      "shareByOperator": {
+        "tsel": 94.85,
+        "xlLegacy": 0.54,
+        "isat": 4.02,
+        "three": 1.31,
+        "smartfren": 0.0,
+        "xl": 0.61,
+        "ioh": 5.23
+      },
+      "metaMarketSharePrevPct": 95.13,
+      "metaShareHistory": [
+        95.13,
+        94.85
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Sorong",
+      "week": "W26-2026",
+      "metaMarketSharePct": 95.53,
+      "shareByOperator": {
+        "tsel": 95.53,
+        "xlLegacy": 0.18,
+        "isat": 3.53,
+        "three": 1.72,
+        "smartfren": 0.1,
+        "xl": 0.31,
+        "ioh": 5.35
+      },
+      "metaMarketSharePrevPct": 95.6,
+      "metaShareHistory": [
+        95.6,
+        95.53
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kabupaten Merauke",
+      "week": "W26-2026",
+      "metaMarketSharePct": 94.63,
+      "shareByOperator": {
+        "tsel": 94.63,
+        "xlLegacy": 0.45,
+        "isat": 4.56,
+        "three": 1.33,
+        "smartfren": 0.13,
+        "xl": 0.62,
+        "ioh": 6.02
+      },
+      "metaMarketSharePrevPct": 94.35,
+      "metaShareHistory": [
+        94.35,
+        94.63
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kabupaten Jayawijaya",
+      "week": "W26-2026",
+      "metaMarketSharePct": 99.55,
+      "shareByOperator": {
+        "tsel": 99.55,
+        "xlLegacy": 0.26,
+        "isat": 0.29,
+        "three": 0.0,
+        "smartfren": 0.0,
+        "xl": 0.27,
+        "ioh": 0.38
+      },
+      "metaMarketSharePrevPct": 100.0,
+      "metaShareHistory": [
+        100.0,
+        99.55
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kabupaten Mimika",
+      "week": "W26-2026",
+      "metaMarketSharePct": 89.97,
+      "shareByOperator": {
+        "tsel": 89.97,
+        "xlLegacy": 0.27,
+        "isat": 9.53,
+        "three": 2.02,
+        "smartfren": 0.12,
+        "xl": 0.43,
+        "ioh": 11.88
+      },
+      "metaMarketSharePrevPct": 90.45,
+      "metaShareHistory": [
+        90.45,
+        89.97
+      ]
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Jayapura",
+      "week": "W26-2026",
+      "metaMarketSharePct": 94.47,
+      "shareByOperator": {
+        "tsel": 94.47,
+        "xlLegacy": 0.25,
+        "isat": 5.55,
+        "three": 1.06,
+        "smartfren": 0.1,
+        "xl": 0.35,
+        "ioh": 6.73
+      },
+      "metaMarketSharePrevPct": 94.26,
+      "metaShareHistory": [
+        94.26,
+        94.47
+      ]
+    },
+    {
+      "level": "Area",
+      "area": "Area 1",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 54.5,
+      "shareByOperator": {
+        "tsel": 54.5,
+        "xlLegacy": 23.37,
+        "isat": 12.64,
+        "three": 10.51,
+        "smartfren": 3.67,
+        "xl": 26.89,
+        "ioh": 22.97
+      },
+      "metaMarketSharePrevPct": 54.59,
+      "metaShareHistory": [
+        54.59,
+        54.5
+      ]
+    },
+    {
+      "level": "Area",
+      "area": "Area 2",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 30.61,
+      "shareByOperator": {
+        "tsel": 30.61,
+        "xlLegacy": 25.81,
+        "isat": 26.4,
+        "three": 14.83,
+        "smartfren": 6.7,
+        "xl": 32.3,
+        "ioh": 40.85
+      },
+      "metaMarketSharePrevPct": 30.67,
+      "metaShareHistory": [
+        30.67,
+        30.61
+      ]
+    },
+    {
+      "level": "Area",
+      "area": "Area 3",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 36.13,
+      "shareByOperator": {
+        "tsel": 36.13,
+        "xlLegacy": 22.04,
+        "isat": 25.32,
+        "three": 10.13,
+        "smartfren": 9.68,
+        "xl": 31.52,
+        "ioh": 35.21
+      },
+      "metaMarketSharePrevPct": 36.28,
+      "metaShareHistory": [
+        36.28,
+        36.13
+      ]
+    },
+    {
+      "level": "Area",
+      "area": "Area 4",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 60.64,
+      "shareByOperator": {
+        "tsel": 60.64,
+        "xlLegacy": 12.88,
+        "isat": 18.15,
+        "three": 8.33,
+        "smartfren": 4.01,
+        "xl": 16.77,
+        "ioh": 26.27
+      },
+      "metaMarketSharePrevPct": 60.84,
+      "metaShareHistory": [
+        60.84,
+        60.64
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 58.97,
+      "shareByOperator": {
+        "tsel": 58.97,
+        "xlLegacy": 24.92,
+        "isat": 7.46,
+        "three": 10.55,
+        "smartfren": 3.04,
+        "xl": 27.85,
+        "ioh": 17.86
+      },
+      "metaMarketSharePrevPct": 58.91,
+      "metaShareHistory": [
+        58.91,
+        58.97
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 64.26,
+      "shareByOperator": {
+        "tsel": 64.26,
+        "xlLegacy": 20.5,
+        "isat": 6.75,
+        "three": 9.58,
+        "smartfren": 2.8,
+        "xl": 23.19,
+        "ioh": 16.22
+      },
+      "metaMarketSharePrevPct": 64.52,
+      "metaShareHistory": [
+        64.52,
+        64.26
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 44.45,
+      "shareByOperator": {
+        "tsel": 44.45,
+        "xlLegacy": 23.83,
+        "isat": 20.91,
+        "three": 11.07,
+        "smartfren": 4.76,
+        "xl": 28.41,
+        "ioh": 31.71
+      },
+      "metaMarketSharePrevPct": 44.53,
+      "metaShareHistory": [
+        44.53,
+        44.45
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.17,
+      "shareByOperator": {
+        "tsel": 32.17,
+        "xlLegacy": 24.19,
+        "isat": 26.6,
+        "three": 14.21,
+        "smartfren": 7.03,
+        "xl": 31.0,
+        "ioh": 40.45
+      },
+      "metaMarketSharePrevPct": 32.26,
+      "metaShareHistory": [
+        32.26,
+        32.17
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 25.81,
+      "shareByOperator": {
+        "tsel": 25.81,
+        "xlLegacy": 21.53,
+        "isat": 34.27,
+        "three": 15.98,
+        "smartfren": 6.76,
+        "xl": 28.12,
+        "ioh": 49.78
+      },
+      "metaMarketSharePrevPct": 25.69,
+      "metaShareHistory": [
+        25.69,
+        25.81
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 33.22,
+      "shareByOperator": {
+        "tsel": 33.22,
+        "xlLegacy": 31.64,
+        "isat": 18.83,
+        "three": 14.43,
+        "smartfren": 6.26,
+        "xl": 37.63,
+        "ioh": 33.03
+      },
+      "metaMarketSharePrevPct": 33.37,
+      "metaShareHistory": [
+        33.37,
+        33.22
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 29.09,
+      "shareByOperator": {
+        "tsel": 29.09,
+        "xlLegacy": 19.91,
+        "isat": 26.22,
+        "three": 12.95,
+        "smartfren": 15.75,
+        "xl": 35.36,
+        "ioh": 38.83
+      },
+      "metaMarketSharePrevPct": 29.35,
+      "metaShareHistory": [
+        29.35,
+        29.09
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 35.11,
+      "shareByOperator": {
+        "tsel": 35.11,
+        "xlLegacy": 20.2,
+        "isat": 32.16,
+        "three": 9.44,
+        "smartfren": 6.19,
+        "xl": 26.23,
+        "ioh": 41.34
+      },
+      "metaMarketSharePrevPct": 35.11,
+      "metaShareHistory": [
+        35.11,
+        35.11
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 52.89,
+      "shareByOperator": {
+        "tsel": 52.89,
+        "xlLegacy": 30.05,
+        "isat": 10.37,
+        "three": 5.57,
+        "smartfren": 3.52,
+        "xl": 33.47,
+        "ioh": 15.87
+      },
+      "metaMarketSharePrevPct": 53.22,
+      "metaShareHistory": [
+        53.22,
+        52.89
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 53.24,
+      "shareByOperator": {
+        "tsel": 53.24,
+        "xlLegacy": 15.53,
+        "isat": 24.13,
+        "three": 9.35,
+        "smartfren": 1.78,
+        "xl": 17.27,
+        "ioh": 33.27
+      },
+      "metaMarketSharePrevPct": 53.31,
+      "metaShareHistory": [
+        53.31,
+        53.24
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 57.7,
+      "shareByOperator": {
+        "tsel": 57.7,
+        "xlLegacy": 14.01,
+        "isat": 16.89,
+        "three": 9.32,
+        "smartfren": 6.71,
+        "xl": 20.54,
+        "ioh": 25.99
+      },
+      "metaMarketSharePrevPct": 57.96,
+      "metaShareHistory": [
+        57.96,
+        57.7
+      ]
+    },
+    {
+      "level": "Region",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 94.22,
+      "shareByOperator": {
+        "tsel": 94.22,
+        "xlLegacy": 0.5,
+        "isat": 5.04,
+        "three": 1.26,
+        "smartfren": 0.14,
+        "xl": 0.62,
+        "ioh": 6.31
+      },
+      "metaMarketSharePrevPct": 94.41,
+      "metaShareHistory": [
+        94.41,
+        94.22
+      ]
+    },
+    {
+      "level": "Area Group",
+      "area": "ALL",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 33.37,
+      "shareByOperator": {
+        "tsel": 33.37,
+        "xlLegacy": 23.92,
+        "isat": 25.86,
+        "three": 12.47,
+        "smartfren": 8.2,
+        "xl": 31.91,
+        "ioh": 38.02
+      },
+      "island": "Java",
+      "metaMarketSharePrevPct": 33.48,
+      "metaShareHistory": [
+        33.48,
+        33.37
+      ]
+    },
+    {
+      "level": "Area Group",
+      "area": "ALL",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 57.09,
+      "shareByOperator": {
+        "tsel": 57.09,
+        "xlLegacy": 18.85,
+        "isat": 15.07,
+        "three": 9.57,
+        "smartfren": 3.82,
+        "xl": 22.54,
+        "ioh": 24.45
+      },
+      "island": "Non Java",
+      "metaMarketSharePrevPct": 57.22,
+      "metaShareHistory": [
+        57.22,
+        57.09
+      ]
+    },
+    {
+      "level": "Nationwide",
+      "area": "ALL",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 43.17,
+      "shareByOperator": {
+        "tsel": 43.17,
+        "xlLegacy": 21.8,
+        "isat": 21.38,
+        "three": 11.25,
+        "smartfren": 6.39,
+        "xl": 28.01,
+        "ioh": 32.37
+      },
+      "metaMarketSharePrevPct": 43.29,
+      "metaShareHistory": [
+        43.29,
+        43.17
+      ]
+    },
+    {
+      "level": "Archetype",
+      "area": "ALL",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 59.31,
+      "shareByOperator": {
+        "tsel": 59.31,
+        "xlLegacy": 19.87,
+        "isat": 12.93,
+        "three": 9.51,
+        "smartfren": 3.09,
+        "xl": 22.81,
+        "ioh": 22.27
+      },
+      "archetype": "Basic",
+      "metaMarketSharePrevPct": 59.43,
+      "metaShareHistory": [
+        59.43,
+        59.31
+      ]
+    },
+    {
+      "level": "Archetype",
+      "area": "ALL",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 32.21,
+      "shareByOperator": {
+        "tsel": 32.21,
+        "xlLegacy": 24.47,
+        "isat": 26.23,
+        "three": 12.87,
+        "smartfren": 8.25,
+        "xl": 32.5,
+        "ioh": 38.78
+      },
+      "archetype": "Compete",
+      "metaMarketSharePrevPct": 32.32,
+      "metaShareHistory": [
+        32.32,
+        32.21
+      ]
+    },
+    {
+      "level": "Archetype",
+      "area": "ALL",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 84.68,
+      "shareByOperator": {
+        "tsel": 84.68,
+        "xlLegacy": 6.61,
+        "isat": 7.0,
+        "three": 3.48,
+        "smartfren": 0.97,
+        "xl": 7.56,
+        "ioh": 10.37
+      },
+      "archetype": "Fortress",
+      "metaMarketSharePrevPct": 84.82,
+      "metaShareHistory": [
+        84.82,
+        84.68
+      ]
+    },
+    {
+      "level": "Archetype",
+      "area": "ALL",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 94.15,
+      "shareByOperator": {
+        "tsel": 94.15,
+        "xlLegacy": 0.8,
+        "isat": 4.55,
+        "three": 1.75,
+        "smartfren": 0.16,
+        "xl": 0.94,
+        "ioh": 6.26
+      },
+      "archetype": "Super Fortress",
+      "metaMarketSharePrevPct": 94.05,
+      "metaShareHistory": [
+        94.05,
+        94.15
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 2",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 30.61,
+      "shareByOperator": {
+        "tsel": 30.61,
+        "xlLegacy": 25.81,
+        "isat": 26.4,
+        "three": 14.83,
+        "smartfren": 6.7,
+        "xl": 32.3,
+        "ioh": 40.85
+      },
+      "archetype": "Compete",
+      "metaMarketSharePrevPct": 30.67,
+      "metaShareHistory": [
+        30.67,
+        30.61
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 3",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 31.26,
+      "shareByOperator": {
+        "tsel": 31.26,
+        "xlLegacy": 22.78,
+        "isat": 27.75,
+        "three": 10.86,
+        "smartfren": 10.77,
+        "xl": 33.32,
+        "ioh": 38.34
+      },
+      "archetype": "Compete",
+      "metaMarketSharePrevPct": 31.4,
+      "metaShareHistory": [
+        31.4,
+        31.26
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 1",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 54.69,
+      "shareByOperator": {
+        "tsel": 54.69,
+        "xlLegacy": 24.52,
+        "isat": 10.96,
+        "three": 11.13,
+        "smartfren": 3.66,
+        "xl": 28.03,
+        "ioh": 21.91
+      },
+      "archetype": "Basic",
+      "metaMarketSharePrevPct": 54.79,
+      "metaShareHistory": [
+        54.79,
+        54.69
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 2",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 33.82,
+      "shareByOperator": {
+        "tsel": 33.82,
+        "xlLegacy": 22.8,
+        "isat": 24.93,
+        "three": 15.5,
+        "smartfren": 7.4,
+        "xl": 29.96,
+        "ioh": 40.04
+      },
+      "archetype": "Basic",
+      "metaMarketSharePrevPct": 33.9,
+      "metaShareHistory": [
+        33.9,
+        33.82
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 3",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 50.06,
+      "shareByOperator": {
+        "tsel": 50.06,
+        "xlLegacy": 26.23,
+        "isat": 15.02,
+        "three": 6.59,
+        "smartfren": 4.79,
+        "xl": 30.78,
+        "ioh": 21.44
+      },
+      "archetype": "Basic",
+      "metaMarketSharePrevPct": 50.34,
+      "metaShareHistory": [
+        50.34,
+        50.06
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 4",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 48.14,
+      "shareByOperator": {
+        "tsel": 48.14,
+        "xlLegacy": 17.37,
+        "isat": 22.46,
+        "three": 10.98,
+        "smartfren": 5.74,
+        "xl": 22.96,
+        "ioh": 33.19
+      },
+      "archetype": "Basic",
+      "metaMarketSharePrevPct": 48.27,
+      "metaShareHistory": [
+        48.27,
+        48.14
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 1",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 75.93,
+      "shareByOperator": {
+        "tsel": 75.93,
+        "xlLegacy": 13.45,
+        "isat": 7.23,
+        "three": 5.38,
+        "smartfren": 1.49,
+        "xl": 14.87,
+        "ioh": 12.55
+      },
+      "archetype": "Fortress",
+      "metaMarketSharePrevPct": 75.99,
+      "metaShareHistory": [
+        75.99,
+        75.93
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 3",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 87.98,
+      "shareByOperator": {
+        "tsel": 87.98,
+        "xlLegacy": 4.58,
+        "isat": 4.59,
+        "three": 4.77,
+        "smartfren": 0.94,
+        "xl": 5.53,
+        "ioh": 9.26
+      },
+      "archetype": "Fortress",
+      "metaMarketSharePrevPct": 88.06,
+      "metaShareHistory": [
+        88.06,
+        87.98
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 4",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 78.33,
+      "shareByOperator": {
+        "tsel": 78.33,
+        "xlLegacy": 6.64,
+        "isat": 12.84,
+        "three": 4.49,
+        "smartfren": 1.11,
+        "xl": 7.7,
+        "ioh": 17.23
+      },
+      "archetype": "Fortress",
+      "metaMarketSharePrevPct": 78.53,
+      "metaShareHistory": [
+        78.53,
+        78.33
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 1",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 92.63,
+      "shareByOperator": {
+        "tsel": 92.63,
+        "xlLegacy": 2.83,
+        "isat": 1.1,
+        "three": 5.02,
+        "smartfren": 0.33,
+        "xl": 3.05,
+        "ioh": 6.2
+      },
+      "archetype": "Super Fortress",
+      "metaMarketSharePrevPct": 92.27,
+      "metaShareHistory": [
+        92.27,
+        92.63
+      ]
+    },
+    {
+      "level": "Archetype Area",
+      "area": "Area 4",
+      "region": "ALL",
+      "city": "ALL",
+      "week": "W26-2026",
+      "metaMarketSharePct": 94.19,
+      "shareByOperator": {
+        "tsel": 94.19,
+        "xlLegacy": 0.51,
+        "isat": 5.05,
+        "three": 1.27,
+        "smartfren": 0.13,
+        "xl": 0.64,
+        "ioh": 6.28
+      },
+      "archetype": "Super Fortress",
+      "metaMarketSharePrevPct": 94.33,
+      "metaShareHistory": [
+        94.33,
+        94.19
+      ]
+    }
+  ]
+}

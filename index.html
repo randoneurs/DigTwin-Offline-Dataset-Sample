@@ -239,6 +239,7 @@
   .kpi-mid{ display:flex; align-items:baseline; gap:10px; margin-top:8px; flex-wrap:wrap; }
   .kpi-value{ font-size:26px; font-weight:700; }
   .kpi-delta{ font-size:12px; font-weight:700; }
+  .kpi-compare{ font-size:11px; color:var(--text-3); margin-top:4px; }
   .kpi-spark{ margin-top:8px; opacity:0.92; }
   .kpi-spark svg{ display:block; }
 
@@ -1210,22 +1211,28 @@
      and drop the resulting JSON in here via "Load snapshot" below — read locally in the browser, no network call.
      Expected shape (see the "Snapshot format" button in the UI for the full example):
      { "generatedAt": ISO datetime, "rows": [ { area, region, city, week,
-         metaMarketSharePct, metaMarketSharePrevPct, metaShareHistory[8],
+         metaMarketSharePct, metaMarketSharePrevPct, metaShareHistory[8], shareByOperator{tsel,xl,ioh,...},
          csiNpsScore, csiNpsPrevScore, csiNpsHistory[8],
          networkExperienceBenchmarkScore, networkExperienceBenchmarkPrevScore, networkBenchmarkHistory[8] }, ... ] }
      Rows may be filed at any grain (city, region, area, or "ALL" rollups) — the lookup below falls back from
-     city -> region -> area -> national for whatever grain your export actually covers.
+     city -> region -> area -> national for whatever grain your export actually covers. Rows may also carry an
+     "island" (Java / Non Java) or "archetype" (Basic / Compete / Fortress / Super Fortress) tag instead of a
+     city/region — those aren't wired to a filter dropdown yet, but ride along in the snapshot for MarketSight's
+     Ask card to reference. metaMarketSharePct is Telkomsel's own share (for the KPI tile); shareByOperator carries
+     every operator's % at that same row so the tile can show a competitor comparison and the Ask card can quote
+     exact numbers. Generate this file from the META market-share exports with scripts/build_snapshot.py.
   */
   let hadoopSnapshot = null;
 
   const HADOOP_SCHEMA_EXAMPLE = {
     generatedAt: "2026-07-10T09:32:00+07:00",
-    note: "One row per (area, region, city, week) combination your export covers. Use \"ALL\" for area/region/city to file a rollup row (e.g. a national row is area=ALL, region=ALL, city=ALL). week must match this dashboard's period format, e.g. \"W28-2026\".",
+    note: "One row per (area, region, city, week) combination your export covers. Use \"ALL\" for area/region/city to file a rollup row (e.g. a national row is area=ALL, region=ALL, city=ALL); use \"island\" or \"archetype\" instead for those grains. week must match this dashboard's period format, e.g. \"W28-2026\".",
     rows: [
       {
         area: "Area 3", region: "JATIM", city: "Kota Surabaya", week: "W28-2026",
         metaMarketSharePct: 36.8, metaMarketSharePrevPct: 38.1,
         metaShareHistory: [39.4,39.0,38.8,38.5,38.3,38.1,37.6,36.8],
+        shareByOperator: { tsel: 36.8, xl: 24.1, ioh: 32.2, isat: 23.2, three: 13.2, smartfren: 9.0, xlLegacy: 21.1 },
         csiNpsScore: 41.2, csiNpsPrevScore: 47.0,
         csiNpsHistory: [48.5,48.0,47.6,47.2,47.0,44.5,42.0,41.2],
         networkExperienceBenchmarkScore: 72.4, networkExperienceBenchmarkPrevScore: 75.9,
@@ -1235,10 +1242,19 @@
         area: "ALL", region: "ALL", city: "ALL", week: "W28-2026",
         metaMarketSharePct: 38.1, metaMarketSharePrevPct: 38.6,
         metaShareHistory: [39.0,38.9,38.8,38.7,38.6,38.4,38.2,38.1],
+        shareByOperator: { tsel: 38.1, xl: 24.9, ioh: 30.5 },
         csiNpsScore: 57.0, csiNpsPrevScore: 58.4,
         csiNpsHistory: [59.0,58.8,58.6,58.4,58.4,58.0,57.4,57.0],
         networkExperienceBenchmarkScore: 74.9, networkExperienceBenchmarkPrevScore: 75.6,
         networkBenchmarkHistory: [76.2,76.0,75.9,75.8,75.6,75.4,75.1,74.9]
+      },
+      {
+        area: "ALL", region: "ALL", city: "ALL", week: "W28-2026", island: "Java",
+        metaMarketSharePct: 33.4, shareByOperator: { tsel: 33.4, xl: 31.9, ioh: 38.0 }
+      },
+      {
+        area: "Area 2", region: "ALL", city: "ALL", week: "W28-2026", archetype: "Compete",
+        metaMarketSharePct: 30.6, shareByOperator: { tsel: 30.6, xl: 32.3, ioh: 40.9 }
       }
     ]
   };
@@ -1269,29 +1285,62 @@
   }
 
   function getCoreKPIs(scope, rng){
+    // Market share comes from the Hadoop snapshot when a row is available for
+    // this scope; CSI-NPS and Network Benchmark aren't in that export yet, so
+    // each metric falls back to a modeled estimate independently instead of
+    // the whole tile going modeled just because one sibling metric is missing.
     const row = findSnapshotRow(scope);
-    if(row){
-      const shareDelta = round1(row.metaMarketSharePct - (row.metaMarketSharePrevPct != null ? row.metaMarketSharePrevPct : row.metaMarketSharePct));
-      const npsDelta = round1(row.csiNpsScore - (row.csiNpsPrevScore != null ? row.csiNpsPrevScore : row.csiNpsScore));
-      const benchDelta = round1(row.networkExperienceBenchmarkScore - (row.networkExperienceBenchmarkPrevScore != null ? row.networkExperienceBenchmarkPrevScore : row.networkExperienceBenchmarkScore));
-      return {
-        source: 'hadoop', generatedAt: hadoopSnapshot.generatedAt,
-        metaShare: row.metaMarketSharePct, metaShareDelta: shareDelta, metaShareHistory: row.metaShareHistory,
-        csiNps: row.csiNpsScore, csiNpsDelta: npsDelta, csiNpsHistory: row.csiNpsHistory,
-        netBench: row.networkExperienceBenchmarkScore, netBenchDelta: benchDelta, netBenchHistory: row.networkBenchmarkHistory
-      };
+    const hasShare = row && row.metaMarketSharePct != null;
+
+    let metaShare, metaShareDelta, metaShareHistory, metaShareSource, shareByOperator;
+    if(hasShare){
+      metaShare = row.metaMarketSharePct;
+      metaShareDelta = round1(row.metaMarketSharePct - (row.metaMarketSharePrevPct != null ? row.metaMarketSharePrevPct : row.metaMarketSharePct));
+      metaShareHistory = row.metaShareHistory;
+      metaShareSource = 'hadoop';
+      shareByOperator = row.shareByOperator || null;
+    } else {
+      metaShare = round1(jitter(rng, 38.4, 3.2));
+      metaShareDelta = round1(jitter(rng, -0.6, 1.1));
+      metaShareHistory = walkTo(rng, metaShare, 8, 0.6);
+      metaShareSource = 'modeled';
+      shareByOperator = null;
     }
-    const metaShare = round1(jitter(rng, 38.4, 3.2));
-    const metaShareDelta = round1(jitter(rng, -0.6, 1.1));
-    const csiNps = round1(jitter(rng, 58, 6));
-    const csiNpsDelta = round1(jitter(rng, -2.5, 2.5));
-    const netBench = round1(jitter(rng, 74, 6));
-    const netBenchDelta = round1(jitter(rng, -1.0, 2.0));
+
+    const hasNps = row && row.csiNpsScore != null;
+    let csiNps, csiNpsDelta, csiNpsHistory, csiNpsSource;
+    if(hasNps){
+      csiNps = row.csiNpsScore;
+      csiNpsDelta = round1(row.csiNpsScore - (row.csiNpsPrevScore != null ? row.csiNpsPrevScore : row.csiNpsScore));
+      csiNpsHistory = row.csiNpsHistory;
+      csiNpsSource = 'hadoop';
+    } else {
+      csiNps = round1(jitter(rng, 58, 6));
+      csiNpsDelta = round1(jitter(rng, -2.5, 2.5));
+      csiNpsHistory = walkTo(rng, csiNps, 8, 1.2);
+      csiNpsSource = 'modeled';
+    }
+
+    const hasBench = row && row.networkExperienceBenchmarkScore != null;
+    let netBench, netBenchDelta, netBenchHistory, netBenchSource;
+    if(hasBench){
+      netBench = row.networkExperienceBenchmarkScore;
+      netBenchDelta = round1(row.networkExperienceBenchmarkScore - (row.networkExperienceBenchmarkPrevScore != null ? row.networkExperienceBenchmarkPrevScore : row.networkExperienceBenchmarkScore));
+      netBenchHistory = row.networkBenchmarkHistory;
+      netBenchSource = 'hadoop';
+    } else {
+      netBench = round1(jitter(rng, 74, 6));
+      netBenchDelta = round1(jitter(rng, -1.0, 2.0));
+      netBenchHistory = walkTo(rng, netBench, 8, 1.0);
+      netBenchSource = 'modeled';
+    }
+
     return {
-      source: 'modeled',
-      metaShare, metaShareDelta, metaShareHistory: walkTo(rng, metaShare, 8, 0.6),
-      csiNps, csiNpsDelta, csiNpsHistory: walkTo(rng, csiNps, 8, 1.2),
-      netBench, netBenchDelta, netBenchHistory: walkTo(rng, netBench, 8, 1.0)
+      source: (hasShare || hasNps || hasBench) ? 'hadoop' : 'modeled',
+      generatedAt: hadoopSnapshot ? hadoopSnapshot.generatedAt : null,
+      metaShare, metaShareDelta, metaShareHistory, metaShareSource, shareByOperator,
+      csiNps, csiNpsDelta, csiNpsHistory, csiNpsSource,
+      netBench, netBenchDelta, netBenchHistory, netBenchSource
     };
   }
 
@@ -1312,7 +1361,7 @@
       '</svg>';
   }
 
-  function kpiTile(label, value, unit, delta, source, history, accent, detailKey){
+  function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine){
     const deltaColor = delta == null ? 'var(--text-3)' : (delta >= 0 ? 'var(--good)' : 'var(--bad)');
     const arrow = delta == null ? '' : (delta >= 0 ? '▲' : '▼');
     const sourceChip = source === 'hadoop'
@@ -1324,8 +1373,19 @@
           '<span class="kpi-value num">' + value + unit + '</span>' +
           (delta != null ? '<span class="kpi-delta num" style="color:' + deltaColor + '">' + arrow + ' ' + Math.abs(delta) + ' WoW</span>' : '') +
         '</div>' +
+        (compareLine ? '<div class="kpi-compare">' + compareLine + '</div>' : '') +
         '<div class="kpi-spark">' + sparkline(history, accent) + '</div>' +
       '</div>';
+  }
+
+  function shareCompareLine(shareByOperator){
+    if(!shareByOperator) return '';
+    const xl = shareByOperator.xl, ioh = shareByOperator.ioh;
+    if(xl == null && ioh == null) return '';
+    const parts = [];
+    if(xl != null) parts.push('XLSmart ' + xl + '%');
+    if(ioh != null) parts.push('IOH ' + ioh + '%');
+    return 'vs ' + parts.join(' · ');
   }
 
   let lastKPIs = null;
@@ -1333,9 +1393,9 @@
     lastKPIs = kpis;
     const row = document.getElementById('kpiRow');
     row.innerHTML =
-      kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.source, kpis.metaShareHistory, 'var(--brand)', 'kpi-share') +
-      kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.source, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps') +
-      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.source, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench');
+      kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.metaShareSource, kpis.metaShareHistory, 'var(--brand)', 'kpi-share', shareCompareLine(kpis.shareByOperator)) +
+      kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.csiNpsSource, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps') +
+      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.netBenchSource, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench');
 
     const status = document.getElementById('hbStatus');
     if(kpis.source === 'hadoop'){
@@ -2050,7 +2110,7 @@
     narrative.innerHTML =
       'Telkomsel market share in <b>' + place + '</b> stands at <b>' + share + '%</b> ' +
       'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + Math.abs(delta) + 'pt WoW</span>' +
-      (kpis.source === 'hadoop' ? ', sourced from the latest Hadoop Meta Market Share extract' : ', modeled pending a live Hadoop snapshot') + '). ' +
+      (kpis.metaShareSource === 'hadoop' ? ', sourced from the latest Hadoop Meta Market Share extract' : ', modeled pending a live Hadoop snapshot') + '). ' +
       'Cross-signal review points to three converging drivers: a <b>RETINA field outlet scan</b> confirms IOH opened ' +
       '<b class="num-cite">' + outlets + ' new outlets/kiosks</b> in the scoped area over the past 3 weeks as part of a network densification push; ' +
       'this coincides with a <span class="' + npsCls + '">' + npsPhrase + '</span>' +
@@ -2453,13 +2513,45 @@
   /* ================= AI QUESTION ENGINE ================= */
   const MARKETSIGHT_API = 'https://marketsight-ruby.vercel.app/api/chat';
 
+  function fmtShareByOperator(shareByOperator){
+    if(!shareByOperator) return '';
+    return Object.keys(OPERATORS)
+      .filter(k => shareByOperator[k] != null)
+      .map(k => OPERATORS[k].name + ' ' + shareByOperator[k] + '%')
+      .join(', ');
+  }
+
+  // Precise META market-share figures (per operator) straight from the loaded Hadoop
+  // snapshot, so the Ask card can quote exact numbers instead of paraphrasing the
+  // rendered KPI tile. Covers the current filter scope plus the rollups (national,
+  // island, archetype) that don't have their own filter dropdown yet.
+  function hadoopMarketShareContext(){
+    if(!hadoopSnapshot || !Array.isArray(hadoopSnapshot.rows)) return '';
+    const rows = hadoopSnapshot.rows;
+    const scopeRow = findSnapshotRow(rawScope());
+    const nationalRow = rows.find(r => r.area === 'ALL' && r.region === 'ALL' && r.city === 'ALL' && !r.island && !r.archetype);
+    const islandRows = rows.filter(r => r.island);
+    const archetypeRows = rows.filter(r => r.archetype);
+
+    const lines = [];
+    if(scopeRow && scopeRow.shareByOperator) lines.push('Meta market share (current scope): ' + fmtShareByOperator(scopeRow.shareByOperator));
+    if(nationalRow && nationalRow.shareByOperator) lines.push('Meta market share (national): ' + fmtShareByOperator(nationalRow.shareByOperator));
+    islandRows.forEach(r => { if(r.shareByOperator) lines.push('Meta market share (' + r.island + '): ' + fmtShareByOperator(r.shareByOperator)); });
+    archetypeRows.forEach(r => {
+      if(!r.shareByOperator) return;
+      const label = r.archetype + (r.area && r.area !== 'ALL' ? ' / ' + r.area : '');
+      lines.push('Meta market share (' + label + ' archetype): ' + fmtShareByOperator(r.shareByOperator));
+    });
+    return lines.join('\n');
+  }
+
   function dashboardContextText(){
     const s = scopeLabel();
     const pick = id => {
       const el = document.getElementById(id);
       return el ? el.textContent.trim().replace(/\s+/g, ' ') : '';
     };
-    return [
+    const lines = [
       'Scope: area=' + s.area + ', region=' + s.region + ', city=' + s.city + ', week=' + s.week,
       'Executive summary: ' + pick('execSummaryText'),
       'Synthesis: ' + pick('synthNarrative'),
@@ -2467,7 +2559,10 @@
       'Product sentiment: ' + pick('sentimentList'),
       'Competitive scorecard: ' + pick('scorecardGrid'),
       'Core KPIs: ' + pick('kpiRow')
-    ].filter(line => !/: $/.test(line)).join('\n');
+    ].filter(line => !/: $/.test(line));
+    const shareDetail = hadoopMarketShareContext();
+    if(shareDetail) lines.push(shareDetail);
+    return lines.join('\n');
   }
 
   function aiAnswerFor(question){
@@ -2774,13 +2869,13 @@
 
   function buildKpiModal(metric){
     if(!lastKPIs) return { eyebrow:'Core KPI', title:'No data yet', body:'<p>Apply a filter to load data.</p>' };
-    const src = lastKPIs.source === 'hadoop'
+    const srcFor = (metricSource) => metricSource === 'hadoop'
       ? 'Sourced from the loaded Hadoop snapshot for the current filter scope.'
       : 'Modeled estimate — load a Hadoop snapshot above (see the control bar) for real figures.';
     if(metric === 'share'){
       return { eyebrow:'Core KPI · Meta Market Share', title:'Meta Market Share — ' + lastKPIs.metaShare + '%',
         body:
-          '<p>Blended market share, recomputed for the active Area/Region/City/Week filter. ' + src + '</p>' +
+          '<p>Blended market share, recomputed for the active Area/Region/City/Week filter. ' + srcFor(lastKPIs.metaShareSource) + '</p>' +
           buildMonthlyTrendSection(SHARE_TREND_MONTHLY, 'Monthly market share trend — national (TSEL vs IOH vs XLSmart)') +
           '<div><div class="modal-section-label">Latest position by Area &amp; Region</div>' + buildAreaRegionTable(MARKET_BY_REGION, '%', 'Share') + '</div>' +
           '<div><div class="modal-section-label">Cities losing share (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_SHARE, '%', 'Share') + '</div>'
@@ -2789,7 +2884,7 @@
     if(metric === 'nps'){
       return { eyebrow:'Core KPI · CSI-NPS Score', title:'CSI-NPS Score — ' + lastKPIs.csiNps,
         body:
-          '<p>Blended Customer Satisfaction Index + Net Promoter Score for the active scope. ' + src + '</p>' +
+          '<p>Blended Customer Satisfaction Index + Net Promoter Score for the active scope. ' + srcFor(lastKPIs.csiNpsSource) + '</p>' +
           buildMonthlyTrendSection(NPS_TREND_MONTHLY, 'Monthly CSI-NPS trend — national (TSEL vs IOH vs XLSmart)') +
           '<div><div class="modal-section-label">Latest position by Area &amp; Region</div>' + buildAreaRegionTable(NPS_BY_REGION, '', 'Score') + '</div>' +
           '<div><div class="modal-section-label">Cities losing ground (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_NPS, '', 'Score') + '</div>'
@@ -2797,7 +2892,7 @@
     }
     return { eyebrow:'Core KPI · Network Experience Benchmark', title:'Network Experience Benchmark — ' + lastKPIs.netBench,
       body:
-        '<p>Third-party / crowdsourced network quality benchmark score for the active scope. ' + src + '</p>' +
+        '<p>Third-party / crowdsourced network quality benchmark score for the active scope. ' + srcFor(lastKPIs.netBenchSource) + '</p>' +
         buildMonthlyTrendSection(BENCH_TREND_MONTHLY, 'Monthly Network Experience Benchmark trend — national (TSEL vs IOH vs XLSmart)') +
         '<div><div class="modal-section-label">Latest position by Area &amp; Region</div>' + buildAreaRegionTable(BENCH_BY_REGION, '', 'Score') + '</div>' +
         '<div><div class="modal-section-label">Cities losing ground (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_BENCH, '', 'Score') + '</div>'

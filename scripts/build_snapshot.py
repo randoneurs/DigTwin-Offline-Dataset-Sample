@@ -1,0 +1,262 @@
+#!/usr/bin/env python3
+"""Convert META market-share CSV exports into the JSON snapshot index.html loads
+via "Load snapshot (.json)". Run this whenever new all_city_operator_*.csv /
+region_*.csv files land, then drop the resulting file into the dashboard.
+
+Usage:
+  python3 scripts/build_snapshot.py \
+      --date 20260628 --all-city all_city_operator_20260628.csv --region region_20260628.csv \
+      --prev-date 20260524 --prev-all-city all_city_operator_20260524.csv --prev-region region_20260524.csv \
+      --out snapshot_20260628.json
+
+--prev-* is optional; when given, week-over-week deltas and a 2-point sparkline
+are computed from real data instead of being left null.
+"""
+import argparse
+import csv
+import json
+import re
+import sys
+from datetime import date
+
+AREA_MAP = {
+    "Area 1": ["SUMBAGUT", "SUMBAGTENG", "SUMBAGSEL"],
+    "Area 2": ["JAKARTA-BANTEN", "EASTERN JABOTABEK", "JABAR"],
+    "Area 3": ["JATENG-DIY", "JATIM", "BALINUSRA"],
+    "Area 4": ["KALIMANTAN", "SULAWESI", "PUMA"],
+}
+REGION_TO_AREA = {region: area for area, regions in AREA_MAP.items() for region in regions}
+
+# region_*.csv's "Region" column (any case) -> this dashboard's REGION_LABELS key.
+REGION_CSV_TO_KEY = {
+    "sumbagut": "SUMBAGUT",
+    "sumbagteng": "SUMBAGTENG",
+    "sumbagsel": "SUMBAGSEL",
+    "jakarta banten": "JAKARTA-BANTEN",
+    "eastern jabotabek": "EASTERN JABOTABEK",
+    "jabar": "JABAR",
+    "jateng": "JATENG-DIY",
+    "jatim": "JATIM",
+    "balinusra": "BALINUSRA",
+    "kalimantan": "KALIMANTAN",
+    "sulawesi": "SULAWESI",
+    "puma": "PUMA",
+}
+
+# The dashboard's curated CITY_MAP (index.html) — only these cities resolve
+# through the fArea/fRegion/fCity filters, so only these are pulled from the
+# 510-city CSV. Everything else in the CSV is real data but isn't reachable
+# from a dropdown yet.
+CITY_MAP = {
+    "SUMBAGUT": ["Kota Medan", "Kota Banda Aceh", "Kabupaten Deli Serdang", "Kota Pematangsiantar", "Kota Binjai", "Kabupaten Langkat", "Kota Lhokseumawe", "Kabupaten Simalungun"],
+    "SUMBAGTENG": ["Kota Pekanbaru", "Kota Padang", "Kota Batam", "Kota Jambi", "Kota Dumai", "Kabupaten Kampar", "Kota Tanjungpinang", "Kabupaten Bungo"],
+    "SUMBAGSEL": ["Kota Palembang", "Kota Bandar Lampung", "Kota Bengkulu", "Kota Pangkalpinang", "Kabupaten Ogan Ilir", "Kota Prabumulih", "Kabupaten Lampung Selatan", "Kota Metro"],
+    "JAKARTA-BANTEN": ["Kota Jakarta Selatan", "Kota Jakarta Pusat", "Kota Tangerang", "Kota Tangerang Selatan", "Kota Serang", "Kabupaten Tangerang", "Kota Cilegon", "Kota Jakarta Barat"],
+    "EASTERN JABOTABEK": ["Kota Bekasi", "Kabupaten Bekasi", "Kota Depok", "Kota Bogor", "Kabupaten Bogor", "Kota Jakarta Timur", "Kabupaten Karawang", "Kota Jakarta Utara"],
+    "JABAR": ["Kota Bandung", "Kota Cirebon", "Kabupaten Bandung", "Kota Sukabumi", "Kota Tasikmalaya", "Kabupaten Garut", "Kota Cimahi", "Kabupaten Sumedang"],
+    "JATENG-DIY": ["Kota Semarang", "Kota Yogyakarta", "Kota Surakarta", "Kabupaten Sleman", "Kota Magelang", "Kota Tegal", "Kabupaten Banyumas", "Kota Pekalongan"],
+    "JATIM": ["Kota Surabaya", "Kota Malang", "Kota Kediri", "Kabupaten Sidoarjo", "Kota Madiun", "Kabupaten Jember", "Kota Mojokerto", "Kabupaten Banyuwangi"],
+    "BALINUSRA": ["Kota Denpasar", "Kabupaten Badung", "Kota Mataram", "Kota Kupang", "Kabupaten Sumbawa", "Kabupaten Buleleng", "Kabupaten Lombok Barat", "Kabupaten Ende"],
+    "KALIMANTAN": ["Kota Balikpapan", "Kota Samarinda", "Kota Banjarmasin", "Kota Pontianak", "Kota Palangka Raya", "Kabupaten Kutai Kartanegara", "Kota Tarakan", "Kota Banjarbaru"],
+    "SULAWESI": ["Kota Makassar", "Kota Manado", "Kota Palu", "Kota Kendari", "Kota Gorontalo", "Kabupaten Bone", "Kota Pare-Pare", "Kabupaten Minahasa"],
+    "PUMA": ["Kota Jayapura", "Kota Ambon", "Kabupaten Merauke", "Kota Sorong", "Kabupaten Mimika", "Kota Ternate", "Kabupaten Jayawijaya", "Kota Manokwari"],
+}
+
+
+# Known spots where the CSV's spelling doesn't follow the generic "Kota X" ->
+# "KOTA X" / "Kabupaten X" -> "X" rule (checked against a real export).
+CITY_NAME_OVERRIDES = {
+    "Kota Pematangsiantar": "KOTA PEMATANG SIANTAR",
+    "Kota Tanjungpinang": "KOTA TANJUNG PINANG",
+    "Kota Jakarta Selatan": "JAKARTA SELATAN",
+    "Kota Jakarta Pusat": "JAKARTA PUSAT",
+    "Kota Jakarta Barat": "JAKARTA BARAT",
+    "Kota Jakarta Timur": "JAKARTA TIMUR",
+    "Kota Jakarta Utara": "JAKARTA UTARA",
+    "Kota Palangka Raya": "KOTA PALANGKARAYA",
+    "Kota Banjarbaru": "KOTA BANJAR BARU",
+    "Kota Manokwari": "MANOKWARI",
+}
+
+
+def city_csv_key(dashboard_name):
+    if dashboard_name in CITY_NAME_OVERRIDES:
+        return CITY_NAME_OVERRIDES[dashboard_name]
+    if dashboard_name.startswith("Kota "):
+        return "KOTA " + dashboard_name[len("Kota "):].upper()
+    if dashboard_name.startswith("Kabupaten "):
+        return dashboard_name[len("Kabupaten "):].upper()
+    return dashboard_name.upper()
+
+
+CITY_CSV_TO_DASHBOARD = {
+    city_csv_key(city): (region, city)
+    for region, cities in CITY_MAP.items()
+    for city in cities
+}
+
+OPERATOR_FIELDS = ["tsel", "xl", "isat", "three", "smartfren", "xl+", "ioh"]
+
+
+def to_float(value):
+    value = (value or "").strip()
+    return float(value) if value else None
+
+
+def share_by_operator(row, keymap):
+    return {
+        "tsel": to_float(row[keymap["tsel"]]),
+        "xlLegacy": to_float(row[keymap["xl"]]),
+        "isat": to_float(row[keymap["isat"]]),
+        "three": to_float(row[keymap["three"]]),
+        "smartfren": to_float(row[keymap["smartfren"]]),
+        # XL+ = XL + Smartfren merged brand ("XLSmart") — this is the dashboard's "xl" operator identity.
+        "xl": to_float(row[keymap["xl+"]]),
+        # IOH = Indosat + Tri merged brand — the dashboard's "ioh" operator identity.
+        "ioh": to_float(row[keymap["ioh"]]),
+    }
+
+
+def header_keymap(fieldnames):
+    lower = {h.lower(): h for h in fieldnames}
+    return {op: lower[op] for op in OPERATOR_FIELDS}
+
+
+def iso_week_label(d):
+    iso_year, iso_week, _ = d.isocalendar()
+    return f"W{iso_week:02d}-{iso_year}"
+
+
+def parse_yyyymmdd(s):
+    return date(int(s[0:4]), int(s[4:6]), int(s[6:8]))
+
+
+def read_all_city(path):
+    """Returns dict: (region_key, dashboard_city_name) -> shareByOperator, plus count of unmatched CSV rows."""
+    out = {}
+    skipped = 0
+    total = 0
+    with open(path, newline="", encoding="utf-8-sig") as f:
+        reader = csv.DictReader(f)
+        keymap = header_keymap(reader.fieldnames)
+        for r in reader:
+            total += 1
+            match = CITY_CSV_TO_DASHBOARD.get(r["CITY"].strip().upper())
+            if not match:
+                skipped += 1
+                continue
+            out[match] = share_by_operator(r, keymap)
+    return out, skipped, total
+
+
+def read_region(path):
+    """Returns list of (level, key_tuple, shareByOperator) where key_tuple is
+    (area, region, city, island, archetype) with 'ALL' for the axes that don't apply."""
+    out = []
+    with open(path, newline="", encoding="utf-8-sig") as f:
+        reader = csv.DictReader(f)
+        keymap = header_keymap(reader.fieldnames)
+        for r in reader:
+            level = r["level"].strip()
+            name = r["Region"].strip()
+            share = share_by_operator(r, keymap)
+            if level == "Nationwide":
+                out.append((level, ("ALL", "ALL", "ALL", None, None), share))
+            elif level == "Area Group":
+                out.append((level, ("ALL", "ALL", "ALL", name, None), share))
+            elif level == "Area":
+                out.append((level, (name, "ALL", "ALL", None, None), share))
+            elif level == "Region":
+                region_key = REGION_CSV_TO_KEY.get(name.lower())
+                if not region_key:
+                    print(f"warning: unmapped region '{name}', skipping", file=sys.stderr)
+                    continue
+                out.append((level, (REGION_TO_AREA[region_key], region_key, "ALL", None, None), share))
+            elif level == "Archetype":
+                out.append((level, ("ALL", "ALL", "ALL", None, name), share))
+            elif level == "Archetype Area":
+                m = re.match(r"^(.*) AREA (\d)$", name, re.IGNORECASE)
+                if not m:
+                    print(f"warning: unrecognized Archetype Area '{name}', skipping", file=sys.stderr)
+                    continue
+                out.append((level, (f"Area {m.group(2)}", "ALL", "ALL", None, m.group(1).strip()), share))
+            else:
+                print(f"warning: unknown level '{level}' for '{name}', skipping", file=sys.stderr)
+    return out
+
+
+def build(args):
+    d = parse_yyyymmdd(args.date)
+    week = iso_week_label(d)
+
+    prev_tsel_by_key = {}
+    if args.prev_date:
+        prev_all_city, _, _ = read_all_city(args.prev_all_city)
+        for (region_key, city_name), share in prev_all_city.items():
+            prev_tsel_by_key[("City", REGION_TO_AREA[region_key], region_key, city_name, None, None)] = share["tsel"]
+        for level, (area, region, city, island, archetype), share in read_region(args.prev_region):
+            prev_tsel_by_key[(level, area, region, city, island, archetype)] = share["tsel"]
+
+    rows = []
+
+    all_city, skipped, total = read_all_city(args.all_city)
+    for (region_key, city_name), share in all_city.items():
+        area_key = REGION_TO_AREA[region_key]
+        prev = prev_tsel_by_key.get(("City", area_key, region_key, city_name, None, None))
+        row = {
+            "level": "City", "area": area_key, "region": region_key, "city": city_name, "week": week,
+            "metaMarketSharePct": share["tsel"], "shareByOperator": share,
+        }
+        if prev is not None:
+            row["metaMarketSharePrevPct"] = prev
+            row["metaShareHistory"] = [prev, share["tsel"]]
+        rows.append(row)
+    if skipped:
+        print(f"note: {skipped} of {total} city rows in {args.all_city} aren't in this dashboard's "
+              f"curated CITY_MAP and were skipped — not an error, just not reachable from a filter dropdown yet.",
+              file=sys.stderr)
+
+    for level, (area, region, city, island, archetype), share in read_region(args.region):
+        prev = prev_tsel_by_key.get((level, area, region, city, island, archetype))
+        row = {
+            "level": level, "area": area, "region": region, "city": city, "week": week,
+            "metaMarketSharePct": share["tsel"], "shareByOperator": share,
+        }
+        if island:
+            row["island"] = island
+        if archetype:
+            row["archetype"] = archetype
+        if prev is not None:
+            row["metaMarketSharePrevPct"] = prev
+            row["metaShareHistory"] = [prev, share["tsel"]]
+        rows.append(row)
+
+    return {
+        "generatedAt": d.isoformat() + "T00:00:00+07:00",
+        "note": "Generated from META market-share exports via scripts/build_snapshot.py — do not hand-edit.",
+        "rows": rows,
+    }
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--date", required=True, help="YYYYMMDD, matches the current CSVs' filename suffix")
+    ap.add_argument("--all-city", required=True, help="path to all_city_operator_YYYYMMDD.csv")
+    ap.add_argument("--region", required=True, help="path to region_YYYYMMDD.csv")
+    ap.add_argument("--prev-date", help="YYYYMMDD for the prior period, to compute real WoW deltas")
+    ap.add_argument("--prev-all-city", help="path to the prior period's all_city_operator CSV")
+    ap.add_argument("--prev-region", help="path to the prior period's region CSV")
+    ap.add_argument("--out", required=True, help="output snapshot JSON path")
+    args = ap.parse_args()
+
+    if args.prev_date and not (args.prev_all_city and args.prev_region):
+        ap.error("--prev-date requires --prev-all-city and --prev-region")
+
+    snapshot = build(args)
+    with open(args.out, "w") as f:
+        json.dump(snapshot, f, indent=2)
+    print(f"wrote {args.out}: {len(snapshot['rows'])} rows")
+
+
+if __name__ == "__main__":
+    main()

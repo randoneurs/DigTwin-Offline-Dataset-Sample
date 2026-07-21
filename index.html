@@ -688,6 +688,8 @@
   .modal-body table.mkt-table td{ padding:5px 8px; border-bottom:1px solid var(--border); }
   .modal-body table.mkt-table tr:last-child td{ border-bottom:none; }
   .modal-body table.mkt-table td.name-cell{ font-family:var(--sans); font-weight:600; color:var(--text-1); }
+  .modal-body table.mkt-table tr:has(td.area-agg-row){ background:rgba(255,255,255,0.035); }
+  .modal-body table.mkt-table td.area-agg-row{ font-weight:800; color:var(--data); }
   .modal-body table.mkt-table th.num, .modal-body table.mkt-table td.num{ text-align:right; width:15%; border-left:1px solid var(--border); }
   .modal-body .area-group-label{
     font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--data);
@@ -2967,16 +2969,23 @@
     const cls = delta >= 0 ? 'delta-up' : 'delta-down';
     return '<td class="num ' + cls + '">' + (delta >= 0 ? '▲' : '▼') + Math.abs(delta) + '</td>';
   }
-  function buildAreaRegionTable(dataByRegion, unit, valueLabel){
-    return Object.keys(AREA_MAP).map(areaName => {
-      const rows = AREA_MAP[areaName].map(r => {
-        const d = dataByRegion[r];
-        return '<tr><td class="name-cell">' + REGION_LABELS[r] + '</td><td class="num">' + d.val + unit + '</td>' +
-          deltaCell(d.wow) + deltaCell(d.mom) + deltaCell(d.yoy) + '</tr>';
-      }).join('');
+  function buildAreaRegionTable(dataByRegion, unit, valueLabel, nationalRow, areaRows){
+    const header = '<thead><tr><th>Region</th><th class="num">' + valueLabel + '</th><th class="num">WoW</th><th class="num">MoM</th><th class="num">YoY</th></tr></thead>';
+    const dataRow = (name, d, cls) => {
+      if(!d) return '';
+      return '<tr><td class="name-cell' + (cls ? ' ' + cls : '') + '">' + name + '</td><td class="num">' + d.val + unit + '</td>' +
+        deltaCell(d.wow) + deltaCell(d.mom) + deltaCell(d.yoy) + '</tr>';
+    };
+    const nationalSection = nationalRow
+      ? '<div class="area-group-label">Nationwide</div><table class="mkt-table">' + header + '<tbody>' + dataRow('National', nationalRow) + '</tbody></table>'
+      : '';
+    const areaSections = Object.keys(AREA_MAP).map(areaName => {
+      const areaAggRow = areaRows && areaRows[areaName] ? dataRow(areaName + ' (All Regions)', areaRows[areaName], 'area-agg-row') : '';
+      const regionRows = AREA_MAP[areaName].map(r => dataRow(REGION_LABELS[r], dataByRegion[r])).join('');
       return '<div class="area-group-label">' + areaName + '</div>' +
-        '<table class="mkt-table"><thead><tr><th>Region</th><th class="num">' + valueLabel + '</th><th class="num">WoW</th><th class="num">MoM</th><th class="num">YoY</th></tr></thead><tbody>' + rows + '</tbody></table>';
+        '<table class="mkt-table">' + header + '<tbody>' + areaAggRow + regionRows + '</tbody></table>';
     }).join('');
+    return nationalSection + areaSections;
   }
   function buildCitiesLosingTable(cities, unit, valueLabel){
     const top5 = cities.slice().sort((a, b) => a.mom - b.mom).slice(0, 5);
@@ -2995,20 +3004,33 @@
     const d = new Date(generatedAt);
     return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
   }
+  function shareRowDeltas(r){
+    return {
+      val: r.metaMarketSharePct,
+      wow: r.metaMarketSharePrevWowPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevWowPct) : null,
+      mom: r.metaMarketSharePrevPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevPct) : null,
+      yoy: r.metaMarketSharePrevYoyPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevYoyPct) : null
+    };
+  }
+  // Reads Nationwide, Area (1-4), and Region rows straight from the loaded
+  // region_YYYYMMDD.csv-derived snapshot — not the hardcoded MARKET_BY_REGION
+  // modeled fallback, which only kicks in when no snapshot is loaded at all.
   function realAreaRegionRows(){
-    if(!hadoopSnapshot) return null;
-    const rows = hadoopSnapshot.rows.filter(r => r.level === 'Region' && r.metaMarketSharePct != null);
-    if(rows.length < Object.keys(REGION_LABELS).length) return null;
-    const byRegion = {};
-    rows.forEach(r => {
-      byRegion[r.region] = {
-        val: r.metaMarketSharePct,
-        wow: r.metaMarketSharePrevWowPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevWowPct) : null,
-        mom: r.metaMarketSharePrevPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevPct) : null,
-        yoy: r.metaMarketSharePrevYoyPct != null ? round1(r.metaMarketSharePct - r.metaMarketSharePrevYoyPct) : null
-      };
-    });
-    return byRegion;
+    if(!hadoopSnapshot || !Array.isArray(hadoopSnapshot.rows)) return null;
+    const rows = hadoopSnapshot.rows.filter(r => !r.island && !r.archetype && r.metaMarketSharePct != null);
+
+    const regionRows = rows.filter(r => r.level === 'Region');
+    if(regionRows.length < Object.keys(REGION_LABELS).length) return null;
+    const regions = {};
+    regionRows.forEach(r => { regions[r.region] = shareRowDeltas(r); });
+
+    const areas = {};
+    rows.filter(r => r.level === 'Area').forEach(r => { areas[r.area] = shareRowDeltas(r); });
+
+    const nationalRow = rows.find(r => r.level === 'Nationwide');
+    const national = nationalRow ? shareRowDeltas(nationalRow) : null;
+
+    return { regions, areas, national };
   }
   function realCitiesLosingRows(){
     if(!hadoopSnapshot) return null;
@@ -3037,7 +3059,7 @@
         body:
           '<p>Blended market share, recomputed for the active Area/Region/City/Week filter. ' + srcFor(lastKPIs.metaShareSource) + '</p>' +
           buildMonthlyTrendSection(SHARE_TREND_MONTHLY, 'Monthly market share trend — national (TSEL vs IOH vs XLSmart)') +
-          '<div><div class="modal-section-label">Latest position by Area &amp; Region' + regionTag + '</div>' + buildAreaRegionTable(realRegion || MARKET_BY_REGION, '%', 'Share') + '</div>' +
+          '<div><div class="modal-section-label">Latest position by Area &amp; Region' + regionTag + '</div>' + buildAreaRegionTable(realRegion ? realRegion.regions : MARKET_BY_REGION, '%', 'Share', realRegion && realRegion.national, realRegion && realRegion.areas) + '</div>' +
           '<div><div class="modal-section-label">Cities losing share (WoW, MoM &amp; YoY)' + citiesTag + '</div>' + buildCitiesLosingTable(realCities || CITIES_LOSING_SHARE, '%', 'Share') + '</div>'
       };
     }

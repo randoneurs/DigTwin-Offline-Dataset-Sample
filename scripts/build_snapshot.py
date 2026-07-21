@@ -9,8 +9,10 @@ Usage:
       --prev-date 20260524 --prev-all-city all_city_operator_20260524.csv --prev-region region_20260524.csv \
       --out snapshot_20260628.json
 
---prev-* is optional; when given, week-over-week deltas and a 2-point sparkline
-are computed from real data instead of being left null.
+--prev-* is optional; when given, month-over-month (MoM) deltas and a 2-point
+sparkline are computed from real data instead of being left null. The two
+sample exports this project ships (2026-05-24 and 2026-06-28) are about five
+weeks apart, so this comparison is treated as MoM rather than week-over-week.
 """
 import argparse
 import csv
@@ -231,11 +233,14 @@ def build(args):
             row["metaShareHistory"] = [prev, share["tsel"]]
         rows.append(row)
 
-    return {
+    snapshot = {
         "generatedAt": d.isoformat() + "T00:00:00+07:00",
         "note": "Generated from META market-share exports via scripts/build_snapshot.py — do not hand-edit.",
         "rows": rows,
     }
+    if args.prev_date:
+        snapshot["comparedToDate"] = parse_yyyymmdd(args.prev_date).isoformat() + "T00:00:00+07:00"
+    return snapshot
 
 
 def main():
@@ -243,7 +248,7 @@ def main():
     ap.add_argument("--date", required=True, help="YYYYMMDD, matches the current CSVs' filename suffix")
     ap.add_argument("--all-city", required=True, help="path to all_city_operator_YYYYMMDD.csv")
     ap.add_argument("--region", required=True, help="path to region_YYYYMMDD.csv")
-    ap.add_argument("--prev-date", help="YYYYMMDD for the prior period, to compute real WoW deltas")
+    ap.add_argument("--prev-date", help="YYYYMMDD for the prior period, to compute real MoM deltas")
     ap.add_argument("--prev-all-city", help="path to the prior period's all_city_operator CSV")
     ap.add_argument("--prev-region", help="path to the prior period's region CSV")
     ap.add_argument("--out", required=True, help="output snapshot JSON path (dated archive copy)")

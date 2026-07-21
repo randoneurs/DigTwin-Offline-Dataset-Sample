@@ -1344,6 +1344,7 @@
     return {
       source: (hasShare || hasNps || hasBench) ? 'hadoop' : 'modeled',
       generatedAt: hadoopSnapshot ? hadoopSnapshot.generatedAt : null,
+      comparedToDate: hadoopSnapshot ? hadoopSnapshot.comparedToDate : null,
       metaShare, metaShareDelta, metaShareHistory, metaShareSource, shareByOperator,
       csiNps, csiNpsDelta, csiNpsHistory, csiNpsSource,
       netBench, netBenchDelta, netBenchHistory, netBenchSource
@@ -1374,7 +1375,14 @@
     return '<span class="kpi-asof">as of : ' + label + '</span>';
   }
 
-  function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine, generatedAt){
+  function momTitle(source, comparedToDate){
+    if(source !== 'hadoop' || !comparedToDate) return '';
+    const d = new Date(comparedToDate);
+    const label = d.getFullYear() + '-' + MONTH_ABBR[d.getMonth()] + '-' + String(d.getDate()).padStart(2, '0');
+    return ' title="MoM vs ' + label + '"';
+  }
+
+  function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine, generatedAt, comparedToDate){
     const deltaColor = delta == null ? 'var(--text-3)' : (delta >= 0 ? 'var(--good)' : 'var(--bad)');
     const arrow = delta == null ? '' : (delta >= 0 ? '▲' : '▼');
     const sourceChip = source === 'hadoop'
@@ -1386,7 +1394,7 @@
         '</div>' +
         '<div class="kpi-mid">' +
           '<span class="kpi-value num">' + value + unit + '</span>' +
-          (delta != null ? '<span class="kpi-delta num" style="color:' + deltaColor + '">' + arrow + ' ' + Math.abs(delta) + ' WoW</span>' : '') +
+          (delta != null ? '<span class="kpi-delta num"' + momTitle(source, comparedToDate) + ' style="color:' + deltaColor + '">' + arrow + ' ' + Math.abs(delta) + ' MoM</span>' : '') +
         '</div>' +
         (compareLine ? '<div class="kpi-compare">' + compareLine + '</div>' : '') +
         '<div class="kpi-spark">' + sparkline(history, accent) + '</div>' +
@@ -1408,9 +1416,9 @@
     lastKPIs = kpis;
     const row = document.getElementById('kpiRow');
     row.innerHTML =
-      kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.metaShareSource, kpis.metaShareHistory, 'var(--brand)', 'kpi-share', shareCompareLine(kpis.shareByOperator), kpis.generatedAt) +
-      kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.csiNpsSource, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps', null, kpis.generatedAt) +
-      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.netBenchSource, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench', null, kpis.generatedAt);
+      kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.metaShareSource, kpis.metaShareHistory, 'var(--brand)', 'kpi-share', shareCompareLine(kpis.shareByOperator), kpis.generatedAt, kpis.comparedToDate) +
+      kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.csiNpsSource, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps', null, kpis.generatedAt, kpis.comparedToDate) +
+      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.netBenchSource, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench', null, kpis.generatedAt, kpis.comparedToDate);
 
     const status = document.getElementById('hbStatus');
     if(kpis.source === 'hadoop'){
@@ -2124,7 +2132,7 @@
     const narrative = document.getElementById('synthNarrative');
     narrative.innerHTML =
       'Telkomsel market share in <b>' + place + '</b> stands at <b>' + share + '%</b> ' +
-      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + Math.abs(delta) + 'pt WoW</span>' +
+      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + Math.abs(delta) + 'pt MoM</span>' +
       (kpis.metaShareSource === 'hadoop' ? ', sourced from the latest Hadoop Meta Market Share extract' : ', modeled pending a live Hadoop snapshot') + '). ' +
       'Cross-signal review points to three converging drivers: a <b>RETINA field outlet scan</b> confirms IOH opened ' +
       '<b class="num-cite">' + outlets + ' new outlets/kiosks</b> in the scoped area over the past 3 weeks as part of a network densification push; ' +
@@ -2187,7 +2195,7 @@
 
     document.getElementById('execSummaryText').innerHTML =
       'Telkomsel market share in <b>' + place + '</b> stands at <b>' + share + '%</b> ' +
-      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + Math.abs(delta) + 'pt WoW</span>). ' +
+      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + Math.abs(delta) + 'pt MoM</span>). ' +
       headline + ' A prioritized action list and the full cross-signal narrative are one click away in <b>Overview</b>.';
   }
 

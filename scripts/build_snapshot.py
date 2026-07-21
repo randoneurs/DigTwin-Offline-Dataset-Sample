@@ -7,12 +7,17 @@ Usage:
   python3 scripts/build_snapshot.py \
       --date 20260628 --all-city all_city_operator_20260628.csv --region region_20260628.csv \
       --prev-date 20260524 --prev-all-city all_city_operator_20260524.csv --prev-region region_20260524.csv \
+      --yoy-date 20250629 --yoy-all-city all_city_operator_20250629.csv --yoy-region region_20250629.csv \
       --out snapshot_20260628.json
 
---prev-* is optional; when given, month-over-month (MoM) deltas and a 2-point
-sparkline are computed from real data instead of being left null. The two
-sample exports this project ships (2026-05-24 and 2026-06-28) are about five
-weeks apart, so this comparison is treated as MoM rather than week-over-week.
+--prev-* and --yoy-* are each optional; when given, real month-over-month
+(MoM) / year-over-year (YoY) deltas and a chronological sparkline are computed
+instead of being left null. The two non-YoY sample exports this project ships
+(2026-05-24 and 2026-06-28) are about five weeks apart, so that comparison is
+treated as MoM rather than week-over-week. Every operator's own share (not
+just tsel's) is carried forward as shareByOperatorPrev/shareByOperatorYoy so
+the dashboard can show each competitor's own MoM/YoY change, not just
+Telkomsel's.
 """
 import argparse
 import csv
@@ -187,31 +192,58 @@ def read_region(path):
     return out
 
 
+def build_share_lookup(all_city_path, region_path):
+    """Full per-operator share dict for every (level, area, region, city, island, archetype)
+    key in one period's CSVs — lets callers pull tsel's own share (for the MoM/YoY delta) or
+    a competitor's (xl/ioh) share, all from the same lookup."""
+    lookup = {}
+    all_city, _, _ = read_all_city(all_city_path)
+    for (region_key, city_name), share in all_city.items():
+        lookup[("City", REGION_TO_AREA[region_key], region_key, city_name, None, None)] = share
+    for level, (area, region, city, island, archetype), share in read_region(region_path):
+        lookup[(level, area, region, city, island, archetype)] = share
+    return lookup
+
+
+def build_history(yoy_val, prev_val, current_val):
+    """Chronological [yoy, prev, current], dropping whichever of yoy/prev is missing."""
+    pts = [v for v in (yoy_val, prev_val) if v is not None]
+    pts.append(current_val)
+    return pts if len(pts) >= 2 else None
+
+
 def build(args):
     d = parse_yyyymmdd(args.date)
     week = iso_week_label(d)
 
-    prev_tsel_by_key = {}
-    if args.prev_date:
-        prev_all_city, _, _ = read_all_city(args.prev_all_city)
-        for (region_key, city_name), share in prev_all_city.items():
-            prev_tsel_by_key[("City", REGION_TO_AREA[region_key], region_key, city_name, None, None)] = share["tsel"]
-        for level, (area, region, city, island, archetype), share in read_region(args.prev_region):
-            prev_tsel_by_key[(level, area, region, city, island, archetype)] = share["tsel"]
+    prev_share_by_key = build_share_lookup(args.prev_all_city, args.prev_region) if args.prev_date else {}
+    yoy_share_by_key = build_share_lookup(args.yoy_all_city, args.yoy_region) if args.yoy_date else {}
+
+    def add_comparisons(row, key, share):
+        prev_share, yoy_share = prev_share_by_key.get(key), yoy_share_by_key.get(key)
+        prev, yoy = (prev_share or {}).get("tsel"), (yoy_share or {}).get("tsel")
+        if prev is not None:
+            row["metaMarketSharePrevPct"] = prev
+        if yoy is not None:
+            row["metaMarketSharePrevYoyPct"] = yoy
+        if prev_share is not None:
+            row["shareByOperatorPrev"] = prev_share
+        if yoy_share is not None:
+            row["shareByOperatorYoy"] = yoy_share
+        history = build_history(yoy, prev, share["tsel"])
+        if history:
+            row["metaShareHistory"] = history
 
     rows = []
 
     all_city, skipped, total = read_all_city(args.all_city)
     for (region_key, city_name), share in all_city.items():
         area_key = REGION_TO_AREA[region_key]
-        prev = prev_tsel_by_key.get(("City", area_key, region_key, city_name, None, None))
         row = {
             "level": "City", "area": area_key, "region": region_key, "city": city_name, "week": week,
             "metaMarketSharePct": share["tsel"], "shareByOperator": share,
         }
-        if prev is not None:
-            row["metaMarketSharePrevPct"] = prev
-            row["metaShareHistory"] = [prev, share["tsel"]]
+        add_comparisons(row, ("City", area_key, region_key, city_name, None, None), share)
         rows.append(row)
     if skipped:
         print(f"note: {skipped} of {total} city rows in {args.all_city} aren't in this dashboard's "
@@ -219,7 +251,6 @@ def build(args):
               file=sys.stderr)
 
     for level, (area, region, city, island, archetype), share in read_region(args.region):
-        prev = prev_tsel_by_key.get((level, area, region, city, island, archetype))
         row = {
             "level": level, "area": area, "region": region, "city": city, "week": week,
             "metaMarketSharePct": share["tsel"], "shareByOperator": share,
@@ -228,9 +259,7 @@ def build(args):
             row["island"] = island
         if archetype:
             row["archetype"] = archetype
-        if prev is not None:
-            row["metaMarketSharePrevPct"] = prev
-            row["metaShareHistory"] = [prev, share["tsel"]]
+        add_comparisons(row, (level, area, region, city, island, archetype), share)
         rows.append(row)
 
     snapshot = {
@@ -240,6 +269,8 @@ def build(args):
     }
     if args.prev_date:
         snapshot["comparedToDate"] = parse_yyyymmdd(args.prev_date).isoformat() + "T00:00:00+07:00"
+    if args.yoy_date:
+        snapshot["comparedToDateYoy"] = parse_yyyymmdd(args.yoy_date).isoformat() + "T00:00:00+07:00"
     return snapshot
 
 
@@ -251,6 +282,9 @@ def main():
     ap.add_argument("--prev-date", help="YYYYMMDD for the prior period, to compute real MoM deltas")
     ap.add_argument("--prev-all-city", help="path to the prior period's all_city_operator CSV")
     ap.add_argument("--prev-region", help="path to the prior period's region CSV")
+    ap.add_argument("--yoy-date", help="YYYYMMDD for the same period one year prior, to compute real YoY deltas")
+    ap.add_argument("--yoy-all-city", help="path to the year-ago all_city_operator CSV")
+    ap.add_argument("--yoy-region", help="path to the year-ago region CSV")
     ap.add_argument("--out", required=True, help="output snapshot JSON path (dated archive copy)")
     ap.add_argument("--latest-copy", default="snapshot_latest.json",
                     help="also write here — this is the stable filename index.html auto-fetches on load "
@@ -259,6 +293,8 @@ def main():
 
     if args.prev_date and not (args.prev_all_city and args.prev_region):
         ap.error("--prev-date requires --prev-all-city and --prev-region")
+    if args.yoy_date and not (args.yoy_all_city and args.yoy_region):
+        ap.error("--yoy-date requires --yoy-all-city and --yoy-region")
 
     snapshot = build(args)
     with open(args.out, "w") as f:

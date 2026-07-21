@@ -19,7 +19,27 @@
         "ioh": 16.83
       },
       "metaMarketSharePrevPct": 70.83,
+      "metaMarketSharePrevYoyPct": 70.46,
+      "shareByOperatorPrev": {
+        "tsel": 70.83,
+        "xlLegacy": 13.85,
+        "isat": 3.24,
+        "three": 15.15,
+        "smartfren": 2.01,
+        "xl": 15.98,
+        "ioh": 18.37
+      },
+      "shareByOperatorYoy": {
+        "tsel": 70.46,
+        "xlLegacy": 15.66,
+        "isat": 4.44,
+        "three": 15.45,
+        "smartfren": 1.84,
+        "xl": 17.39,
+        "ioh": 19.41
+      },
       "metaShareHistory": [
+        70.46,
         70.83,
         71.17
       ]
@@ -41,7 +61,27 @@
         "ioh": 11.99
       },
       "metaMarketSharePrevPct": 71.52,
+      "metaMarketSharePrevYoyPct": 69.41,
+      "shareByOperatorPrev": {
+        "tsel": 71.52,
+        "xlLegacy": 18.98,
+        "isat": 1.74,
+        "three": 9.73,
+        "smartfren": 1.92,
+        "xl": 20.26,
+        "ioh": 12.04
+      },
+      "shareByOperatorYoy": {
+        "tsel": 69.41,
+        "xlLegacy": 22.01,
+        "isat": 2.27,
+        "three": 12.22,
+        "smartfren": 1.76,
+        "xl": 23.38,
+        "ioh": 14.54
+      },
       "metaShareHistory": [
+        69.41,
         71.52,
         71.29
       ]
@@ -63,7 +103,27 @@
         "ioh": 12.52
       },
       "metaMarketSharePrevPct": 55.88,
+      "metaMarketSharePrevYoyPct": 55.64,
+      "shareByOperatorPrev": {
+        "tsel": 55.88,
+        "xlLegacy": 31.13,
+        "isat": 4.08,
+        "three": 8.67,
+        "smartfren": 4.52,
+        "xl": 35.67,
+        "ioh": 12.86
+      },
+      "shareByOperatorYoy": {
+        "tsel": 55.64,
+        "xlLegacy": 34.16,
+        "isat": 4.52,
+        "three": 7.49,
+        "smartfren": 5.25,
+        "xl": 39.12,
+        "ioh": 12.12
+      },
       "metaShareHistory": [
+        55.64,
         55.88,
         55.84
       ]
@@ -85,7 +145,27 @@
         "ioh": 23.07
       },
       "metaMarketSharePrevPct": 44.56,
+      "metaMarketSharePrevYoyPct": 46.16,
+      "shareByOperatorPrev": {
+        "tsel": 44.56,
+        "xlLegacy": 33.09,
+        "isat": 10.5,
+        "three": 13.42,
+        "smartfren": 3.79,
+        "xl": 36.7,
+        "ioh": 23.69
+      },
+      "shareByOperatorYoy": {
+        "tsel": 46.16,
+        "xlLegacy": 37.08,
+        "isat": 12.22,
+        "three": 9.56,
+        "smartfren": 3.47,
+        "xl": 40.04,
+        "ioh": 21.39
+      },
       "metaShareHistory": [
+        46.16,
         44.56,
         44.58
       ]
@@ -107,7 +187,27 @@
         "ioh": 14.47
       },
       "metaMarketSharePrevPct": 49.9,
+      "metaMarketSharePrevYoyPct": 53.28,
+      "shareByOperatorPrev": {
+        "tsel": 49.9,
+        "xlLegacy": 38.67,
+        "isat": 5.92,
+        "three": 8.9,
+        "smartfren": 1.46,
+        "xl": 40.06,
+        "ioh": 14.76
+      },
+      "shareByOperatorYoy": {
+        "tsel": 53.28,
+        "xlLegacy": 37.49,
+        "isat": 6.85,
+        "three": 9.42,
+        "smartfren": 1.32,
+        "xl": 38.44,
+        "ioh": 15.86
+      },
       "metaShareHistory": [
+        53.28,
         49.9,
         50.91
       ]
@@ -129,7 +229,27 @@
         "ioh": 12.41
       },
       "metaMarketSharePrevPct": 56.92,
+      "metaMarketSharePrevYoyPct": 56.62,
+      "shareByOperatorPrev": {
+        "tsel": 56.92,
+        "xlLegacy": 31.29,
+        "isat": 3.58,
+        "three": 9.46,
+        "smartfren": 3.81,
+        "xl": 34.93,
+        "ioh": 13.01
+      },
+      "shareByOperatorYoy": {
+        "tsel": 56.62,
+        "xlLegacy": 35.71,
+        "isat": 3.87,
+        "three": 8.11,
+        "smartfren": 4.98,
+        "xl": 39.84,
+        "ioh": 11.87
+      },
       "metaShareHistory": [
+        56.62,
         56.92,
         57.96
       ]
@@ -151,7 +271,27 @@
         "ioh": 26.43
       },
       "metaMarketSharePrevPct": 46.8,
+      "metaMarketSharePrevYoyPct": 51.13,
+      "shareByOperatorPrev": {
+        "tsel": 46.8,
+        "xlLegacy": 27.29,
+        "isat": 11.61,
+        "three": 16.05,
+        "smartfren": 4.7,
+        "xl": 31.85,
+        "ioh": 27.26
+      },
+      "shareByOperatorYoy": {
+        "tsel": 51.13,
+        "xlLegacy": 32.35,
+        "isat": 10.51,
+        "three": 11.03,
+        "smartfren": 5.2,
+        "xl": 36.9,
+        "ioh": 21.06
+      },
       "metaShareHistory": [
+        51.13,
         46.8,
         46.91
       ]
@@ -173,7 +313,27 @@
         "ioh": 19.4
       },
       "metaMarketSharePrevPct": 48.87,
+      "metaMarketSharePrevYoyPct": 50.1,
+      "shareByOperatorPrev": {
+        "tsel": 48.87,
+        "xlLegacy": 35.14,
+        "isat": 8.83,
+        "three": 10.42,
+        "smartfren": 1.65,
+        "xl": 36.52,
+        "ioh": 18.99
+      },
+      "shareByOperatorYoy": {
+        "tsel": 50.1,
+        "xlLegacy": 36.05,
+        "isat": 9.64,
+        "three": 9.68,
+        "smartfren": 2.03,
+        "xl": 37.71,
+        "ioh": 19.1
+      },
       "metaShareHistory": [
+        50.1,
         48.87,
         49.19
       ]
@@ -195,7 +355,27 @@
         "ioh": 16.74
       },
       "metaMarketSharePrevPct": 58.22,
+      "metaMarketSharePrevYoyPct": 59.71,
+      "shareByOperatorPrev": {
+        "tsel": 58.22,
+        "xlLegacy": 27.47,
+        "isat": 4.4,
+        "three": 12.62,
+        "smartfren": 2.25,
+        "xl": 29.52,
+        "ioh": 16.85
+      },
+      "shareByOperatorYoy": {
+        "tsel": 59.71,
+        "xlLegacy": 28.11,
+        "isat": 4.16,
+        "three": 12.96,
+        "smartfren": 2.41,
+        "xl": 30.16,
+        "ioh": 17.06
+      },
       "metaShareHistory": [
+        59.71,
         58.22,
         58.24
       ]
@@ -217,7 +397,27 @@
         "ioh": 13.99
       },
       "metaMarketSharePrevPct": 66.79,
+      "metaMarketSharePrevYoyPct": 57.33,
+      "shareByOperatorPrev": {
+        "tsel": 66.79,
+        "xlLegacy": 20.29,
+        "isat": 7.84,
+        "three": 5.84,
+        "smartfren": 3.41,
+        "xl": 23.86,
+        "ioh": 13.83
+      },
+      "shareByOperatorYoy": {
+        "tsel": 57.33,
+        "xlLegacy": 19.47,
+        "isat": 16.71,
+        "three": 10.87,
+        "smartfren": 2.81,
+        "xl": 21.98,
+        "ioh": 27.17
+      },
       "metaShareHistory": [
+        57.33,
         66.79,
         66.0
       ]
@@ -239,7 +439,27 @@
         "ioh": 22.04
       },
       "metaMarketSharePrevPct": 59.63,
+      "metaMarketSharePrevYoyPct": 63.84,
+      "shareByOperatorPrev": {
+        "tsel": 59.63,
+        "xlLegacy": 18.53,
+        "isat": 7.78,
+        "three": 14.76,
+        "smartfren": 4.35,
+        "xl": 22.82,
+        "ioh": 22.44
+      },
+      "shareByOperatorYoy": {
+        "tsel": 63.84,
+        "xlLegacy": 18.65,
+        "isat": 6.78,
+        "three": 13.77,
+        "smartfren": 4.41,
+        "xl": 22.84,
+        "ioh": 20.32
+      },
       "metaShareHistory": [
+        63.84,
         59.63,
         59.31
       ]
@@ -261,7 +481,27 @@
         "ioh": 11.83
       },
       "metaMarketSharePrevPct": 64.95,
+      "metaMarketSharePrevYoyPct": 65.22,
+      "shareByOperatorPrev": {
+        "tsel": 64.95,
+        "xlLegacy": 23.7,
+        "isat": 4.13,
+        "three": 8.15,
+        "smartfren": 3.67,
+        "xl": 27.52,
+        "ioh": 12.08
+      },
+      "shareByOperatorYoy": {
+        "tsel": 65.22,
+        "xlLegacy": 24.6,
+        "isat": 4.01,
+        "three": 9.08,
+        "smartfren": 3.94,
+        "xl": 28.26,
+        "ioh": 13.01
+      },
       "metaShareHistory": [
+        65.22,
         64.95,
         63.81
       ]
@@ -283,7 +523,27 @@
         "ioh": 18.78
       },
       "metaMarketSharePrevPct": 57.37,
+      "metaMarketSharePrevYoyPct": 61.66,
+      "shareByOperatorPrev": {
+        "tsel": 57.37,
+        "xlLegacy": 27.82,
+        "isat": 13.32,
+        "three": 5.42,
+        "smartfren": 1.17,
+        "xl": 28.91,
+        "ioh": 18.89
+      },
+      "shareByOperatorYoy": {
+        "tsel": 61.66,
+        "xlLegacy": 27.15,
+        "isat": 11.37,
+        "three": 5.15,
+        "smartfren": 0.98,
+        "xl": 28.23,
+        "ioh": 16.28
+      },
       "metaShareHistory": [
+        61.66,
         57.37,
         57.09
       ]
@@ -305,7 +565,27 @@
         "ioh": 32.33
       },
       "metaMarketSharePrevPct": 51.25,
+      "metaMarketSharePrevYoyPct": 57.58,
+      "shareByOperatorPrev": {
+        "tsel": 51.25,
+        "xlLegacy": 18.16,
+        "isat": 15.12,
+        "three": 17.17,
+        "smartfren": 3.44,
+        "xl": 21.5,
+        "ioh": 32.16
+      },
+      "shareByOperatorYoy": {
+        "tsel": 57.58,
+        "xlLegacy": 18.46,
+        "isat": 13.46,
+        "three": 15.07,
+        "smartfren": 3.16,
+        "xl": 21.43,
+        "ioh": 28.2
+      },
       "metaShareHistory": [
+        57.58,
         51.25,
         50.84
       ]
@@ -327,7 +607,27 @@
         "ioh": 29.79
       },
       "metaMarketSharePrevPct": 35.07,
+      "metaMarketSharePrevYoyPct": 35.08,
+      "shareByOperatorPrev": {
+        "tsel": 35.07,
+        "xlLegacy": 27.1,
+        "isat": 23.86,
+        "three": 8.19,
+        "smartfren": 12.89,
+        "xl": 40.09,
+        "ioh": 31.35
+      },
+      "shareByOperatorYoy": {
+        "tsel": 35.08,
+        "xlLegacy": 31.34,
+        "isat": 30.33,
+        "three": 6.55,
+        "smartfren": 7.71,
+        "xl": 38.4,
+        "ioh": 36.37
+      },
       "metaShareHistory": [
+        35.08,
         35.07,
         34.59
       ]
@@ -349,7 +649,27 @@
         "ioh": 31.08
       },
       "metaMarketSharePrevPct": 40.02,
+      "metaMarketSharePrevYoyPct": 43.55,
+      "shareByOperatorPrev": {
+        "tsel": 40.02,
+        "xlLegacy": 25.71,
+        "isat": 14.03,
+        "three": 17.57,
+        "smartfren": 8.45,
+        "xl": 33.73,
+        "ioh": 31.24
+      },
+      "shareByOperatorYoy": {
+        "tsel": 43.55,
+        "xlLegacy": 27.09,
+        "isat": 14.73,
+        "three": 14.91,
+        "smartfren": 8.13,
+        "xl": 34.61,
+        "ioh": 29.21
+      },
       "metaShareHistory": [
+        43.55,
         40.02,
         39.91
       ]
@@ -371,7 +691,27 @@
         "ioh": 23.82
       },
       "metaMarketSharePrevPct": 39.88,
+      "metaMarketSharePrevYoyPct": 41.32,
+      "shareByOperatorPrev": {
+        "tsel": 39.88,
+        "xlLegacy": 29.89,
+        "isat": 11.69,
+        "three": 11.96,
+        "smartfren": 11.19,
+        "xl": 41.4,
+        "ioh": 23.94
+      },
+      "shareByOperatorYoy": {
+        "tsel": 41.32,
+        "xlLegacy": 30.54,
+        "isat": 11.01,
+        "three": 12.92,
+        "smartfren": 12.28,
+        "xl": 42.74,
+        "ioh": 23.27
+      },
       "metaShareHistory": [
+        41.32,
         39.88,
         39.92
       ]
@@ -393,7 +733,27 @@
         "ioh": 33.65
       },
       "metaMarketSharePrevPct": 51.81,
+      "metaMarketSharePrevYoyPct": 51.53,
+      "shareByOperatorPrev": {
+        "tsel": 51.81,
+        "xlLegacy": 18.7,
+        "isat": 19.48,
+        "three": 14.6,
+        "smartfren": 0.61,
+        "xl": 19.19,
+        "ioh": 33.84
+      },
+      "shareByOperatorYoy": {
+        "tsel": 51.53,
+        "xlLegacy": 22.6,
+        "isat": 19.04,
+        "three": 13.52,
+        "smartfren": 0.58,
+        "xl": 23.11,
+        "ioh": 32.04
+      },
       "metaShareHistory": [
+        51.53,
         51.81,
         51.59
       ]
@@ -415,7 +775,27 @@
         "ioh": 47.32
       },
       "metaMarketSharePrevPct": 24.24,
+      "metaMarketSharePrevYoyPct": 26.35,
+      "shareByOperatorPrev": {
+        "tsel": 24.24,
+        "xlLegacy": 27.76,
+        "isat": 30.47,
+        "three": 17.53,
+        "smartfren": 5.5,
+        "xl": 32.99,
+        "ioh": 47.6
+      },
+      "shareByOperatorYoy": {
+        "tsel": 26.35,
+        "xlLegacy": 32.88,
+        "isat": 29.01,
+        "three": 14.66,
+        "smartfren": 5.01,
+        "xl": 37.51,
+        "ioh": 43.15
+      },
       "metaShareHistory": [
+        26.35,
         24.24,
         23.52
       ]
@@ -437,7 +817,27 @@
         "ioh": 45.53
       },
       "metaMarketSharePrevPct": 33.23,
+      "metaMarketSharePrevYoyPct": 37.57,
+      "shareByOperatorPrev": {
+        "tsel": 33.23,
+        "xlLegacy": 20.68,
+        "isat": 24.44,
+        "three": 21.5,
+        "smartfren": 5.13,
+        "xl": 25.55,
+        "ioh": 45.54
+      },
+      "shareByOperatorYoy": {
+        "tsel": 37.57,
+        "xlLegacy": 22.57,
+        "isat": 24.86,
+        "three": 18.02,
+        "smartfren": 5.17,
+        "xl": 27.48,
+        "ioh": 42.14
+      },
       "metaShareHistory": [
+        37.57,
         33.23,
         32.78
       ]
@@ -459,7 +859,27 @@
         "ioh": 41.63
       },
       "metaMarketSharePrevPct": 31.67,
+      "metaMarketSharePrevYoyPct": 32.15,
+      "shareByOperatorPrev": {
+        "tsel": 31.67,
+        "xlLegacy": 21.37,
+        "isat": 26.35,
+        "three": 16.61,
+        "smartfren": 9.01,
+        "xl": 29.86,
+        "ioh": 42.32
+      },
+      "shareByOperatorYoy": {
+        "tsel": 32.15,
+        "xlLegacy": 25.89,
+        "isat": 25.68,
+        "three": 15.24,
+        "smartfren": 8.54,
+        "xl": 34.01,
+        "ioh": 40.51
+      },
       "metaShareHistory": [
+        32.15,
         31.67,
         32.01
       ]
@@ -481,7 +901,27 @@
         "ioh": 19.99
       },
       "metaMarketSharePrevPct": 44.64,
+      "metaMarketSharePrevYoyPct": 45.35,
+      "shareByOperatorPrev": {
+        "tsel": 44.64,
+        "xlLegacy": 34.36,
+        "isat": 13.92,
+        "three": 6.73,
+        "smartfren": 4.72,
+        "xl": 38.93,
+        "ioh": 20.7
+      },
+      "shareByOperatorYoy": {
+        "tsel": 45.35,
+        "xlLegacy": 36.83,
+        "isat": 14.19,
+        "three": 5.8,
+        "smartfren": 4.56,
+        "xl": 41.26,
+        "ioh": 19.62
+      },
       "metaShareHistory": [
+        45.35,
         44.64,
         44.6
       ]
@@ -503,7 +943,27 @@
         "ioh": 23.46
       },
       "metaMarketSharePrevPct": 59.76,
+      "metaMarketSharePrevYoyPct": 60.18,
+      "shareByOperatorPrev": {
+        "tsel": 59.76,
+        "xlLegacy": 17.54,
+        "isat": 11.7,
+        "three": 11.94,
+        "smartfren": 2.18,
+        "xl": 19.71,
+        "ioh": 23.43
+      },
+      "shareByOperatorYoy": {
+        "tsel": 60.18,
+        "xlLegacy": 19.93,
+        "isat": 11.08,
+        "three": 11.44,
+        "smartfren": 2.1,
+        "xl": 21.87,
+        "ioh": 22.27
+      },
       "metaShareHistory": [
+        60.18,
         59.76,
         59.37
       ]
@@ -525,7 +985,27 @@
         "ioh": 11.17
       },
       "metaMarketSharePrevPct": 60.38,
+      "metaMarketSharePrevYoyPct": 60.82,
+      "shareByOperatorPrev": {
+        "tsel": 60.38,
+        "xlLegacy": 29.52,
+        "isat": 6.34,
+        "three": 5.64,
+        "smartfren": 1.21,
+        "xl": 30.6,
+        "ioh": 11.93
+      },
+      "shareByOperatorYoy": {
+        "tsel": 60.82,
+        "xlLegacy": 30.66,
+        "isat": 6.55,
+        "three": 5.85,
+        "smartfren": 0.97,
+        "xl": 31.66,
+        "ioh": 12.27
+      },
       "metaShareHistory": [
+        60.82,
         60.38,
         60.08
       ]
@@ -547,7 +1027,27 @@
         "ioh": 40.52
       },
       "metaMarketSharePrevPct": 38.22,
+      "metaMarketSharePrevYoyPct": 41.81,
+      "shareByOperatorPrev": {
+        "tsel": 38.22,
+        "xlLegacy": 19.85,
+        "isat": 28.85,
+        "three": 12.63,
+        "smartfren": 5.0,
+        "xl": 24.75,
+        "ioh": 41.05
+      },
+      "shareByOperatorYoy": {
+        "tsel": 41.81,
+        "xlLegacy": 20.77,
+        "isat": 27.91,
+        "three": 11.84,
+        "smartfren": 5.0,
+        "xl": 25.57,
+        "ioh": 38.91
+      },
       "metaShareHistory": [
+        41.81,
         38.22,
         38.39
       ]
@@ -569,7 +1069,27 @@
         "ioh": 41.31
       },
       "metaMarketSharePrevPct": 37.14,
+      "metaMarketSharePrevYoyPct": 40.43,
+      "shareByOperatorPrev": {
+        "tsel": 37.14,
+        "xlLegacy": 18.53,
+        "isat": 26.98,
+        "three": 14.98,
+        "smartfren": 6.91,
+        "xl": 25.26,
+        "ioh": 41.49
+      },
+      "shareByOperatorYoy": {
+        "tsel": 40.43,
+        "xlLegacy": 19.34,
+        "isat": 26.33,
+        "three": 14.51,
+        "smartfren": 6.67,
+        "xl": 25.7,
+        "ioh": 40.09
+      },
       "metaShareHistory": [
+        40.43,
         37.14,
         37.22
       ]
@@ -591,7 +1111,27 @@
         "ioh": 39.5
       },
       "metaMarketSharePrevPct": 35.18,
+      "metaMarketSharePrevYoyPct": 39.78,
+      "shareByOperatorPrev": {
+        "tsel": 35.18,
+        "xlLegacy": 19.26,
+        "isat": 28.84,
+        "three": 12.66,
+        "smartfren": 8.08,
+        "xl": 27.05,
+        "ioh": 41.06
+      },
+      "shareByOperatorYoy": {
+        "tsel": 39.78,
+        "xlLegacy": 19.76,
+        "isat": 27.9,
+        "three": 11.69,
+        "smartfren": 7.57,
+        "xl": 27.09,
+        "ioh": 38.97
+      },
       "metaShareHistory": [
+        39.78,
         35.18,
         37.61
       ]
@@ -613,7 +1153,27 @@
         "ioh": 43.62
       },
       "metaMarketSharePrevPct": 35.96,
+      "metaMarketSharePrevYoyPct": 37.5,
+      "shareByOperatorPrev": {
+        "tsel": 35.96,
+        "xlLegacy": 19.37,
+        "isat": 27.68,
+        "three": 14.31,
+        "smartfren": 6.9,
+        "xl": 26.0,
+        "ioh": 41.54
+      },
+      "shareByOperatorYoy": {
+        "tsel": 37.5,
+        "xlLegacy": 20.15,
+        "isat": 28.75,
+        "three": 13.43,
+        "smartfren": 7.16,
+        "xl": 26.95,
+        "ioh": 41.37
+      },
       "metaShareHistory": [
+        37.5,
         35.96,
         33.52
       ]
@@ -635,7 +1195,27 @@
         "ioh": 43.27
       },
       "metaMarketSharePrevPct": 32.66,
+      "metaMarketSharePrevYoyPct": 36.16,
+      "shareByOperatorPrev": {
+        "tsel": 32.66,
+        "xlLegacy": 20.67,
+        "isat": 28.96,
+        "three": 13.78,
+        "smartfren": 7.77,
+        "xl": 28.23,
+        "ioh": 42.34
+      },
+      "shareByOperatorYoy": {
+        "tsel": 36.16,
+        "xlLegacy": 21.81,
+        "isat": 28.45,
+        "three": 12.9,
+        "smartfren": 7.54,
+        "xl": 29.03,
+        "ioh": 40.62
+      },
       "metaShareHistory": [
+        36.16,
         32.66,
         31.11
       ]
@@ -657,7 +1237,27 @@
         "ioh": 51.42
       },
       "metaMarketSharePrevPct": 23.12,
+      "metaMarketSharePrevYoyPct": 22.78,
+      "shareByOperatorPrev": {
+        "tsel": 23.12,
+        "xlLegacy": 21.82,
+        "isat": 36.52,
+        "three": 15.67,
+        "smartfren": 7.26,
+        "xl": 28.85,
+        "ioh": 51.6
+      },
+      "shareByOperatorYoy": {
+        "tsel": 22.78,
+        "xlLegacy": 25.35,
+        "isat": 37.55,
+        "three": 14.19,
+        "smartfren": 7.01,
+        "xl": 31.99,
+        "ioh": 51.02
+      },
       "metaShareHistory": [
+        22.78,
         23.12,
         22.94
       ]
@@ -679,7 +1279,27 @@
         "ioh": 30.09
       },
       "metaMarketSharePrevPct": 31.74,
+      "metaMarketSharePrevYoyPct": 35.48,
+      "shareByOperatorPrev": {
+        "tsel": 31.74,
+        "xlLegacy": 33.75,
+        "isat": 17.28,
+        "three": 13.5,
+        "smartfren": 8.73,
+        "xl": 42.04,
+        "ioh": 30.52
+      },
+      "shareByOperatorYoy": {
+        "tsel": 35.48,
+        "xlLegacy": 37.24,
+        "isat": 15.89,
+        "three": 11.75,
+        "smartfren": 8.02,
+        "xl": 44.65,
+        "ioh": 27.35
+      },
       "metaShareHistory": [
+        35.48,
         31.74,
         31.52
       ]
@@ -701,7 +1321,27 @@
         "ioh": 32.74
       },
       "metaMarketSharePrevPct": 35.21,
+      "metaMarketSharePrevYoyPct": 40.29,
+      "shareByOperatorPrev": {
+        "tsel": 35.21,
+        "xlLegacy": 30.18,
+        "isat": 15.56,
+        "three": 17.64,
+        "smartfren": 6.97,
+        "xl": 37.0,
+        "ioh": 32.9
+      },
+      "shareByOperatorYoy": {
+        "tsel": 40.29,
+        "xlLegacy": 32.27,
+        "isat": 14.74,
+        "three": 16.01,
+        "smartfren": 6.54,
+        "xl": 38.22,
+        "ioh": 30.27
+      },
       "metaShareHistory": [
+        40.29,
         35.21,
         34.85
       ]
@@ -723,7 +1363,27 @@
         "ioh": 29.17
       },
       "metaMarketSharePrevPct": 39.12,
+      "metaMarketSharePrevYoyPct": 41.4,
+      "shareByOperatorPrev": {
+        "tsel": 39.12,
+        "xlLegacy": 29.16,
+        "isat": 19.3,
+        "three": 10.64,
+        "smartfren": 6.87,
+        "xl": 35.83,
+        "ioh": 29.62
+      },
+      "shareByOperatorYoy": {
+        "tsel": 41.4,
+        "xlLegacy": 31.28,
+        "isat": 18.84,
+        "three": 10.93,
+        "smartfren": 6.54,
+        "xl": 37.24,
+        "ioh": 29.12
+      },
       "metaShareHistory": [
+        41.4,
         39.12,
         39.0
       ]
@@ -745,7 +1405,27 @@
         "ioh": 55.42
       },
       "metaMarketSharePrevPct": 20.03,
+      "metaMarketSharePrevYoyPct": 20.49,
+      "shareByOperatorPrev": {
+        "tsel": 20.03,
+        "xlLegacy": 23.94,
+        "isat": 40.61,
+        "three": 15.34,
+        "smartfren": 4.31,
+        "xl": 28.11,
+        "ioh": 55.49
+      },
+      "shareByOperatorYoy": {
+        "tsel": 20.49,
+        "xlLegacy": 25.15,
+        "isat": 39.91,
+        "three": 16.53,
+        "smartfren": 4.08,
+        "xl": 29.01,
+        "ioh": 55.55
+      },
       "metaShareHistory": [
+        20.49,
         20.03,
         20.06
       ]
@@ -767,7 +1447,27 @@
         "ioh": 47.17
       },
       "metaMarketSharePrevPct": 29.99,
+      "metaMarketSharePrevYoyPct": 27.98,
+      "shareByOperatorPrev": {
+        "tsel": 29.99,
+        "xlLegacy": 17.64,
+        "isat": 31.83,
+        "three": 16.28,
+        "smartfren": 8.59,
+        "xl": 26.02,
+        "ioh": 47.47
+      },
+      "shareByOperatorYoy": {
+        "tsel": 27.98,
+        "xlLegacy": 20.73,
+        "isat": 34.38,
+        "three": 15.92,
+        "smartfren": 7.94,
+        "xl": 28.35,
+        "ioh": 49.21
+      },
       "metaShareHistory": [
+        27.98,
         29.99,
         30.61
       ]
@@ -789,7 +1489,27 @@
         "ioh": 54.75
       },
       "metaMarketSharePrevPct": 21.34,
+      "metaMarketSharePrevYoyPct": 21.66,
+      "shareByOperatorPrev": {
+        "tsel": 21.34,
+        "xlLegacy": 19.83,
+        "isat": 36.84,
+        "three": 19.08,
+        "smartfren": 7.28,
+        "xl": 27.13,
+        "ioh": 55.31
+      },
+      "shareByOperatorYoy": {
+        "tsel": 21.66,
+        "xlLegacy": 21.36,
+        "isat": 38.12,
+        "three": 18.58,
+        "smartfren": 7.72,
+        "xl": 28.76,
+        "ioh": 55.88
+      },
       "metaShareHistory": [
+        21.66,
         21.34,
         21.55
       ]
@@ -811,7 +1531,27 @@
         "ioh": 61.91
       },
       "metaMarketSharePrevPct": 16.74,
+      "metaMarketSharePrevYoyPct": 17.11,
+      "shareByOperatorPrev": {
+        "tsel": 16.74,
+        "xlLegacy": 22.21,
+        "isat": 52.32,
+        "three": 10.48,
+        "smartfren": 2.8,
+        "xl": 25.51,
+        "ioh": 62.03
+      },
+      "shareByOperatorYoy": {
+        "tsel": 17.11,
+        "xlLegacy": 22.87,
+        "isat": 55.18,
+        "three": 8.55,
+        "smartfren": 2.97,
+        "xl": 25.66,
+        "ioh": 62.98
+      },
       "metaShareHistory": [
+        17.11,
         16.74,
         16.88
       ]
@@ -833,7 +1573,27 @@
         "ioh": 35.13
       },
       "metaMarketSharePrevPct": 34.45,
+      "metaMarketSharePrevYoyPct": 36.89,
+      "shareByOperatorPrev": {
+        "tsel": 34.45,
+        "xlLegacy": 27.08,
+        "isat": 17.51,
+        "three": 17.73,
+        "smartfren": 8.18,
+        "xl": 34.83,
+        "ioh": 34.95
+      },
+      "shareByOperatorYoy": {
+        "tsel": 36.89,
+        "xlLegacy": 30.04,
+        "isat": 17.16,
+        "three": 16.1,
+        "smartfren": 8.29,
+        "xl": 37.86,
+        "ioh": 32.76
+      },
       "metaShareHistory": [
+        36.89,
         34.45,
         34.44
       ]
@@ -855,7 +1615,27 @@
         "ioh": 36.12
       },
       "metaMarketSharePrevPct": 32.48,
+      "metaMarketSharePrevYoyPct": 31.18,
+      "shareByOperatorPrev": {
+        "tsel": 32.48,
+        "xlLegacy": 27.41,
+        "isat": 10.95,
+        "three": 25.36,
+        "smartfren": 8.65,
+        "xl": 35.48,
+        "ioh": 35.78
+      },
+      "shareByOperatorYoy": {
+        "tsel": 31.18,
+        "xlLegacy": 31.88,
+        "isat": 12.03,
+        "three": 23.57,
+        "smartfren": 8.42,
+        "xl": 39.77,
+        "ioh": 35.0
+      },
       "metaShareHistory": [
+        31.18,
         32.48,
         32.59
       ]
@@ -877,7 +1657,27 @@
         "ioh": 46.13
       },
       "metaMarketSharePrevPct": 32.3,
+      "metaMarketSharePrevYoyPct": 31.73,
+      "shareByOperatorPrev": {
+        "tsel": 32.3,
+        "xlLegacy": 18.03,
+        "isat": 27.79,
+        "three": 19.59,
+        "smartfren": 7.02,
+        "xl": 24.92,
+        "ioh": 46.76
+      },
+      "shareByOperatorYoy": {
+        "tsel": 31.73,
+        "xlLegacy": 19.48,
+        "isat": 29.86,
+        "three": 19.46,
+        "smartfren": 7.25,
+        "xl": 26.43,
+        "ioh": 48.21
+      },
       "metaShareHistory": [
+        31.73,
         32.3,
         32.11
       ]
@@ -899,7 +1699,27 @@
         "ioh": 44.86
       },
       "metaMarketSharePrevPct": 31.39,
+      "metaMarketSharePrevYoyPct": 34.19,
+      "shareByOperatorPrev": {
+        "tsel": 31.39,
+        "xlLegacy": 20.23,
+        "isat": 25.53,
+        "three": 19.45,
+        "smartfren": 7.57,
+        "xl": 27.62,
+        "ioh": 44.6
+      },
+      "shareByOperatorYoy": {
+        "tsel": 34.19,
+        "xlLegacy": 21.59,
+        "isat": 24.21,
+        "three": 19.71,
+        "smartfren": 7.4,
+        "xl": 28.69,
+        "ioh": 42.98
+      },
       "metaShareHistory": [
+        34.19,
         31.39,
         31.5
       ]
@@ -921,7 +1741,27 @@
         "ioh": 39.41
       },
       "metaMarketSharePrevPct": 32.66,
+      "metaMarketSharePrevYoyPct": 35.6,
+      "shareByOperatorPrev": {
+        "tsel": 32.66,
+        "xlLegacy": 24.23,
+        "isat": 19.49,
+        "three": 19.34,
+        "smartfren": 8.31,
+        "xl": 32.1,
+        "ioh": 38.51
+      },
+      "shareByOperatorYoy": {
+        "tsel": 35.6,
+        "xlLegacy": 26.64,
+        "isat": 17.07,
+        "three": 20.16,
+        "smartfren": 8.02,
+        "xl": 34.27,
+        "ioh": 36.8
+      },
       "metaShareHistory": [
+        35.6,
         32.66,
         32.75
       ]
@@ -943,7 +1783,27 @@
         "ioh": 30.86
       },
       "metaMarketSharePrevPct": 41.95,
+      "metaMarketSharePrevYoyPct": 45.91,
+      "shareByOperatorPrev": {
+        "tsel": 41.95,
+        "xlLegacy": 28.07,
+        "isat": 18.86,
+        "three": 12.3,
+        "smartfren": 3.39,
+        "xl": 31.25,
+        "ioh": 31.15
+      },
+      "shareByOperatorYoy": {
+        "tsel": 45.91,
+        "xlLegacy": 28.19,
+        "isat": 18.9,
+        "three": 10.96,
+        "smartfren": 2.7,
+        "xl": 30.76,
+        "ioh": 29.35
+      },
       "metaShareHistory": [
+        45.91,
         41.95,
         41.52
       ]
@@ -965,7 +1825,27 @@
         "ioh": 39.41
       },
       "metaMarketSharePrevPct": 31.52,
+      "metaMarketSharePrevYoyPct": 30.56,
+      "shareByOperatorPrev": {
+        "tsel": 31.52,
+        "xlLegacy": 18.65,
+        "isat": 29.63,
+        "three": 10.1,
+        "smartfren": 14.21,
+        "xl": 32.59,
+        "ioh": 39.42
+      },
+      "shareByOperatorYoy": {
+        "tsel": 30.56,
+        "xlLegacy": 19.16,
+        "isat": 29.59,
+        "three": 10.07,
+        "smartfren": 16.84,
+        "xl": 35.46,
+        "ioh": 39.14
+      },
       "metaShareHistory": [
+        30.56,
         31.52,
         31.0
       ]
@@ -987,7 +1867,27 @@
         "ioh": 48.28
       },
       "metaMarketSharePrevPct": 25.59,
+      "metaMarketSharePrevYoyPct": 26.68,
+      "shareByOperatorPrev": {
+        "tsel": 25.59,
+        "xlLegacy": 19.11,
+        "isat": 38.67,
+        "three": 10.12,
+        "smartfren": 11.28,
+        "xl": 30.06,
+        "ioh": 48.43
+      },
+      "shareByOperatorYoy": {
+        "tsel": 26.68,
+        "xlLegacy": 20.37,
+        "isat": 37.01,
+        "three": 9.81,
+        "smartfren": 13.33,
+        "xl": 33.36,
+        "ioh": 45.82
+      },
       "metaShareHistory": [
+        26.68,
         25.59,
         25.49
       ]
@@ -1009,7 +1909,27 @@
         "ioh": 44.32
       },
       "metaMarketSharePrevPct": 32.26,
+      "metaMarketSharePrevYoyPct": 33.26,
+      "shareByOperatorPrev": {
+        "tsel": 32.26,
+        "xlLegacy": 17.32,
+        "isat": 27.82,
+        "three": 16.71,
+        "smartfren": 10.52,
+        "xl": 27.75,
+        "ioh": 43.85
+      },
+      "shareByOperatorYoy": {
+        "tsel": 33.26,
+        "xlLegacy": 18.6,
+        "isat": 28.13,
+        "three": 15.94,
+        "smartfren": 11.38,
+        "xl": 29.55,
+        "ioh": 43.29
+      },
       "metaShareHistory": [
+        33.26,
         32.26,
         31.64
       ]
@@ -1031,7 +1951,27 @@
         "ioh": 40.62
       },
       "metaMarketSharePrevPct": 30.86,
+      "metaMarketSharePrevYoyPct": 31.6,
+      "shareByOperatorPrev": {
+        "tsel": 30.86,
+        "xlLegacy": 16.41,
+        "isat": 21.42,
+        "three": 19.32,
+        "smartfren": 16.28,
+        "xl": 32.42,
+        "ioh": 40.35
+      },
+      "shareByOperatorYoy": {
+        "tsel": 31.6,
+        "xlLegacy": 17.76,
+        "isat": 20.96,
+        "three": 19.56,
+        "smartfren": 17.03,
+        "xl": 34.19,
+        "ioh": 39.99
+      },
       "metaShareHistory": [
+        31.6,
         30.86,
         30.56
       ]
@@ -1053,7 +1993,27 @@
         "ioh": 52.22
       },
       "metaMarketSharePrevPct": 18.81,
+      "metaMarketSharePrevYoyPct": 21.23,
+      "shareByOperatorPrev": {
+        "tsel": 18.81,
+        "xlLegacy": 25.86,
+        "isat": 40.36,
+        "three": 12.38,
+        "smartfren": 7.32,
+        "xl": 33.01,
+        "ioh": 52.15
+      },
+      "shareByOperatorYoy": {
+        "tsel": 21.23,
+        "xlLegacy": 26.64,
+        "isat": 39.75,
+        "three": 11.56,
+        "smartfren": 7.52,
+        "xl": 33.71,
+        "ioh": 50.64
+      },
       "metaShareHistory": [
+        21.23,
         18.81,
         18.82
       ]
@@ -1075,7 +2035,27 @@
         "ioh": 42.99
       },
       "metaMarketSharePrevPct": 21.82,
+      "metaMarketSharePrevYoyPct": 23.41,
+      "shareByOperatorPrev": {
+        "tsel": 21.82,
+        "xlLegacy": 28.57,
+        "isat": 24.15,
+        "three": 19.39,
+        "smartfren": 10.79,
+        "xl": 38.88,
+        "ioh": 43.26
+      },
+      "shareByOperatorYoy": {
+        "tsel": 23.41,
+        "xlLegacy": 30.53,
+        "isat": 22.79,
+        "three": 18.37,
+        "smartfren": 12.21,
+        "xl": 42.06,
+        "ioh": 40.24
+      },
       "metaShareHistory": [
+        23.41,
         21.82,
         22.15
       ]
@@ -1097,7 +2077,27 @@
         "ioh": 36.49
       },
       "metaMarketSharePrevPct": 36.9,
+      "metaMarketSharePrevYoyPct": 36.39,
+      "shareByOperatorPrev": {
+        "tsel": 36.9,
+        "xlLegacy": 19.22,
+        "isat": 20.46,
+        "three": 16.4,
+        "smartfren": 11.35,
+        "xl": 30.28,
+        "ioh": 36.5
+      },
+      "shareByOperatorYoy": {
+        "tsel": 36.39,
+        "xlLegacy": 21.57,
+        "isat": 21.73,
+        "three": 15.83,
+        "smartfren": 11.44,
+        "xl": 32.49,
+        "ioh": 37.23
+      },
       "metaShareHistory": [
+        36.39,
         36.9,
         36.64
       ]
@@ -1119,7 +2119,27 @@
         "ioh": 41.0
       },
       "metaMarketSharePrevPct": 32.61,
+      "metaMarketSharePrevYoyPct": 34.85,
+      "shareByOperatorPrev": {
+        "tsel": 32.61,
+        "xlLegacy": 19.08,
+        "isat": 19.81,
+        "three": 21.62,
+        "smartfren": 11.28,
+        "xl": 30.21,
+        "ioh": 41.1
+      },
+      "shareByOperatorYoy": {
+        "tsel": 34.85,
+        "xlLegacy": 21.05,
+        "isat": 19.28,
+        "three": 19.99,
+        "smartfren": 12.86,
+        "xl": 33.23,
+        "ioh": 38.29
+      },
       "metaShareHistory": [
+        34.85,
         32.61,
         32.42
       ]
@@ -1141,7 +2161,27 @@
         "ioh": 33.43
       },
       "metaMarketSharePrevPct": 47.79,
+      "metaMarketSharePrevYoyPct": 47.46,
+      "shareByOperatorPrev": {
+        "tsel": 47.79,
+        "xlLegacy": 16.6,
+        "isat": 26.31,
+        "three": 7.09,
+        "smartfren": 4.81,
+        "xl": 21.29,
+        "ioh": 33.26
+      },
+      "shareByOperatorYoy": {
+        "tsel": 47.46,
+        "xlLegacy": 19.23,
+        "isat": 25.39,
+        "three": 6.63,
+        "smartfren": 4.81,
+        "xl": 23.9,
+        "ioh": 31.66
+      },
       "metaShareHistory": [
+        47.46,
         47.79,
         48.04
       ]
@@ -1163,7 +2203,27 @@
         "ioh": 24.62
       },
       "metaMarketSharePrevPct": 47.9,
+      "metaMarketSharePrevYoyPct": 47.45,
+      "shareByOperatorPrev": {
+        "tsel": 47.9,
+        "xlLegacy": 25.85,
+        "isat": 19.97,
+        "three": 5.01,
+        "smartfren": 3.95,
+        "xl": 29.63,
+        "ioh": 24.81
+      },
+      "shareByOperatorYoy": {
+        "tsel": 47.45,
+        "xlLegacy": 27.77,
+        "isat": 18.98,
+        "three": 4.73,
+        "smartfren": 3.91,
+        "xl": 31.53,
+        "ioh": 23.3
+      },
       "metaShareHistory": [
+        47.45,
         47.9,
         47.78
       ]
@@ -1185,7 +2245,27 @@
         "ioh": 42.93
       },
       "metaMarketSharePrevPct": 32.36,
+      "metaMarketSharePrevYoyPct": 31.93,
+      "shareByOperatorPrev": {
+        "tsel": 32.36,
+        "xlLegacy": 18.39,
+        "isat": 26.44,
+        "three": 16.99,
+        "smartfren": 9.43,
+        "xl": 27.7,
+        "ioh": 43.1
+      },
+      "shareByOperatorYoy": {
+        "tsel": 31.93,
+        "xlLegacy": 20.5,
+        "isat": 26.11,
+        "three": 18.67,
+        "smartfren": 8.89,
+        "xl": 28.99,
+        "ioh": 43.99
+      },
       "metaShareHistory": [
+        31.93,
         32.36,
         32.06
       ]
@@ -1207,7 +2287,27 @@
         "ioh": 51.02
       },
       "metaMarketSharePrevPct": 32.46,
+      "metaMarketSharePrevYoyPct": 31.3,
+      "shareByOperatorPrev": {
+        "tsel": 32.46,
+        "xlLegacy": 16.12,
+        "isat": 43.08,
+        "three": 8.72,
+        "smartfren": 2.61,
+        "xl": 19.34,
+        "ioh": 51.31
+      },
+      "shareByOperatorYoy": {
+        "tsel": 31.3,
+        "xlLegacy": 18.93,
+        "isat": 44.83,
+        "three": 7.78,
+        "smartfren": 2.44,
+        "xl": 21.25,
+        "ioh": 52.16
+      },
       "metaShareHistory": [
+        31.3,
         32.46,
         32.69
       ]
@@ -1229,7 +2329,27 @@
         "ioh": 35.12
       },
       "metaMarketSharePrevPct": 41.48,
+      "metaMarketSharePrevYoyPct": 41.86,
+      "shareByOperatorPrev": {
+        "tsel": 41.48,
+        "xlLegacy": 18.77,
+        "isat": 22.0,
+        "three": 13.97,
+        "smartfren": 7.26,
+        "xl": 26.01,
+        "ioh": 35.59
+      },
+      "shareByOperatorYoy": {
+        "tsel": 41.86,
+        "xlLegacy": 19.89,
+        "isat": 22.95,
+        "three": 12.6,
+        "smartfren": 7.68,
+        "xl": 27.23,
+        "ioh": 35.08
+      },
       "metaShareHistory": [
+        41.86,
         41.48,
         41.57
       ]
@@ -1251,7 +2371,27 @@
         "ioh": 54.25
       },
       "metaMarketSharePrevPct": 23.75,
+      "metaMarketSharePrevYoyPct": 24.65,
+      "shareByOperatorPrev": {
+        "tsel": 23.75,
+        "xlLegacy": 18.42,
+        "isat": 46.29,
+        "three": 8.6,
+        "smartfren": 6.37,
+        "xl": 24.16,
+        "ioh": 54.65
+      },
+      "shareByOperatorYoy": {
+        "tsel": 24.65,
+        "xlLegacy": 20.81,
+        "isat": 46.14,
+        "three": 8.66,
+        "smartfren": 6.22,
+        "xl": 26.35,
+        "ioh": 53.97
+      },
       "metaShareHistory": [
+        24.65,
         23.75,
         24.18
       ]
@@ -1273,7 +2413,27 @@
         "ioh": 43.69
       },
       "metaMarketSharePrevPct": 37.39,
+      "metaMarketSharePrevYoyPct": 36.97,
+      "shareByOperatorPrev": {
+        "tsel": 37.39,
+        "xlLegacy": 15.36,
+        "isat": 28.03,
+        "three": 17.01,
+        "smartfren": 6.39,
+        "xl": 22.21,
+        "ioh": 44.1
+      },
+      "shareByOperatorYoy": {
+        "tsel": 36.97,
+        "xlLegacy": 17.31,
+        "isat": 28.73,
+        "three": 15.54,
+        "smartfren": 6.4,
+        "xl": 23.96,
+        "ioh": 44.03
+      },
       "metaShareHistory": [
+        36.97,
         37.39,
         36.78
       ]
@@ -1295,7 +2455,27 @@
         "ioh": 36.08
       },
       "metaMarketSharePrevPct": 37.53,
+      "metaMarketSharePrevYoyPct": 36.81,
+      "shareByOperatorPrev": {
+        "tsel": 37.53,
+        "xlLegacy": 21.36,
+        "isat": 23.37,
+        "three": 12.96,
+        "smartfren": 8.95,
+        "xl": 30.09,
+        "ioh": 35.96
+      },
+      "shareByOperatorYoy": {
+        "tsel": 36.81,
+        "xlLegacy": 25.55,
+        "isat": 23.95,
+        "three": 12.29,
+        "smartfren": 8.4,
+        "xl": 33.48,
+        "ioh": 35.7
+      },
       "metaShareHistory": [
+        36.81,
         37.53,
         37.48
       ]
@@ -1317,7 +2497,27 @@
         "ioh": 40.13
       },
       "metaMarketSharePrevPct": 29.45,
+      "metaMarketSharePrevYoyPct": 25.8,
+      "shareByOperatorPrev": {
+        "tsel": 29.45,
+        "xlLegacy": 25.36,
+        "isat": 25.53,
+        "three": 15.2,
+        "smartfren": 8.4,
+        "xl": 33.48,
+        "ioh": 40.31
+      },
+      "shareByOperatorYoy": {
+        "tsel": 25.8,
+        "xlLegacy": 28.33,
+        "isat": 27.82,
+        "three": 15.82,
+        "smartfren": 8.61,
+        "xl": 36.58,
+        "ioh": 42.92
+      },
       "metaShareHistory": [
+        25.8,
         29.45,
         28.99
       ]
@@ -1339,7 +2539,27 @@
         "ioh": 44.16
       },
       "metaMarketSharePrevPct": 29.71,
+      "metaMarketSharePrevYoyPct": 28.91,
+      "shareByOperatorPrev": {
+        "tsel": 29.71,
+        "xlLegacy": 21.46,
+        "isat": 24.81,
+        "three": 19.93,
+        "smartfren": 8.68,
+        "xl": 29.91,
+        "ioh": 44.25
+      },
+      "shareByOperatorYoy": {
+        "tsel": 28.91,
+        "xlLegacy": 23.14,
+        "isat": 26.19,
+        "three": 19.77,
+        "smartfren": 9.04,
+        "xl": 31.82,
+        "ioh": 44.96
+      },
       "metaShareHistory": [
+        28.91,
         29.71,
         29.73
       ]
@@ -1361,7 +2581,27 @@
         "ioh": 31.64
       },
       "metaMarketSharePrevPct": 29.39,
+      "metaMarketSharePrevYoyPct": 29.65,
+      "shareByOperatorPrev": {
+        "tsel": 29.39,
+        "xlLegacy": 38.34,
+        "isat": 11.11,
+        "three": 21.65,
+        "smartfren": 4.57,
+        "xl": 42.46,
+        "ioh": 31.97
+      },
+      "shareByOperatorYoy": {
+        "tsel": 29.65,
+        "xlLegacy": 41.07,
+        "isat": 10.53,
+        "three": 21.48,
+        "smartfren": 4.85,
+        "xl": 45.41,
+        "ioh": 31.35
+      },
       "metaShareHistory": [
+        29.65,
         29.39,
         29.4
       ]
@@ -1383,7 +2623,27 @@
         "ioh": 29.91
       },
       "metaMarketSharePrevPct": 23.2,
+      "metaMarketSharePrevYoyPct": 22.15,
+      "shareByOperatorPrev": {
+        "tsel": 23.2,
+        "xlLegacy": 46.66,
+        "isat": 12.44,
+        "three": 18.16,
+        "smartfren": 4.43,
+        "xl": 50.82,
+        "ioh": 30.17
+      },
+      "shareByOperatorYoy": {
+        "tsel": 22.15,
+        "xlLegacy": 50.08,
+        "isat": 13.88,
+        "three": 16.03,
+        "smartfren": 5.33,
+        "xl": 54.72,
+        "ioh": 29.23
+      },
       "metaShareHistory": [
+        22.15,
         23.2,
         22.98
       ]
@@ -1405,7 +2665,27 @@
         "ioh": 39.22
       },
       "metaMarketSharePrevPct": 35.09,
+      "metaMarketSharePrevYoyPct": 30.38,
+      "shareByOperatorPrev": {
+        "tsel": 35.09,
+        "xlLegacy": 22.22,
+        "isat": 24.39,
+        "three": 14.98,
+        "smartfren": 7.46,
+        "xl": 29.47,
+        "ioh": 38.95
+      },
+      "shareByOperatorYoy": {
+        "tsel": 30.38,
+        "xlLegacy": 26.71,
+        "isat": 23.97,
+        "three": 14.01,
+        "smartfren": 10.93,
+        "xl": 37.3,
+        "ioh": 37.37
+      },
       "metaShareHistory": [
+        30.38,
         35.09,
         35.08
       ]
@@ -1427,7 +2707,27 @@
         "ioh": 27.68
       },
       "metaMarketSharePrevPct": 38.83,
+      "metaMarketSharePrevYoyPct": 40.16,
+      "shareByOperatorPrev": {
+        "tsel": 38.83,
+        "xlLegacy": 27.77,
+        "isat": 20.65,
+        "three": 7.46,
+        "smartfren": 6.67,
+        "xl": 34.23,
+        "ioh": 27.91
+      },
+      "shareByOperatorYoy": {
+        "tsel": 40.16,
+        "xlLegacy": 28.39,
+        "isat": 21.7,
+        "three": 6.29,
+        "smartfren": 6.52,
+        "xl": 34.55,
+        "ioh": 27.83
+      },
       "metaShareHistory": [
+        40.16,
         38.83,
         38.91
       ]
@@ -1449,7 +2749,27 @@
         "ioh": 20.93
       },
       "metaMarketSharePrevPct": 24.22,
+      "metaMarketSharePrevYoyPct": 24.57,
+      "shareByOperatorPrev": {
+        "tsel": 24.22,
+        "xlLegacy": 41.12,
+        "isat": 17.35,
+        "three": 4.79,
+        "smartfren": 15.05,
+        "xl": 55.51,
+        "ioh": 21.84
+      },
+      "shareByOperatorYoy": {
+        "tsel": 24.57,
+        "xlLegacy": 42.35,
+        "isat": 16.63,
+        "three": 4.6,
+        "smartfren": 15.73,
+        "xl": 56.94,
+        "ioh": 21.16
+      },
       "metaShareHistory": [
+        24.57,
         24.22,
         24.28
       ]
@@ -1471,7 +2791,27 @@
         "ioh": 28.81
       },
       "metaMarketSharePrevPct": 42.15,
+      "metaMarketSharePrevYoyPct": 43.38,
+      "shareByOperatorPrev": {
+        "tsel": 42.15,
+        "xlLegacy": 27.4,
+        "isat": 15.97,
+        "three": 12.38,
+        "smartfren": 5.42,
+        "xl": 32.61,
+        "ioh": 28.33
+      },
+      "shareByOperatorYoy": {
+        "tsel": 43.38,
+        "xlLegacy": 30.47,
+        "isat": 14.71,
+        "three": 10.68,
+        "smartfren": 5.41,
+        "xl": 35.53,
+        "ioh": 25.08
+      },
       "metaShareHistory": [
+        43.38,
         42.15,
         41.79
       ]
@@ -1493,7 +2833,27 @@
         "ioh": 8.57
       },
       "metaMarketSharePrevPct": 19.3,
+      "metaMarketSharePrevYoyPct": 18.27,
+      "shareByOperatorPrev": {
+        "tsel": 19.3,
+        "xlLegacy": 72.64,
+        "isat": 3.86,
+        "three": 4.88,
+        "smartfren": 1.35,
+        "xl": 74.21,
+        "ioh": 8.64
+      },
+      "shareByOperatorYoy": {
+        "tsel": 18.27,
+        "xlLegacy": 75.77,
+        "isat": 3.17,
+        "three": 4.11,
+        "smartfren": 1.24,
+        "xl": 76.43,
+        "ioh": 6.91
+      },
       "metaShareHistory": [
+        18.27,
         19.3,
         19.02
       ]
@@ -1515,7 +2875,27 @@
         "ioh": 5.73
       },
       "metaMarketSharePrevPct": 66.63,
+      "metaMarketSharePrevYoyPct": 65.22,
+      "shareByOperatorPrev": {
+        "tsel": 66.63,
+        "xlLegacy": 29.71,
+        "isat": 4.39,
+        "three": 1.48,
+        "smartfren": 1.63,
+        "xl": 31.01,
+        "ioh": 5.92
+      },
+      "shareByOperatorYoy": {
+        "tsel": 65.22,
+        "xlLegacy": 33.17,
+        "isat": 3.77,
+        "three": 1.59,
+        "smartfren": 0.39,
+        "xl": 33.48,
+        "ioh": 5.18
+      },
       "metaShareHistory": [
+        65.22,
         66.63,
         65.98
       ]
@@ -1537,7 +2917,27 @@
         "ioh": 11.71
       },
       "metaMarketSharePrevPct": 25.29,
+      "metaMarketSharePrevYoyPct": 22.71,
+      "shareByOperatorPrev": {
+        "tsel": 25.29,
+        "xlLegacy": 64.42,
+        "isat": 4.12,
+        "three": 8.04,
+        "smartfren": 1.6,
+        "xl": 65.69,
+        "ioh": 11.96
+      },
+      "shareByOperatorYoy": {
+        "tsel": 22.71,
+        "xlLegacy": 69.84,
+        "isat": 3.82,
+        "three": 7.26,
+        "smartfren": 1.52,
+        "xl": 71.15,
+        "ioh": 10.78
+      },
       "metaShareHistory": [
+        22.71,
         25.29,
         25.2
       ]
@@ -1559,7 +2959,27 @@
         "ioh": 9.74
       },
       "metaMarketSharePrevPct": 88.0,
+      "metaMarketSharePrevYoyPct": 88.13,
+      "shareByOperatorPrev": {
+        "tsel": 88.0,
+        "xlLegacy": 4.09,
+        "isat": 4.56,
+        "three": 5.34,
+        "smartfren": 0.88,
+        "xl": 5.0,
+        "ioh": 9.77
+      },
+      "shareByOperatorYoy": {
+        "tsel": 88.13,
+        "xlLegacy": 5.08,
+        "isat": 4.19,
+        "three": 5.46,
+        "smartfren": 0.15,
+        "xl": 5.27,
+        "ioh": 9.91
+      },
       "metaShareHistory": [
+        88.13,
         88.0,
         88.07
       ]
@@ -1581,7 +3001,27 @@
         "ioh": 13.46
       },
       "metaMarketSharePrevPct": 78.82,
+      "metaMarketSharePrevYoyPct": 81.56,
+      "shareByOperatorPrev": {
+        "tsel": 78.82,
+        "xlLegacy": 10.4,
+        "isat": 9.99,
+        "three": 3.83,
+        "smartfren": 1.17,
+        "xl": 11.45,
+        "ioh": 13.62
+      },
+      "shareByOperatorYoy": {
+        "tsel": 81.56,
+        "xlLegacy": 11.32,
+        "isat": 8.3,
+        "three": 3.23,
+        "smartfren": 0.18,
+        "xl": 11.46,
+        "ioh": 11.36
+      },
       "metaShareHistory": [
+        81.56,
         78.82,
         78.49
       ]
@@ -1603,7 +3043,27 @@
         "ioh": 55.45
       },
       "metaMarketSharePrevPct": 32.45,
+      "metaMarketSharePrevYoyPct": 35.91,
+      "shareByOperatorPrev": {
+        "tsel": 32.45,
+        "xlLegacy": 13.83,
+        "isat": 28.7,
+        "three": 27.53,
+        "smartfren": 1.81,
+        "xl": 15.5,
+        "ioh": 55.54
+      },
+      "shareByOperatorYoy": {
+        "tsel": 35.91,
+        "xlLegacy": 16.55,
+        "isat": 27.25,
+        "three": 25.46,
+        "smartfren": 1.62,
+        "xl": 18.16,
+        "ioh": 51.44
+      },
       "metaShareHistory": [
+        35.91,
         32.45,
         32.32
       ]
@@ -1625,7 +3085,27 @@
         "ioh": 23.72
       },
       "metaMarketSharePrevPct": 65.76,
+      "metaMarketSharePrevYoyPct": 70.51,
+      "shareByOperatorPrev": {
+        "tsel": 65.76,
+        "xlLegacy": 14.53,
+        "isat": 14.73,
+        "three": 8.94,
+        "smartfren": 0.56,
+        "xl": 14.72,
+        "ioh": 23.48
+      },
+      "shareByOperatorYoy": {
+        "tsel": 70.51,
+        "xlLegacy": 14.16,
+        "isat": 13.64,
+        "three": 7.23,
+        "smartfren": 0.15,
+        "xl": 14.32,
+        "ioh": 20.72
+      },
       "metaShareHistory": [
+        70.51,
         65.76,
         65.69
       ]
@@ -1647,7 +3127,27 @@
         "ioh": 35.25
       },
       "metaMarketSharePrevPct": 33.2,
+      "metaMarketSharePrevYoyPct": 36.03,
+      "shareByOperatorPrev": {
+        "tsel": 33.2,
+        "xlLegacy": 31.1,
+        "isat": 23.99,
+        "three": 11.57,
+        "smartfren": 5.35,
+        "xl": 35.98,
+        "ioh": 35.12
+      },
+      "shareByOperatorYoy": {
+        "tsel": 36.03,
+        "xlLegacy": 32.11,
+        "isat": 24.33,
+        "three": 11.09,
+        "smartfren": 4.89,
+        "xl": 36.69,
+        "ioh": 34.75
+      },
       "metaShareHistory": [
+        36.03,
         33.2,
         33.18
       ]
@@ -1669,7 +3169,27 @@
         "ioh": 33.89
       },
       "metaMarketSharePrevPct": 37.94,
+      "metaMarketSharePrevYoyPct": 43.24,
+      "shareByOperatorPrev": {
+        "tsel": 37.94,
+        "xlLegacy": 28.9,
+        "isat": 25.24,
+        "three": 9.37,
+        "smartfren": 2.97,
+        "xl": 31.71,
+        "ioh": 34.31
+      },
+      "shareByOperatorYoy": {
+        "tsel": 43.24,
+        "xlLegacy": 31.52,
+        "isat": 20.67,
+        "three": 8.93,
+        "smartfren": 2.38,
+        "xl": 34.1,
+        "ioh": 29.21
+      },
       "metaShareHistory": [
+        43.24,
         37.94,
         37.9
       ]
@@ -1691,7 +3211,27 @@
         "ioh": 31.34
       },
       "metaMarketSharePrevPct": 62.48,
+      "metaMarketSharePrevYoyPct": 63.44,
+      "shareByOperatorPrev": {
+        "tsel": 62.48,
+        "xlLegacy": 7.99,
+        "isat": 25.48,
+        "three": 7.29,
+        "smartfren": 0.83,
+        "xl": 8.92,
+        "ioh": 32.38
+      },
+      "shareByOperatorYoy": {
+        "tsel": 63.44,
+        "xlLegacy": 8.92,
+        "isat": 25.43,
+        "three": 7.5,
+        "smartfren": 0.57,
+        "xl": 9.27,
+        "ioh": 32.63
+      },
       "metaShareHistory": [
+        63.44,
         62.48,
         63.43
       ]
@@ -1713,7 +3253,27 @@
         "ioh": 38.98
       },
       "metaMarketSharePrevPct": 47.22,
+      "metaMarketSharePrevYoyPct": 50.23,
+      "shareByOperatorPrev": {
+        "tsel": 47.22,
+        "xlLegacy": 16.67,
+        "isat": 25.39,
+        "three": 13.82,
+        "smartfren": 1.91,
+        "xl": 18.65,
+        "ioh": 38.7
+      },
+      "shareByOperatorYoy": {
+        "tsel": 50.23,
+        "xlLegacy": 18.05,
+        "isat": 24.7,
+        "three": 12.89,
+        "smartfren": 1.75,
+        "xl": 19.68,
+        "ioh": 37.02
+      },
       "metaShareHistory": [
+        50.23,
         47.22,
         47.0
       ]
@@ -1735,7 +3295,27 @@
         "ioh": 23.86
       },
       "metaMarketSharePrevPct": 65.57,
+      "metaMarketSharePrevYoyPct": 68.11,
+      "shareByOperatorPrev": {
+        "tsel": 65.57,
+        "xlLegacy": 12.98,
+        "isat": 17.29,
+        "three": 6.74,
+        "smartfren": 1.35,
+        "xl": 14.26,
+        "ioh": 23.9
+      },
+      "shareByOperatorYoy": {
+        "tsel": 68.11,
+        "xlLegacy": 13.93,
+        "isat": 16.9,
+        "three": 6.31,
+        "smartfren": 1.08,
+        "xl": 15.0,
+        "ioh": 23.0
+      },
       "metaShareHistory": [
+        68.11,
         65.57,
         65.63
       ]
@@ -1757,7 +3337,27 @@
         "ioh": 21.27
       },
       "metaMarketSharePrevPct": 78.73,
+      "metaMarketSharePrevYoyPct": 80.18,
+      "shareByOperatorPrev": {
+        "tsel": 78.73,
+        "xlLegacy": 3.57,
+        "isat": 10.14,
+        "three": 10.56,
+        "smartfren": 0.79,
+        "xl": 4.21,
+        "ioh": 20.34
+      },
+      "shareByOperatorYoy": {
+        "tsel": 80.18,
+        "xlLegacy": 4.4,
+        "isat": 10.34,
+        "three": 9.71,
+        "smartfren": 0.35,
+        "xl": 4.8,
+        "ioh": 19.73
+      },
       "metaShareHistory": [
+        80.18,
         78.73,
         78.3
       ]
@@ -1779,7 +3379,27 @@
         "ioh": 38.62
       },
       "metaMarketSharePrevPct": 49.31,
+      "metaMarketSharePrevYoyPct": 47.01,
+      "shareByOperatorPrev": {
+        "tsel": 49.31,
+        "xlLegacy": 11.8,
+        "isat": 16.97,
+        "three": 22.04,
+        "smartfren": 4.71,
+        "xl": 16.46,
+        "ioh": 38.66
+      },
+      "shareByOperatorYoy": {
+        "tsel": 47.01,
+        "xlLegacy": 15.59,
+        "isat": 16.24,
+        "three": 24.31,
+        "smartfren": 4.5,
+        "xl": 19.92,
+        "ioh": 38.99
+      },
       "metaShareHistory": [
+        47.01,
         49.31,
         49.62
       ]
@@ -1801,7 +3421,27 @@
         "ioh": 31.01
       },
       "metaMarketSharePrevPct": 57.02,
+      "metaMarketSharePrevYoyPct": 59.81,
+      "shareByOperatorPrev": {
+        "tsel": 57.02,
+        "xlLegacy": 12.81,
+        "isat": 11.08,
+        "three": 19.94,
+        "smartfren": 4.48,
+        "xl": 17.1,
+        "ioh": 30.81
+      },
+      "shareByOperatorYoy": {
+        "tsel": 59.81,
+        "xlLegacy": 14.57,
+        "isat": 9.76,
+        "three": 19.03,
+        "smartfren": 4.23,
+        "xl": 18.61,
+        "ioh": 28.37
+      },
       "metaShareHistory": [
+        59.81,
         57.02,
         56.96
       ]
@@ -1823,7 +3463,27 @@
         "ioh": 27.09
       },
       "metaMarketSharePrevPct": 59.97,
+      "metaMarketSharePrevYoyPct": 60.9,
+      "shareByOperatorPrev": {
+        "tsel": 59.97,
+        "xlLegacy": 17.21,
+        "isat": 20.45,
+        "three": 7.26,
+        "smartfren": 1.08,
+        "xl": 18.33,
+        "ioh": 27.16
+      },
+      "shareByOperatorYoy": {
+        "tsel": 60.9,
+        "xlLegacy": 21.84,
+        "isat": 18.83,
+        "three": 6.63,
+        "smartfren": 0.48,
+        "xl": 22.22,
+        "ioh": 25.01
+      },
       "metaShareHistory": [
+        60.9,
         59.97,
         59.61
       ]
@@ -1845,7 +3505,27 @@
         "ioh": 26.05
       },
       "metaMarketSharePrevPct": 45.89,
+      "metaMarketSharePrevYoyPct": 49.58,
+      "shareByOperatorPrev": {
+        "tsel": 45.89,
+        "xlLegacy": 26.23,
+        "isat": 14.54,
+        "three": 12.53,
+        "smartfren": 6.87,
+        "xl": 32.25,
+        "ioh": 26.67
+      },
+      "shareByOperatorYoy": {
+        "tsel": 49.58,
+        "xlLegacy": 26.74,
+        "isat": 15.03,
+        "three": 13.06,
+        "smartfren": 5.08,
+        "xl": 31.31,
+        "ioh": 27.74
+      },
       "metaShareHistory": [
+        49.58,
         45.89,
         44.78
       ]
@@ -1867,7 +3547,27 @@
         "ioh": 34.83
       },
       "metaMarketSharePrevPct": 36.54,
+      "metaMarketSharePrevYoyPct": 38.79,
+      "shareByOperatorPrev": {
+        "tsel": 36.54,
+        "xlLegacy": 18.52,
+        "isat": 18.4,
+        "three": 16.78,
+        "smartfren": 15.15,
+        "xl": 33.31,
+        "ioh": 34.86
+      },
+      "shareByOperatorYoy": {
+        "tsel": 38.79,
+        "xlLegacy": 22.91,
+        "isat": 16.9,
+        "three": 15.83,
+        "smartfren": 14.77,
+        "xl": 36.92,
+        "ioh": 32.2
+      },
       "metaShareHistory": [
+        38.79,
         36.54,
         36.83
       ]
@@ -1889,7 +3589,27 @@
         "ioh": 24.12
       },
       "metaMarketSharePrevPct": 47.63,
+      "metaMarketSharePrevYoyPct": 47.98,
+      "shareByOperatorPrev": {
+        "tsel": 47.63,
+        "xlLegacy": 18.67,
+        "isat": 13.77,
+        "three": 10.3,
+        "smartfren": 14.26,
+        "xl": 34.22,
+        "ioh": 24.73
+      },
+      "shareByOperatorYoy": {
+        "tsel": 47.98,
+        "xlLegacy": 23.77,
+        "isat": 14.8,
+        "three": 10.63,
+        "smartfren": 13.71,
+        "xl": 37.13,
+        "ioh": 24.88
+      },
       "metaShareHistory": [
+        47.98,
         47.63,
         47.12
       ]
@@ -1911,7 +3631,27 @@
         "ioh": 17.17
       },
       "metaMarketSharePrevPct": 70.72,
+      "metaMarketSharePrevYoyPct": 73.43,
+      "shareByOperatorPrev": {
+        "tsel": 70.72,
+        "xlLegacy": 15.8,
+        "isat": 9.29,
+        "three": 7.69,
+        "smartfren": 1.34,
+        "xl": 17.03,
+        "ioh": 17.11
+      },
+      "shareByOperatorYoy": {
+        "tsel": 73.43,
+        "xlLegacy": 16.64,
+        "isat": 8.24,
+        "three": 7.78,
+        "smartfren": 0.44,
+        "xl": 17.23,
+        "ioh": 15.81
+      },
       "metaShareHistory": [
+        73.43,
         70.72,
         69.94
       ]
@@ -1933,7 +3673,27 @@
         "ioh": 27.81
       },
       "metaMarketSharePrevPct": 61.86,
+      "metaMarketSharePrevYoyPct": 61.9,
+      "shareByOperatorPrev": {
+        "tsel": 61.86,
+        "xlLegacy": 14.63,
+        "isat": 9.41,
+        "three": 18.08,
+        "smartfren": 1.19,
+        "xl": 15.57,
+        "ioh": 27.48
+      },
+      "shareByOperatorYoy": {
+        "tsel": 61.9,
+        "xlLegacy": 19.11,
+        "isat": 8.45,
+        "three": 16.16,
+        "smartfren": 0.59,
+        "xl": 19.76,
+        "ioh": 24.28
+      },
       "metaShareHistory": [
+        61.9,
         61.86,
         61.61
       ]
@@ -1955,7 +3715,27 @@
         "ioh": 10.29
       },
       "metaMarketSharePrevPct": 91.19,
+      "metaMarketSharePrevYoyPct": 94.13,
+      "shareByOperatorPrev": {
+        "tsel": 91.19,
+        "xlLegacy": 0.33,
+        "isat": 8.25,
+        "three": 1.84,
+        "smartfren": 0.11,
+        "xl": 0.41,
+        "ioh": 10.2
+      },
+      "shareByOperatorYoy": {
+        "tsel": 94.13,
+        "xlLegacy": 0.49,
+        "isat": 5.16,
+        "three": 1.48,
+        "smartfren": 0.09,
+        "xl": 0.58,
+        "ioh": 6.63
+      },
       "metaShareHistory": [
+        94.13,
         91.19,
         91.14
       ]
@@ -1977,7 +3757,27 @@
         "ioh": 4.19
       },
       "metaMarketSharePrevPct": 96.16,
+      "metaMarketSharePrevYoyPct": 96.35,
+      "shareByOperatorPrev": {
+        "tsel": 96.16,
+        "xlLegacy": 0.47,
+        "isat": 2.78,
+        "three": 1.49,
+        "smartfren": 0.1,
+        "xl": 0.54,
+        "ioh": 4.28
+      },
+      "shareByOperatorYoy": {
+        "tsel": 96.35,
+        "xlLegacy": 1.28,
+        "isat": 1.61,
+        "three": 1.01,
+        "smartfren": 0.1,
+        "xl": 1.35,
+        "ioh": 2.66
+      },
       "metaShareHistory": [
+        96.35,
         96.16,
         95.62
       ]
@@ -1999,7 +3799,27 @@
         "ioh": 5.23
       },
       "metaMarketSharePrevPct": 95.13,
+      "metaMarketSharePrevYoyPct": 95.91,
+      "shareByOperatorPrev": {
+        "tsel": 95.13,
+        "xlLegacy": 0.74,
+        "isat": 3.81,
+        "three": 1.32,
+        "smartfren": 0.09,
+        "xl": 0.86,
+        "ioh": 5.13
+      },
+      "shareByOperatorYoy": {
+        "tsel": 95.91,
+        "xlLegacy": 1.13,
+        "isat": 3.29,
+        "three": 1.53,
+        "smartfren": 0.15,
+        "xl": 1.28,
+        "ioh": 4.94
+      },
       "metaShareHistory": [
+        95.91,
         95.13,
         94.85
       ]
@@ -2021,7 +3841,27 @@
         "ioh": 5.35
       },
       "metaMarketSharePrevPct": 95.6,
+      "metaMarketSharePrevYoyPct": 95.23,
+      "shareByOperatorPrev": {
+        "tsel": 95.6,
+        "xlLegacy": 0.22,
+        "isat": 3.4,
+        "three": 1.75,
+        "smartfren": 0.07,
+        "xl": 0.31,
+        "ioh": 5.09
+      },
+      "shareByOperatorYoy": {
+        "tsel": 95.23,
+        "xlLegacy": 0.46,
+        "isat": 2.93,
+        "three": 2.25,
+        "smartfren": 0.1,
+        "xl": 0.61,
+        "ioh": 4.85
+      },
       "metaShareHistory": [
+        95.23,
         95.6,
         95.53
       ]
@@ -2043,7 +3883,27 @@
         "ioh": 6.02
       },
       "metaMarketSharePrevPct": 94.35,
+      "metaMarketSharePrevYoyPct": 95.5,
+      "shareByOperatorPrev": {
+        "tsel": 94.35,
+        "xlLegacy": 0.59,
+        "isat": 4.44,
+        "three": 1.4,
+        "smartfren": 0.18,
+        "xl": 0.73,
+        "ioh": 5.84
+      },
+      "shareByOperatorYoy": {
+        "tsel": 95.5,
+        "xlLegacy": 1.19,
+        "isat": 2.91,
+        "three": 1.14,
+        "smartfren": 0.14,
+        "xl": 1.29,
+        "ioh": 4.12
+      },
       "metaShareHistory": [
+        95.5,
         94.35,
         94.63
       ]
@@ -2065,7 +3925,27 @@
         "ioh": 0.38
       },
       "metaMarketSharePrevPct": 100.0,
+      "metaMarketSharePrevYoyPct": 97.14,
+      "shareByOperatorPrev": {
+        "tsel": 100.0,
+        "xlLegacy": 0.27,
+        "isat": 0.38,
+        "three": 0.14,
+        "smartfren": 0.07,
+        "xl": 0.33,
+        "ioh": 0.41
+      },
+      "shareByOperatorYoy": {
+        "tsel": 97.14,
+        "xlLegacy": 0.0,
+        "isat": 0.65,
+        "three": 0.0,
+        "smartfren": 0.0,
+        "xl": 0.0,
+        "ioh": 0.32
+      },
       "metaShareHistory": [
+        97.14,
         100.0,
         99.55
       ]
@@ -2087,7 +3967,27 @@
         "ioh": 11.88
       },
       "metaMarketSharePrevPct": 90.45,
+      "metaMarketSharePrevYoyPct": 91.7,
+      "shareByOperatorPrev": {
+        "tsel": 90.45,
+        "xlLegacy": 0.29,
+        "isat": 9.66,
+        "three": 1.89,
+        "smartfren": 0.13,
+        "xl": 0.34,
+        "ioh": 11.94
+      },
+      "shareByOperatorYoy": {
+        "tsel": 91.7,
+        "xlLegacy": 0.37,
+        "isat": 8.54,
+        "three": 2.22,
+        "smartfren": 0.19,
+        "xl": 0.56,
+        "ioh": 10.46
+      },
       "metaShareHistory": [
+        91.7,
         90.45,
         89.97
       ]
@@ -2109,7 +4009,27 @@
         "ioh": 6.73
       },
       "metaMarketSharePrevPct": 94.26,
+      "metaMarketSharePrevYoyPct": 96.16,
+      "shareByOperatorPrev": {
+        "tsel": 94.26,
+        "xlLegacy": 0.27,
+        "isat": 5.56,
+        "three": 1.06,
+        "smartfren": 0.11,
+        "xl": 0.38,
+        "ioh": 6.52
+      },
+      "shareByOperatorYoy": {
+        "tsel": 96.16,
+        "xlLegacy": 0.41,
+        "isat": 3.05,
+        "three": 0.93,
+        "smartfren": 0.14,
+        "xl": 0.55,
+        "ioh": 3.95
+      },
       "metaShareHistory": [
+        96.16,
         94.26,
         94.47
       ]
@@ -2131,7 +4051,27 @@
         "ioh": 22.97
       },
       "metaMarketSharePrevPct": 54.59,
+      "metaMarketSharePrevYoyPct": 56.09,
+      "shareByOperatorPrev": {
+        "tsel": 54.59,
+        "xlLegacy": 23.1,
+        "isat": 12.76,
+        "three": 10.77,
+        "smartfren": 3.59,
+        "xl": 26.56,
+        "ioh": 23.33
+      },
+      "shareByOperatorYoy": {
+        "tsel": 56.09,
+        "xlLegacy": 25.22,
+        "isat": 12.42,
+        "three": 10.11,
+        "smartfren": 3.52,
+        "xl": 28.45,
+        "ioh": 22.18
+      },
       "metaShareHistory": [
+        56.09,
         54.59,
         54.5
       ]
@@ -2153,7 +4093,27 @@
         "ioh": 40.85
       },
       "metaMarketSharePrevPct": 30.67,
+      "metaMarketSharePrevYoyPct": 31.73,
+      "shareByOperatorPrev": {
+        "tsel": 30.67,
+        "xlLegacy": 25.63,
+        "isat": 26.48,
+        "three": 14.94,
+        "smartfren": 6.62,
+        "xl": 32.05,
+        "ioh": 41.01
+      },
+      "shareByOperatorYoy": {
+        "tsel": 31.73,
+        "xlLegacy": 27.67,
+        "isat": 26.47,
+        "three": 14.58,
+        "smartfren": 6.6,
+        "xl": 33.91,
+        "ioh": 40.35
+      },
       "metaShareHistory": [
+        31.73,
         30.67,
         30.61
       ]
@@ -2175,7 +4135,27 @@
         "ioh": 35.21
       },
       "metaMarketSharePrevPct": 36.28,
+      "metaMarketSharePrevYoyPct": 36.96,
+      "shareByOperatorPrev": {
+        "tsel": 36.28,
+        "xlLegacy": 21.87,
+        "isat": 25.51,
+        "three": 10.15,
+        "smartfren": 9.53,
+        "xl": 31.18,
+        "ioh": 35.43
+      },
+      "shareByOperatorYoy": {
+        "tsel": 36.96,
+        "xlLegacy": 24.53,
+        "isat": 24.76,
+        "three": 9.86,
+        "smartfren": 9.09,
+        "xl": 33.25,
+        "ioh": 34.18
+      },
       "metaShareHistory": [
+        36.96,
         36.28,
         36.13
       ]
@@ -2197,7 +4177,27 @@
         "ioh": 26.27
       },
       "metaMarketSharePrevPct": 60.84,
+      "metaMarketSharePrevYoyPct": 62.38,
+      "shareByOperatorPrev": {
+        "tsel": 60.84,
+        "xlLegacy": 12.74,
+        "isat": 18.08,
+        "three": 8.39,
+        "smartfren": 3.88,
+        "xl": 16.51,
+        "ioh": 26.26
+      },
+      "shareByOperatorYoy": {
+        "tsel": 62.38,
+        "xlLegacy": 14.65,
+        "isat": 17.14,
+        "three": 8.22,
+        "smartfren": 3.41,
+        "xl": 17.86,
+        "ioh": 25.01
+      },
       "metaShareHistory": [
+        62.38,
         60.84,
         60.64
       ]
@@ -2219,7 +4219,27 @@
         "ioh": 17.86
       },
       "metaMarketSharePrevPct": 58.91,
+      "metaMarketSharePrevYoyPct": 60.09,
+      "shareByOperatorPrev": {
+        "tsel": 58.91,
+        "xlLegacy": 24.6,
+        "isat": 7.62,
+        "three": 11.01,
+        "smartfren": 2.99,
+        "xl": 27.44,
+        "ioh": 18.43
+      },
+      "shareByOperatorYoy": {
+        "tsel": 60.09,
+        "xlLegacy": 27.49,
+        "isat": 7.96,
+        "three": 9.53,
+        "smartfren": 3.19,
+        "xl": 30.29,
+        "ioh": 17.19
+      },
       "metaShareHistory": [
+        60.09,
         58.91,
         58.97
       ]
@@ -2241,7 +4261,27 @@
         "ioh": 16.22
       },
       "metaMarketSharePrevPct": 64.52,
+      "metaMarketSharePrevYoyPct": 65.19,
+      "shareByOperatorPrev": {
+        "tsel": 64.52,
+        "xlLegacy": 20.19,
+        "isat": 6.79,
+        "three": 9.77,
+        "smartfren": 2.69,
+        "xl": 22.75,
+        "ioh": 16.49
+      },
+      "shareByOperatorYoy": {
+        "tsel": 65.19,
+        "xlLegacy": 21.64,
+        "isat": 6.63,
+        "three": 9.86,
+        "smartfren": 2.55,
+        "xl": 24.03,
+        "ioh": 16.26
+      },
       "metaShareHistory": [
+        65.19,
         64.52,
         64.26
       ]
@@ -2263,7 +4303,27 @@
         "ioh": 31.71
       },
       "metaMarketSharePrevPct": 44.53,
+      "metaMarketSharePrevYoyPct": 46.92,
+      "shareByOperatorPrev": {
+        "tsel": 44.53,
+        "xlLegacy": 23.66,
+        "isat": 21.05,
+        "three": 11.18,
+        "smartfren": 4.7,
+        "xl": 28.19,
+        "ioh": 31.98
+      },
+      "shareByOperatorYoy": {
+        "tsel": 46.92,
+        "xlLegacy": 25.49,
+        "isat": 19.97,
+        "three": 10.75,
+        "smartfren": 4.39,
+        "xl": 29.61,
+        "ioh": 30.27
+      },
       "metaShareHistory": [
+        46.92,
         44.53,
         44.45
       ]
@@ -2285,6 +4345,15 @@
         "ioh": 40.45
       },
       "metaMarketSharePrevPct": 32.26,
+      "shareByOperatorPrev": {
+        "tsel": 32.26,
+        "xlLegacy": 23.95,
+        "isat": 26.68,
+        "three": 14.31,
+        "smartfren": 7.03,
+        "xl": 30.75,
+        "ioh": 40.56
+      },
       "metaShareHistory": [
         32.26,
         32.17
@@ -2307,7 +4376,27 @@
         "ioh": 49.78
       },
       "metaMarketSharePrevPct": 25.69,
+      "metaMarketSharePrevYoyPct": 25.79,
+      "shareByOperatorPrev": {
+        "tsel": 25.69,
+        "xlLegacy": 21.37,
+        "isat": 34.57,
+        "three": 16.16,
+        "smartfren": 6.64,
+        "xl": 27.87,
+        "ioh": 50.16
+      },
+      "shareByOperatorYoy": {
+        "tsel": 25.79,
+        "xlLegacy": 23.02,
+        "isat": 35.59,
+        "three": 16.1,
+        "smartfren": 6.43,
+        "xl": 29.19,
+        "ioh": 50.78
+      },
       "metaShareHistory": [
+        25.79,
         25.69,
         25.81
       ]
@@ -2329,7 +4418,27 @@
         "ioh": 33.03
       },
       "metaMarketSharePrevPct": 33.37,
+      "metaMarketSharePrevYoyPct": 35.33,
+      "shareByOperatorPrev": {
+        "tsel": 33.37,
+        "xlLegacy": 31.46,
+        "isat": 18.9,
+        "three": 14.56,
+        "smartfren": 6.17,
+        "xl": 37.36,
+        "ioh": 33.19
+      },
+      "shareByOperatorYoy": {
+        "tsel": 35.33,
+        "xlLegacy": 33.49,
+        "isat": 18.65,
+        "three": 13.97,
+        "smartfren": 5.89,
+        "xl": 38.96,
+        "ioh": 32.16
+      },
       "metaShareHistory": [
+        35.33,
         33.37,
         33.22
       ]
@@ -2351,7 +4460,27 @@
         "ioh": 38.83
       },
       "metaMarketSharePrevPct": 29.35,
+      "metaMarketSharePrevYoyPct": 30.19,
+      "shareByOperatorPrev": {
+        "tsel": 29.35,
+        "xlLegacy": 19.7,
+        "isat": 26.41,
+        "three": 12.96,
+        "smartfren": 15.5,
+        "xl": 34.91,
+        "ioh": 39.05
+      },
+      "shareByOperatorYoy": {
+        "tsel": 30.19,
+        "xlLegacy": 22.1,
+        "isat": 25.94,
+        "three": 12.87,
+        "smartfren": 15.27,
+        "xl": 36.79,
+        "ioh": 38.27
+      },
       "metaShareHistory": [
+        30.19,
         29.35,
         29.09
       ]
@@ -2373,7 +4502,27 @@
         "ioh": 41.34
       },
       "metaMarketSharePrevPct": 35.11,
+      "metaMarketSharePrevYoyPct": 35.37,
+      "shareByOperatorPrev": {
+        "tsel": 35.11,
+        "xlLegacy": 20.07,
+        "isat": 32.44,
+        "three": 9.41,
+        "smartfren": 6.1,
+        "xl": 26.04,
+        "ioh": 41.58
+      },
+      "shareByOperatorYoy": {
+        "tsel": 35.37,
+        "xlLegacy": 23.09,
+        "isat": 31.56,
+        "three": 9.09,
+        "smartfren": 5.72,
+        "xl": 28.59,
+        "ioh": 40.2
+      },
       "metaShareHistory": [
+        35.37,
         35.11,
         35.11
       ]
@@ -2395,7 +4544,27 @@
         "ioh": 15.87
       },
       "metaMarketSharePrevPct": 53.22,
+      "metaMarketSharePrevYoyPct": 53.76,
+      "shareByOperatorPrev": {
+        "tsel": 53.22,
+        "xlLegacy": 29.9,
+        "isat": 10.4,
+        "three": 5.64,
+        "smartfren": 3.41,
+        "xl": 33.15,
+        "ioh": 15.94
+      },
+      "shareByOperatorYoy": {
+        "tsel": 53.76,
+        "xlLegacy": 32.23,
+        "isat": 9.5,
+        "three": 5.18,
+        "smartfren": 2.83,
+        "xl": 34.86,
+        "ioh": 14.59
+      },
       "metaShareHistory": [
+        53.76,
         53.22,
         52.89
       ]
@@ -2417,7 +4586,27 @@
         "ioh": 33.27
       },
       "metaMarketSharePrevPct": 53.31,
+      "metaMarketSharePrevYoyPct": 54.66,
+      "shareByOperatorPrev": {
+        "tsel": 53.31,
+        "xlLegacy": 15.34,
+        "isat": 24.14,
+        "three": 9.42,
+        "smartfren": 1.71,
+        "xl": 17.02,
+        "ioh": 33.37
+      },
+      "shareByOperatorYoy": {
+        "tsel": 54.66,
+        "xlLegacy": 16.71,
+        "isat": 23.77,
+        "three": 9.52,
+        "smartfren": 1.36,
+        "xl": 17.98,
+        "ioh": 32.84
+      },
       "metaShareHistory": [
+        54.66,
         53.31,
         53.24
       ]
@@ -2439,7 +4628,27 @@
         "ioh": 25.99
       },
       "metaMarketSharePrevPct": 57.96,
+      "metaMarketSharePrevYoyPct": 59.74,
+      "shareByOperatorPrev": {
+        "tsel": 57.96,
+        "xlLegacy": 13.84,
+        "isat": 16.82,
+        "three": 9.44,
+        "smartfren": 6.52,
+        "xl": 20.19,
+        "ioh": 26.0
+      },
+      "shareByOperatorYoy": {
+        "tsel": 59.74,
+        "xlLegacy": 16.57,
+        "isat": 15.75,
+        "three": 9.05,
+        "smartfren": 5.7,
+        "xl": 21.92,
+        "ioh": 24.43
+      },
       "metaShareHistory": [
+        59.74,
         57.96,
         57.7
       ]
@@ -2461,7 +4670,27 @@
         "ioh": 6.31
       },
       "metaMarketSharePrevPct": 94.41,
+      "metaMarketSharePrevYoyPct": 95.44,
+      "shareByOperatorPrev": {
+        "tsel": 94.41,
+        "xlLegacy": 0.55,
+        "isat": 4.86,
+        "three": 1.29,
+        "smartfren": 0.14,
+        "xl": 0.69,
+        "ioh": 6.12
+      },
+      "shareByOperatorYoy": {
+        "tsel": 95.44,
+        "xlLegacy": 0.85,
+        "isat": 3.41,
+        "three": 1.2,
+        "smartfren": 0.14,
+        "xl": 1.0,
+        "ioh": 4.59
+      },
       "metaShareHistory": [
+        95.44,
         94.41,
         94.22
       ]
@@ -2484,7 +4713,27 @@
       },
       "island": "Java",
       "metaMarketSharePrevPct": 33.48,
+      "metaMarketSharePrevYoyPct": 34.43,
+      "shareByOperatorPrev": {
+        "tsel": 33.48,
+        "xlLegacy": 23.75,
+        "isat": 25.99,
+        "three": 12.53,
+        "smartfren": 8.09,
+        "xl": 31.62,
+        "ioh": 38.2
+      },
+      "shareByOperatorYoy": {
+        "tsel": 34.43,
+        "xlLegacy": 26.05,
+        "isat": 25.59,
+        "three": 12.15,
+        "smartfren": 7.87,
+        "xl": 33.57,
+        "ioh": 37.19
+      },
       "metaShareHistory": [
+        34.43,
         33.48,
         33.37
       ]
@@ -2507,7 +4756,27 @@
       },
       "island": "Non Java",
       "metaMarketSharePrevPct": 57.22,
+      "metaMarketSharePrevYoyPct": 58.75,
+      "shareByOperatorPrev": {
+        "tsel": 57.22,
+        "xlLegacy": 18.64,
+        "isat": 15.11,
+        "three": 9.75,
+        "smartfren": 3.73,
+        "xl": 22.24,
+        "ioh": 24.66
+      },
+      "shareByOperatorYoy": {
+        "tsel": 58.75,
+        "xlLegacy": 20.66,
+        "isat": 14.51,
+        "three": 9.3,
+        "smartfren": 3.48,
+        "xl": 23.88,
+        "ioh": 23.46
+      },
       "metaShareHistory": [
+        58.75,
         57.22,
         57.09
       ]
@@ -2529,7 +4798,27 @@
         "ioh": 32.37
       },
       "metaMarketSharePrevPct": 43.29,
+      "metaMarketSharePrevYoyPct": 44.73,
+      "shareByOperatorPrev": {
+        "tsel": 43.29,
+        "xlLegacy": 21.61,
+        "isat": 21.48,
+        "three": 11.36,
+        "smartfren": 6.29,
+        "xl": 27.72,
+        "ioh": 32.57
+      },
+      "shareByOperatorYoy": {
+        "tsel": 44.73,
+        "xlLegacy": 23.73,
+        "isat": 20.87,
+        "three": 10.92,
+        "smartfren": 6.01,
+        "xl": 29.42,
+        "ioh": 31.33
+      },
       "metaShareHistory": [
+        44.73,
         43.29,
         43.17
       ]
@@ -2552,7 +4841,27 @@
       },
       "archetype": "Basic",
       "metaMarketSharePrevPct": 59.43,
+      "metaMarketSharePrevYoyPct": 53.37,
+      "shareByOperatorPrev": {
+        "tsel": 59.43,
+        "xlLegacy": 19.62,
+        "isat": 12.99,
+        "three": 9.75,
+        "smartfren": 2.95,
+        "xl": 22.47,
+        "ioh": 22.55
+      },
+      "shareByOperatorYoy": {
+        "tsel": 53.37,
+        "xlLegacy": 24.05,
+        "isat": 15.26,
+        "three": 10.37,
+        "smartfren": 4.18,
+        "xl": 27.94,
+        "ioh": 25.26
+      },
       "metaShareHistory": [
+        53.37,
         59.43,
         59.31
       ]
@@ -2575,7 +4884,27 @@
       },
       "archetype": "Compete",
       "metaMarketSharePrevPct": 32.32,
+      "metaMarketSharePrevYoyPct": 32.13,
+      "shareByOperatorPrev": {
+        "tsel": 32.32,
+        "xlLegacy": 24.29,
+        "isat": 26.36,
+        "three": 12.93,
+        "smartfren": 8.15,
+        "xl": 32.21,
+        "ioh": 38.96
+      },
+      "shareByOperatorYoy": {
+        "tsel": 32.13,
+        "xlLegacy": 26.8,
+        "isat": 26.72,
+        "three": 12.62,
+        "smartfren": 8.1,
+        "xl": 34.52,
+        "ioh": 38.75
+      },
       "metaShareHistory": [
+        32.13,
         32.32,
         32.21
       ]
@@ -2598,7 +4927,27 @@
       },
       "archetype": "Fortress",
       "metaMarketSharePrevPct": 84.82,
+      "metaMarketSharePrevYoyPct": 80.68,
+      "shareByOperatorPrev": {
+        "tsel": 84.82,
+        "xlLegacy": 6.5,
+        "isat": 6.97,
+        "three": 3.58,
+        "smartfren": 0.89,
+        "xl": 7.37,
+        "ioh": 10.47
+      },
+      "shareByOperatorYoy": {
+        "tsel": 80.68,
+        "xlLegacy": 9.43,
+        "isat": 8.63,
+        "three": 4.87,
+        "smartfren": 0.73,
+        "xl": 10.14,
+        "ioh": 13.35
+      },
       "metaShareHistory": [
+        80.68,
         84.82,
         84.68
       ]
@@ -2621,7 +4970,27 @@
       },
       "archetype": "Super Fortress",
       "metaMarketSharePrevPct": 94.05,
+      "metaMarketSharePrevYoyPct": 95.08,
+      "shareByOperatorPrev": {
+        "tsel": 94.05,
+        "xlLegacy": 0.87,
+        "isat": 4.38,
+        "three": 1.76,
+        "smartfren": 0.16,
+        "xl": 1.03,
+        "ioh": 6.14
+      },
+      "shareByOperatorYoy": {
+        "tsel": 95.08,
+        "xlLegacy": 1.28,
+        "isat": 3.1,
+        "three": 1.66,
+        "smartfren": 0.18,
+        "xl": 1.46,
+        "ioh": 4.74
+      },
       "metaShareHistory": [
+        95.08,
         94.05,
         94.15
       ]
@@ -2644,7 +5013,27 @@
       },
       "archetype": "Compete",
       "metaMarketSharePrevPct": 30.67,
+      "metaMarketSharePrevYoyPct": 31.73,
+      "shareByOperatorPrev": {
+        "tsel": 30.67,
+        "xlLegacy": 25.63,
+        "isat": 26.48,
+        "three": 14.94,
+        "smartfren": 6.62,
+        "xl": 32.05,
+        "ioh": 41.01
+      },
+      "shareByOperatorYoy": {
+        "tsel": 31.73,
+        "xlLegacy": 27.67,
+        "isat": 26.47,
+        "three": 14.58,
+        "smartfren": 6.6,
+        "xl": 33.91,
+        "ioh": 40.35
+      },
       "metaShareHistory": [
+        31.73,
         30.67,
         30.61
       ]
@@ -2667,7 +5056,27 @@
       },
       "archetype": "Compete",
       "metaMarketSharePrevPct": 31.4,
+      "metaMarketSharePrevYoyPct": 31.92,
+      "shareByOperatorPrev": {
+        "tsel": 31.4,
+        "xlLegacy": 22.58,
+        "isat": 27.97,
+        "three": 10.88,
+        "smartfren": 10.61,
+        "xl": 32.97,
+        "ioh": 38.57
+      },
+      "shareByOperatorYoy": {
+        "tsel": 31.92,
+        "xlLegacy": 25.4,
+        "isat": 27.29,
+        "three": 10.63,
+        "smartfren": 10.25,
+        "xl": 35.23,
+        "ioh": 37.45
+      },
       "metaShareHistory": [
+        31.92,
         31.4,
         31.26
       ]
@@ -2690,7 +5099,27 @@
       },
       "archetype": "Basic",
       "metaMarketSharePrevPct": 54.79,
+      "metaMarketSharePrevYoyPct": 56.28,
+      "shareByOperatorPrev": {
+        "tsel": 54.79,
+        "xlLegacy": 24.21,
+        "isat": 11.09,
+        "three": 11.42,
+        "smartfren": 3.62,
+        "xl": 27.67,
+        "ioh": 22.31
+      },
+      "shareByOperatorYoy": {
+        "tsel": 56.28,
+        "xlLegacy": 26.38,
+        "isat": 10.8,
+        "three": 10.64,
+        "smartfren": 3.67,
+        "xl": 29.72,
+        "ioh": 21.12
+      },
       "metaShareHistory": [
+        56.28,
         54.79,
         54.69
       ]
@@ -2713,7 +5142,27 @@
       },
       "archetype": "Basic",
       "metaMarketSharePrevPct": 33.9,
+      "metaMarketSharePrevYoyPct": 35.25,
+      "shareByOperatorPrev": {
+        "tsel": 33.9,
+        "xlLegacy": 22.67,
+        "isat": 24.97,
+        "three": 15.59,
+        "smartfren": 7.33,
+        "xl": 29.77,
+        "ioh": 40.14
+      },
+      "shareByOperatorYoy": {
+        "tsel": 35.25,
+        "xlLegacy": 24.64,
+        "isat": 24.95,
+        "three": 15.13,
+        "smartfren": 7.38,
+        "xl": 31.64,
+        "ioh": 39.32
+      },
       "metaShareHistory": [
+        35.25,
         33.9,
         33.82
       ]
@@ -2736,7 +5185,27 @@
       },
       "archetype": "Basic",
       "metaMarketSharePrevPct": 50.34,
+      "metaMarketSharePrevYoyPct": 52.04,
+      "shareByOperatorPrev": {
+        "tsel": 50.34,
+        "xlLegacy": 26.08,
+        "isat": 15.11,
+        "three": 6.54,
+        "smartfren": 4.69,
+        "xl": 30.65,
+        "ioh": 21.58
+      },
+      "shareByOperatorYoy": {
+        "tsel": 52.04,
+        "xlLegacy": 28.18,
+        "isat": 14.24,
+        "three": 5.7,
+        "smartfren": 3.9,
+        "xl": 31.83,
+        "ioh": 19.74
+      },
       "metaShareHistory": [
+        52.04,
         50.34,
         50.06
       ]
@@ -2759,7 +5228,27 @@
       },
       "archetype": "Basic",
       "metaMarketSharePrevPct": 48.27,
+      "metaMarketSharePrevYoyPct": 49.55,
+      "shareByOperatorPrev": {
+        "tsel": 48.27,
+        "xlLegacy": 17.23,
+        "isat": 22.49,
+        "three": 11.1,
+        "smartfren": 5.58,
+        "xl": 22.63,
+        "ioh": 33.28
+      },
+      "shareByOperatorYoy": {
+        "tsel": 49.55,
+        "xlLegacy": 19.82,
+        "isat": 21.82,
+        "three": 11.03,
+        "smartfren": 5.0,
+        "xl": 24.52,
+        "ioh": 32.37
+      },
       "metaShareHistory": [
+        49.55,
         48.27,
         48.14
       ]
@@ -2782,7 +5271,27 @@
       },
       "archetype": "Fortress",
       "metaMarketSharePrevPct": 75.99,
+      "metaMarketSharePrevYoyPct": 76.38,
+      "shareByOperatorPrev": {
+        "tsel": 75.99,
+        "xlLegacy": 13.19,
+        "isat": 7.24,
+        "three": 5.7,
+        "smartfren": 1.38,
+        "xl": 14.53,
+        "ioh": 12.89
+      },
+      "shareByOperatorYoy": {
+        "tsel": 76.38,
+        "xlLegacy": 14.44,
+        "isat": 7.3,
+        "three": 5.98,
+        "smartfren": 0.99,
+        "xl": 15.37,
+        "ioh": 13.1
+      },
       "metaShareHistory": [
+        76.38,
         75.99,
         75.93
       ]
@@ -2805,7 +5314,27 @@
       },
       "archetype": "Fortress",
       "metaMarketSharePrevPct": 88.06,
+      "metaMarketSharePrevYoyPct": 87.93,
+      "shareByOperatorPrev": {
+        "tsel": 88.06,
+        "xlLegacy": 4.59,
+        "isat": 4.45,
+        "three": 4.9,
+        "smartfren": 0.76,
+        "xl": 5.34,
+        "ioh": 9.23
+      },
+      "shareByOperatorYoy": {
+        "tsel": 87.93,
+        "xlLegacy": 6.35,
+        "isat": 3.79,
+        "three": 4.81,
+        "smartfren": 0.24,
+        "xl": 6.54,
+        "ioh": 8.49
+      },
       "metaShareHistory": [
+        87.93,
         88.06,
         87.98
       ]
@@ -2828,7 +5357,27 @@
       },
       "archetype": "Fortress",
       "metaMarketSharePrevPct": 78.53,
+      "metaMarketSharePrevYoyPct": 80.44,
+      "shareByOperatorPrev": {
+        "tsel": 78.53,
+        "xlLegacy": 6.53,
+        "isat": 12.75,
+        "three": 4.53,
+        "smartfren": 1.05,
+        "xl": 7.53,
+        "ioh": 17.16
+      },
+      "shareByOperatorYoy": {
+        "tsel": 80.44,
+        "xlLegacy": 7.57,
+        "isat": 11.43,
+        "three": 4.19,
+        "smartfren": 0.74,
+        "xl": 8.26,
+        "ioh": 15.47
+      },
       "metaShareHistory": [
+        80.44,
         78.53,
         78.33
       ]
@@ -2851,7 +5400,27 @@
       },
       "archetype": "Super Fortress",
       "metaMarketSharePrevPct": 92.27,
+      "metaMarketSharePrevYoyPct": 93.17,
+      "shareByOperatorPrev": {
+        "tsel": 92.27,
+        "xlLegacy": 3.07,
+        "isat": 1.13,
+        "three": 5.09,
+        "smartfren": 0.39,
+        "xl": 3.44,
+        "ioh": 6.14
+      },
+      "shareByOperatorYoy": {
+        "tsel": 93.17,
+        "xlLegacy": 3.88,
+        "isat": 1.31,
+        "three": 4.2,
+        "smartfren": 0.45,
+        "xl": 4.31,
+        "ioh": 5.59
+      },
       "metaShareHistory": [
+        93.17,
         92.27,
         92.63
       ]
@@ -2874,11 +5443,32 @@
       },
       "archetype": "Super Fortress",
       "metaMarketSharePrevPct": 94.33,
+      "metaMarketSharePrevYoyPct": 95.41,
+      "shareByOperatorPrev": {
+        "tsel": 94.33,
+        "xlLegacy": 0.54,
+        "isat": 4.85,
+        "three": 1.29,
+        "smartfren": 0.13,
+        "xl": 0.68,
+        "ioh": 6.11
+      },
+      "shareByOperatorYoy": {
+        "tsel": 95.41,
+        "xlLegacy": 0.85,
+        "isat": 3.43,
+        "three": 1.23,
+        "smartfren": 0.14,
+        "xl": 1.0,
+        "ioh": 4.59
+      },
       "metaShareHistory": [
+        95.41,
         94.33,
         94.19
       ]
     }
   ],
-  "comparedToDate": "2026-05-24T00:00:00+07:00"
+  "comparedToDate": "2026-05-24T00:00:00+07:00",
+  "comparedToDateYoy": "2025-06-29T00:00:00+07:00"
 }

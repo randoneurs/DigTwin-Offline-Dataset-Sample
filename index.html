@@ -1267,6 +1267,10 @@
   };
 
   function round1(n){ return Math.round(n*10)/10; }
+  // Display formatter: always exactly one digit after the decimal point (43 -> "43.0",
+  // -0 -> "0.0"), so every number on the KPI cards/modals reads uniformly instead of
+  // some showing a bare integer whenever the value happens to round to a whole number.
+  function fmt1(n){ return (n == null) ? '' : Number(n).toFixed(1); }
 
   function rawScope(){
     return { area: fArea.value, region: fRegion.value, city: fCity.value, week: fWeek.value };
@@ -1438,7 +1442,7 @@
     if(delta == null) return '';
     const color = delta >= 0 ? 'var(--good)' : 'var(--bad)';
     const arrow = delta >= 0 ? '▲' : '▼';
-    return '<span class="kpi-delta num"' + compareTitle(suffix, source, comparedToDate) + ' style="color:' + color + '">' + arrow + ' ' + Math.abs(delta) + ' ' + suffix + '</span>';
+    return '<span class="kpi-delta num"' + compareTitle(suffix, source, comparedToDate) + ' style="color:' + color + '">' + arrow + ' ' + fmt1(Math.abs(delta)) + ' ' + suffix + '</span>';
   }
 
   function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine, generatedAt, comparedToDate, deltaYoy, comparedToDateYoy, deltaWow, comparedToDateWow){
@@ -1450,7 +1454,7 @@
           '<div class="kpi-pill-stack">' + sourceChip + asOfChip(source, generatedAt) + '</div>' +
         '</div>' +
         '<div class="kpi-mid">' +
-          '<span class="kpi-value num">' + value + unit + '</span>' +
+          '<span class="kpi-value num">' + fmt1(value) + unit + '</span>' +
           deltaPill(deltaWow, 'WoW', source, comparedToDateWow) +
           deltaPill(delta, 'MoM', source, comparedToDate) +
           deltaPill(deltaYoy, 'YoY', source, comparedToDateYoy) +
@@ -1474,13 +1478,13 @@
       const changes = [];
       if(prev && prev[c.key] != null){
         const d = round1(c.value - prev[c.key]);
-        changes.push((d >= 0 ? '▲' : '▼') + Math.abs(d) + ' MoM');
+        changes.push((d >= 0 ? '▲' : '▼') + fmt1(Math.abs(d)) + ' MoM');
       }
       if(yoy && yoy[c.key] != null){
         const d = round1(c.value - yoy[c.key]);
-        changes.push((d >= 0 ? '▲' : '▼') + Math.abs(d) + ' YoY');
+        changes.push((d >= 0 ? '▲' : '▼') + fmt1(Math.abs(d)) + ' YoY');
       }
-      return c.name + ' : ' + c.value + unit + (changes.length ? '  (' + changes.join(' | ') + ')' : '');
+      return c.name + ' : ' + fmt1(c.value) + unit + (changes.length ? '  (' + changes.join(' | ') + ')' : '');
     };
     return candidates.map(fmt).join(' | ');
   }
@@ -2196,7 +2200,7 @@
     const outlets = Math.round(jitter(rng, 14, 5));
     const npsDelta = kpis.csiNpsDelta;
     const npsCls = npsDelta <= 0 ? 'hl-neg' : 'hl-pos';
-    const npsPhrase = Math.abs(npsDelta) + '-point ' + (npsDelta <= 0 ? 'drop' : 'gain') + ' in CSI-NPS score';
+    const npsPhrase = fmt1(Math.abs(npsDelta)) + '-point ' + (npsDelta <= 0 ? 'drop' : 'gain') + ' in CSI-NPS score';
     const complaintPct = Math.round(jitter(rng, 64, 18));
     const priceCut = Math.round(jitter(rng, 18, 4));
     const benchCls = kpis.netBenchDelta <= 0 ? 'hl-neg' : 'hl-pos';
@@ -2205,13 +2209,13 @@
 
     const narrative = document.getElementById('synthNarrative');
     narrative.innerHTML =
-      'Telkomsel market share in <b>' + place + '</b> stands at <b>' + share + '%</b> ' +
-      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + Math.abs(delta) + 'pt MoM</span>' +
+      'Telkomsel market share in <b>' + place + '</b> stands at <b>' + fmt1(share) + '%</b> ' +
+      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + fmt1(Math.abs(delta)) + 'pt MoM</span>' +
       (kpis.metaShareSource === 'hadoop' ? ', sourced from the latest Hadoop Meta Market Share extract' : ', modeled pending a live Hadoop snapshot') + '). ' +
       'Cross-signal review points to three converging drivers: a <b>RETINA field outlet scan</b> confirms IOH opened ' +
       '<b class="num-cite">' + outlets + ' new outlets/kiosks</b> in the scoped area over the past 3 weeks as part of a network densification push; ' +
       'this coincides with a <span class="' + npsCls + '">' + npsPhrase + '</span>' +
-      ' (Network Experience Benchmark <span class="' + benchCls + '">' + (kpis.netBenchDelta >= 0 ? '▲' : '▼') + ' ' + Math.abs(kpis.netBenchDelta) + '</span> to <b>' + kpis.netBench + '</b>) ' +
+      ' (Network Experience Benchmark <span class="' + benchCls + '">' + (kpis.netBenchDelta >= 0 ? '▲' : '▼') + ' ' + fmt1(Math.abs(kpis.netBenchDelta)) + '</span> to <b>' + fmt1(kpis.netBench) + '</b>) ' +
       'and a <span class="hl-neg">' + complaintPct + '% spike in complaint volume</span>, following a service-quality incident flagged in VOC data. ' +
       'Simultaneously, the <b>Probe pricing RPA</b> detected IOH cutting its 30GB flagship SKU price by <b class="num-cite">' + priceCut + '%</b> shortly before this scan, ' +
       'undercutting Telkomsel\'s equivalent package. ' +
@@ -2264,12 +2268,12 @@
     ];
     const worst = drags.reduce((a,b) => b.delta < a.delta ? b : a);
     const headline = worst.delta < 0
-      ? 'The clearest drag this period is <b>' + worst.label + '</b> (' + worst.delta + '), tied to ' + worst.note + '.'
+      ? 'The clearest drag this period is <b>' + worst.label + '</b> (' + fmt1(worst.delta) + '), tied to ' + worst.note + '.'
       : 'No single metric is sharply negative this period — the picture is broadly stable.';
 
     document.getElementById('execSummaryText').innerHTML =
-      'Telkomsel market share in <b>' + place + '</b> stands at <b>' + share + '%</b> ' +
-      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + Math.abs(delta) + 'pt MoM</span>). ' +
+      'Telkomsel market share in <b>' + place + '</b> stands at <b>' + fmt1(share) + '%</b> ' +
+      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + fmt1(Math.abs(delta)) + 'pt MoM</span>). ' +
       headline + ' A prioritized action list and the full cross-signal narrative are one click away in <b>Overview</b>.';
   }
 
@@ -2967,13 +2971,13 @@
   function deltaCell(delta){
     if(delta == null) return '<td class="num">–</td>';
     const cls = delta >= 0 ? 'delta-up' : 'delta-down';
-    return '<td class="num ' + cls + '">' + (delta >= 0 ? '▲' : '▼') + Math.abs(delta) + '</td>';
+    return '<td class="num ' + cls + '">' + (delta >= 0 ? '▲' : '▼') + fmt1(Math.abs(delta)) + '</td>';
   }
   function buildAreaRegionTable(dataByRegion, unit, valueLabel, nationalRow, areaRows){
     const header = '<thead><tr><th>Region</th><th class="num">' + valueLabel + '</th><th class="num">WoW</th><th class="num">MoM</th><th class="num">YoY</th></tr></thead>';
     const dataRow = (name, d, cls) => {
       if(!d) return '';
-      return '<tr><td class="name-cell' + (cls ? ' ' + cls : '') + '">' + name + '</td><td class="num">' + d.val + unit + '</td>' +
+      return '<tr><td class="name-cell' + (cls ? ' ' + cls : '') + '">' + name + '</td><td class="num">' + fmt1(d.val) + unit + '</td>' +
         deltaCell(d.wow) + deltaCell(d.mom) + deltaCell(d.yoy) + '</tr>';
     };
     const nationalSection = nationalRow
@@ -2991,7 +2995,7 @@
     const top5 = cities.slice().sort((a, b) => a.mom - b.mom).slice(0, 5);
     const rows = top5.map(c =>
       '<tr><td class="name-cell">' + c.name + '<div style="font-size:9.5px;color:var(--text-3);font-weight:400;">' + REGION_LABELS[c.region] + '</div></td>' +
-      '<td class="num">' + c.val + unit + '</td>' +
+      '<td class="num">' + fmt1(c.val) + unit + '</td>' +
       deltaCell(c.wow) + deltaCell(c.mom) + deltaCell(c.yoy) + '</tr>'
     ).join('');
     return '<table class="mkt-table"><thead><tr><th>City</th><th class="num">' + valueLabel + '</th><th class="num">WoW</th><th class="num">MoM</th><th class="num">YoY</th></tr></thead><tbody>' + rows + '</tbody></table>';
@@ -3055,7 +3059,7 @@
       const realCities = realCitiesLosingRows();
       const regionTag = realRegion ? ' <span class="modal-source-tag">· region_' + dateTag + '.csv</span>' : '';
       const citiesTag = realCities ? ' <span class="modal-source-tag">· all_city_operator_' + dateTag + '.csv</span>' : '';
-      return { eyebrow:'Core KPI · Meta Market Share', title:'Meta Market Share — ' + lastKPIs.metaShare + '%',
+      return { eyebrow:'Core KPI · Meta Market Share', title:'Meta Market Share — ' + fmt1(lastKPIs.metaShare) + '%',
         body:
           '<p>Blended market share, recomputed for the active Area/Region/City/Week filter. ' + srcFor(lastKPIs.metaShareSource) + '</p>' +
           buildMonthlyTrendSection(SHARE_TREND_MONTHLY, 'Monthly market share trend — national (TSEL vs IOH vs XLSmart)') +
@@ -3064,7 +3068,7 @@
       };
     }
     if(metric === 'nps'){
-      return { eyebrow:'Core KPI · CSI-NPS Score', title:'CSI-NPS Score — ' + lastKPIs.csiNps,
+      return { eyebrow:'Core KPI · CSI-NPS Score', title:'CSI-NPS Score — ' + fmt1(lastKPIs.csiNps),
         body:
           '<p>Blended Customer Satisfaction Index + Net Promoter Score for the active scope. ' + srcFor(lastKPIs.csiNpsSource) + '</p>' +
           buildMonthlyTrendSection(NPS_TREND_MONTHLY, 'Monthly CSI-NPS trend — national (TSEL vs IOH vs XLSmart)') +
@@ -3072,7 +3076,7 @@
           '<div><div class="modal-section-label">Cities losing ground (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_NPS, '', 'Score') + '</div>'
       };
     }
-    return { eyebrow:'Core KPI · Network Experience Benchmark', title:'Network Experience Benchmark — ' + lastKPIs.netBench,
+    return { eyebrow:'Core KPI · Network Experience Benchmark', title:'Network Experience Benchmark — ' + fmt1(lastKPIs.netBench),
       body:
         '<p>Third-party / crowdsourced network quality benchmark score for the active scope. ' + srcFor(lastKPIs.netBenchSource) + '</p>' +
         buildMonthlyTrendSection(BENCH_TREND_MONTHLY, 'Monthly Network Experience Benchmark trend — national (TSEL vs IOH vs XLSmart)') +

@@ -2515,8 +2515,10 @@
     // Same worst-KPI + outlet/price-cut facts Synthesis narrates below, so the two
     // cards always agree on both the numbers and the story behind them.
     const worst = drivers.worst;
+    const worstCls = worst.delta >= 0 ? 'hl-pos' : 'hl-neg';
+    const worstArrow = worst.delta >= 0 ? '▲' : '▼';
     const headline = worst.delta < 0
-      ? 'The clearest drag this period is <b>' + worst.label + '</b> (' + fmt1(worst.delta) + '), driven by IOH opening <b>' + drivers.outlets + ' new outlets</b> and cutting its 30GB price by <b>' + drivers.priceCut + '%</b> — tied to ' + worst.note + '.'
+      ? 'The clearest drag this period is <b>' + worst.label + '</b> (<b class="' + worstCls + '">' + worstArrow + ' ' + fmt1(Math.abs(worst.delta)) + '</b>), driven by IOH opening <b>' + drivers.outlets + ' new outlets</b> and cutting its 30GB price by <b>' + drivers.priceCut + '%</b> — tied to ' + worst.note + '.'
       : 'No single metric is sharply negative this period — the picture is broadly stable.';
 
     document.getElementById('execSummaryText').innerHTML =

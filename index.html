@@ -1792,17 +1792,23 @@
     return {cls:'parity', text:'NEAR PARITY'};
   }
 
-  function renderProbeTable(){
+  // A fresh RPA scan can pick up small regional promo variance, so each price
+  // is jittered ±4% per scope (seeded by rng, same as the rest of the modeled
+  // cards) rather than showing the exact same nationwide figure everywhere.
+  function renderProbeTable(rng){
     const body = document.getElementById('probeBody');
     body.innerHTML = '';
     PROBE_ROWS.forEach(row => {
-      const st = statusFor(row.tsel, row.ioh, row.xl);
+      const tsel = Math.round(jitter(rng, row.tsel, row.tsel * 0.04) / 100) * 100;
+      const ioh = Math.round(jitter(rng, row.ioh, row.ioh * 0.04) / 100) * 100;
+      const xl = Math.round(jitter(rng, row.xl, row.xl * 0.04) / 100) * 100;
+      const st = statusFor(tsel, ioh, xl);
       const tr = document.createElement('tr');
       tr.innerHTML =
         '<td>' + row.tier + '</td>' +
-        '<td class="price">' + fmtRp(row.tsel) + '</td>' +
-        '<td class="price">' + fmtRp(row.ioh) + '</td>' +
-        '<td class="price">' + fmtRp(row.xl) + '</td>' +
+        '<td class="price">' + fmtRp(tsel) + '</td>' +
+        '<td class="price">' + fmtRp(ioh) + '</td>' +
+        '<td class="price">' + fmtRp(xl) + '</td>' +
         '<td><span class="status-tag ' + st.cls + '">' + st.text + '</span></td>';
       body.appendChild(tr);
     });
@@ -2458,11 +2464,17 @@
     const kpis = getCoreKPIs(rawScope(), rng);
     renderCoreKPIs(kpis);
     const drivers = computeSynthDrivers(rng, kpis);
+    const place = regionNarrativeName();
     renderExecSummary(kpis, drivers);
     renderSynthesis(kpis, drivers);
     renderSentiment(rng);
     renderBuzzChart(rng);
     renderRetinaCard(rawScope(), rng);
+    renderProbeTable(rng);
+    renderProductMovementSection();
+    renderAlerts(drivers, place);
+    renderCompetitors(drivers, place);
+    renderRecs(drivers, place);
   }
 
   /* ================= HADOOP SNAPSHOT LOADER WIRING ================= */
@@ -2624,32 +2636,40 @@
     'Event':            { color:'var(--warn)' },
     'Campaign':         { color:'var(--brand)' }
   };
-  const ALERTS = [
-    { id:'promo', category:'Campaign', sev:'critical', title:'IOH counter-promo detected — 30GB tier −18%', sources:['Probe RPA','Pricing SKU feed'], sla:'SLA 4h', time:'38m ago',
-      desc:'Automated price crawl confirms a national 18% cut on IOH\'s flagship 30GB package, undercutting the equivalent Telkomsel SKU by Rp 15,000.',
-      linkedActionIndex:0, linkedActionLabel:'P1 · Counter-offer on exposed 30GB tier',
-      news:[
-        { source:'Kontan.co.id', date:'2026-07-14', headline:'IOH pangkas harga paket data 30GB, perang tarif kian ketat' },
-        { source:'Selular.ID', date:'2026-07-15', headline:'Diskon Freedom Internet 30GB jadi Rp73 ribu, netizen ramai bandingkan dengan Telkomsel' }
-      ] },
-    { id:'outage', category:'Network', sev:'critical', title:'Network outage — Surabaya Timur cluster', sources:['NOC feed','VOC · X'], sla:'SLA 2h', time:'1h 15m ago',
-      desc:'Intermittent 4G/5G service across 6 BTS sites since last night; complaint volume in the area up 64% and rising.',
-      linkedActionIndex:1, linkedActionLabel:'P1 · Rapid-response crew to flagged site',
-      news:[
-        { source:'Detik Jatim', date:'2026-07-15', headline:'Sinyal Telkomsel byar-pet di Surabaya Timur, warga keluhkan gangguan semalaman' },
-        { source:'Kompas.com', date:'2026-07-16', headline:'Telkomsel selidiki gangguan jaringan di sejumlah titik Surabaya Timur' }
-      ] },
-    { id:'hiring', category:'Event', sev:'high', title:'IOH field hiring signal — Jatim & Jateng', sources:['RETINA scan','LinkedIn/job boards'], sla:'SLA 3 days', time:'6h ago',
-      desc:'RETINA outlet scan plus public job postings indicate IOH is recruiting ~40 additional field sales roles across East & Central Java.',
-      linkedActionIndex:2, linkedActionLabel:'P2 · Reinforce field sales near competitor kiosks',
-      news:[
-        { source:'Bisnis.com', date:'2026-07-10', headline:'IOH perkuat tim sales lapangan di Jawa Timur dan Jawa Tengah' }
-      ] }
-  ];
-  function renderAlerts(){
+  // Built fresh per applyScope() so the price-cut %, complaint spike, and outlet
+  // count agree with the same computeSynthDrivers() numbers Synthesis/Exec Summary
+  // use, and the outage/hiring location follows the current Area/Region/City scope
+  // instead of being frozen at "Surabaya Timur" regardless of filter.
+  function buildAlerts(drivers, place){
+    return [
+      { id:'promo', category:'Campaign', sev:'critical', title:'IOH counter-promo detected — 30GB tier −' + drivers.priceCut + '%', sources:['Probe RPA','Pricing SKU feed'], sla:'SLA 4h', time:'38m ago',
+        desc:'Automated price crawl confirms a national ' + drivers.priceCut + '% cut on IOH\'s flagship 30GB package, undercutting the equivalent Telkomsel SKU by Rp 15,000.',
+        linkedActionIndex:0, linkedActionLabel:'P1 · Counter-offer on exposed 30GB tier',
+        news:[
+          { source:'Kontan.co.id', date:'2026-07-14', headline:'IOH pangkas harga paket data 30GB, perang tarif kian ketat' },
+          { source:'Selular.ID', date:'2026-07-15', headline:'Diskon Freedom Internet 30GB jadi Rp73 ribu, netizen ramai bandingkan dengan Telkomsel' }
+        ] },
+      { id:'outage', category:'Network', sev:'critical', title:'Network outage — ' + place + ' cluster', sources:['NOC feed','VOC · X'], sla:'SLA 2h', time:'1h 15m ago',
+        desc:'Intermittent 4G/5G service across 6 BTS sites since last night; complaint volume in the area up ' + drivers.complaintPct + '% and rising.',
+        linkedActionIndex:1, linkedActionLabel:'P1 · Rapid-response crew to flagged site',
+        news:[
+          { source:'Detik Jatim', date:'2026-07-15', headline:'Sinyal Telkomsel byar-pet di ' + place + ', warga keluhkan gangguan semalaman' },
+          { source:'Kompas.com', date:'2026-07-16', headline:'Telkomsel selidiki gangguan jaringan di sejumlah titik ' + place }
+        ] },
+      { id:'hiring', category:'Event', sev:'high', title:'IOH field hiring signal — ' + place, sources:['RETINA scan','LinkedIn/job boards'], sla:'SLA 3 days', time:'6h ago',
+        desc:'RETINA outlet scan plus public job postings indicate IOH is recruiting ~' + drivers.outlets + ' additional field sales roles across ' + place + '.',
+        linkedActionIndex:2, linkedActionLabel:'P2 · Reinforce field sales near competitor kiosks',
+        news:[
+          { source:'Bisnis.com', date:'2026-07-10', headline:'IOH perkuat tim sales lapangan di ' + place }
+        ] }
+    ];
+  }
+  let lastAlerts = [];
+  function renderAlerts(drivers, place){
+    lastAlerts = buildAlerts(drivers, place);
     const wrap = document.getElementById('alertList');
     wrap.innerHTML = '';
-    ALERTS.forEach(a => {
+    lastAlerts.forEach(a => {
       const el = document.createElement('div');
       el.className = 'alert-item';
       el.dataset.detail = 'alert-' + a.id;
@@ -2674,16 +2694,22 @@
   }
 
   /* ================= COMPETITOR MOVEMENT ================= */
-  const COMPETITORS = [
-    { key:'ioh', fullName:'IOH (Indosat Ooredoo Hutchison)', tag:'Aggressive pricing + field expansion posture', risk:'high', acts:['Price cut','Outlet expansion','Hiring surge'], action:'Analyze',
-      highlights:['30GB tier cut 18% (Rp 89K → Rp 73K), 36h before this scan','+14 outlets/kiosks opened in scoped area in 3 weeks','~40 field sales roles hired across Java'] },
-    { key:'xl', fullName:'XLSmart (XL Axiata + Smartfren)', tag:'Accelerating 5G rollout in urban corridors', risk:'medium', acts:['5G rollout','Bundle refresh'], action:'Monitor',
-      highlights:['5G live in 6 new JABAR/JATIM corridors','Mid-tier bundle refresh launched this week','Speed benchmark gap vs. Telkomsel widening'] }
-  ];
-  function renderCompetitors(){
+  // Same shared drivers/place substitution as Alerts, so the IOH row always
+  // agrees with Synthesis/Exec Summary/Alerts on the price-cut % and outlet count.
+  function buildCompetitors(drivers, place){
+    return [
+      { key:'ioh', fullName:'IOH (Indosat Ooredoo Hutchison)', tag:'Aggressive pricing + field expansion posture', risk:'high', acts:['Price cut','Outlet expansion','Hiring surge'], action:'Analyze',
+        highlights:['30GB tier cut ' + drivers.priceCut + '% (Rp 89K → Rp 73K), 36h before this scan','+' + drivers.outlets + ' outlets/kiosks opened in ' + place + ' in 3 weeks','~' + drivers.outlets + ' field sales roles hired across ' + place] },
+      { key:'xl', fullName:'XLSmart (XL Axiata + Smartfren)', tag:'Accelerating 5G rollout in urban corridors', risk:'medium', acts:['5G rollout','Bundle refresh'], action:'Monitor',
+        highlights:['5G live in 6 new corridors near ' + place,'Mid-tier bundle refresh launched this week','Speed benchmark gap vs. Telkomsel widening'] }
+    ];
+  }
+  let lastCompetitors = [];
+  function renderCompetitors(drivers, place){
+    lastCompetitors = buildCompetitors(drivers, place);
     const wrap = document.getElementById('competitorList');
     wrap.innerHTML = '';
-    COMPETITORS.forEach(c => {
+    lastCompetitors.forEach(c => {
       const el = document.createElement('div');
       el.className = 'comp-row';
       el.dataset.detail = 'comp-' + c.key;
@@ -2701,9 +2727,15 @@
   }
 
   /* ================= STRATEGIC RECOMMENDATIONS ================= */
-  const RECS = [
+  // Two of these (the P1 counter-promo and the outage response) cite the same
+  // price-cut % / place as Synthesis, Exec Summary, Alerts, and Competitors —
+  // built fresh per scope so they stay in agreement instead of a frozen "18%"/
+  // "Surabaya Timur" regardless of which Area/Region/City is selected. The
+  // other five are general strategic plays not tied to a specific scope.
+  function buildRecs(drivers, place){
+    return [
     { horizon:'Immediate · P1 · 24–72h', title:'Launch matched counter-promo on exposed 30GB tier', color:'var(--bad)',
-      body:'Probe RPA confirmed IOH cut its flagship 30GB SKU by 18% (Rp 89,000 → Rp 73,000), 36 hours before this scan, flipping the tier from near-parity to exposed. VOC volume on the price/value topic mentioning IOH is up sharply in the same window.',
+      body:'Probe RPA confirmed IOH cut its flagship 30GB SKU by ' + drivers.priceCut + '% (Rp 89,000 → Rp 73,000), 36 hours before this scan, flipping the tier from near-parity to exposed. VOC volume on the price/value topic mentioning IOH is up sharply in the same window.',
       sources:['Probe RPA','VOC'], kpi:'Target: close price gap to ≤5% within 72h; hold 30GB tier share loss under 0.3pt.',
       prompt:'Buat rencana taktis lengkap untuk counter-promo tier 30GB, termasuk struktur harga, target wilayah, dan estimasi dampak terhadap margin.',
       news:[
@@ -2761,13 +2793,13 @@
         'Packaging: explore a gaming-oriented add-on (low-latency routing) as a differentiator versus IOH\'s price-led and XL\'s coverage-led plays.',
         'Measurement: track gaming-latency complaint volume and network-quality sentiment in the flagged regions monthly against the 25%/4pt targets.'
       ] },
-    { horizon:'Immediate · P1 · 24h', title:'Contain the Surabaya Timur outage', color:'var(--bad)',
-      body:'NOC feed confirms intermittent service across 6 BTS sites since last night; VOC shows an 890-engagement complaint thread on X and complaint volume up 64% in the affected cluster. Left unaddressed, this compounds the region\'s existing share pressure.',
+    { horizon:'Immediate · P1 · 24h', title:'Contain the ' + place + ' outage', color:'var(--bad)',
+      body:'NOC feed confirms intermittent service across 6 BTS sites since last night; VOC shows an 890-engagement complaint thread on X and complaint volume up ' + drivers.complaintPct + '% in the affected cluster. Left unaddressed, this compounds the region\'s existing share pressure.',
       sources:['NOC feed','VOC · X','RETINA'], kpi:'Target: full restoration within 24h; publish customer-facing ETA within 2h.',
-      prompt:'Susun rencana tanggap darurat untuk gangguan jaringan Surabaya Timur, termasuk komunikasi pelanggan dan eskalasi ke tim NOC.',
+      prompt:'Susun rencana tanggap darurat untuk gangguan jaringan ' + place + ', termasuk komunikasi pelanggan dan eskalasi ke tim NOC.',
       news:[
-        { source:'Detik Jatim', date:'2026-07-15', headline:'Sinyal Telkomsel byar-pet di Surabaya Timur, warga keluhkan gangguan semalaman' },
-        { source:'Kompas.com', date:'2026-07-16', headline:'Telkomsel selidiki gangguan jaringan di sejumlah titik Surabaya Timur' }
+        { source:'Detik Jatim', date:'2026-07-15', headline:'Sinyal Telkomsel byar-pet di ' + place + ', warga keluhkan gangguan semalaman' },
+        { source:'Kompas.com', date:'2026-07-16', headline:'Telkomsel selidiki gangguan jaringan di sejumlah titik ' + place }
       ],
       gtm:[
         'Restore: dispatch the crew with spares pre-staged for the known fault pattern at these sites; target restoration inside the 2h SLA.',
@@ -2791,11 +2823,14 @@
         'Partnership: explore co-selling with regional system integrators already serving the target enterprise segments.',
         'Measurement: track enterprise/B2B account growth outside JABOTABEK quarterly against the 15%-in-3-quarters target.'
       ] }
-  ];
-  function renderRecs(){
+    ];
+  }
+  let lastRecs = [];
+  function renderRecs(drivers, place){
+    lastRecs = buildRecs(drivers, place);
     const grid = document.getElementById('recGrid');
     grid.innerHTML = '';
-    RECS.forEach((r, recIdx) => {
+    lastRecs.forEach((r, recIdx) => {
       const el = document.createElement('div');
       el.className = 'rec-card';
       el.dataset.detail = 'rec-' + recIdx;
@@ -3637,7 +3672,7 @@
     }
     if(key.indexOf('alert-') === 0){
       const alertId = key.slice(6);
-      const a = ALERTS.find(x => x.id === alertId);
+      const a = lastAlerts.find(x => x.id === alertId);
       if(!a) return null;
       const newsHtml = (a.news || []).map(n =>
         '<div class="news-item"><div class="news-meta"><span class="news-source">' + n.source + '</span><span class="news-date">' + n.date + '</span></div><div class="news-headline">' + n.headline + '</div></div>'
@@ -3651,7 +3686,7 @@
     }
     if(key.indexOf('comp-') === 0){
       const compKey = key.slice(5);
-      const c = COMPETITORS.find(x => x.key === compKey);
+      const c = lastCompetitors.find(x => x.key === compKey);
       if(!c) return null;
       return { eyebrow:'Competitor profile · ' + c.risk + ' risk', title:c.fullName,
         body:'<p>Posture: ' + c.tag + '.</p><ul class="detail-list">' + c.highlights.map(h => '<li>' + h + '</li>').join('') + '</ul>' +
@@ -3695,7 +3730,7 @@
     if(key === 'buzz-engagement') return buildBuzzEngagementModal();
     if(key.indexOf('rec-') === 0){
       const recIdx = parseInt(key.slice(4), 10);
-      const r = RECS[recIdx];
+      const r = lastRecs[recIdx];
       if(!r) return null;
       const oc = recOwnerCadence(r.horizon);
       const newsHtml = (r.news || []).map(n =>
@@ -3745,11 +3780,6 @@
   /* ================= INIT ================= */
   buildMacroTrack();
   buildVocTrack();
-  renderProbeTable();
-  renderProductMovementSection();
-  renderAlerts();
-  renderCompetitors();
-  renderRecs();
   renderGov();
   setFooterTime();
   applyScope();

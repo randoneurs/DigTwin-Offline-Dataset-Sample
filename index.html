@@ -623,6 +623,11 @@
     border:1px solid var(--border); background:linear-gradient(180deg,var(--surface-2),var(--surface));
   }
   .rec-top{ display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .rec-cat-row{ display:flex; gap:6px; flex-wrap:wrap; min-height:22px; }
+  .rec-cat{
+    font-size:9.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    padding:2px 8px; border-radius:100px; border:1px solid; background:rgba(255,255,255,0.04);
+  }
   /* Every row below (rationale, chips, target, button) needs to start at the
      same height across sibling cards in a grid row, so the title and
      rationale reserve a fixed height (clamped to a max line count) instead
@@ -2942,7 +2947,7 @@
   // other five are general strategic plays not tied to a specific scope.
   function buildRecs(drivers, place){
     return [
-    { horizon:'Immediate · P1 · 24–72h', title:'Launch matched counter-promo on exposed 30GB tier', color:'var(--bad)',
+    { horizon:'Immediate · P1 · 24–72h', title:'Launch matched counter-promo on exposed 30GB tier', color:'var(--bad)', categories:['Marketing','Sales'],
       body:'Probe RPA confirmed IOH cut its flagship 30GB SKU by ' + drivers.priceCut + '% (Rp 89,000 → Rp 73,000), 36 hours before this scan, flipping the tier from near-parity to exposed. VOC volume on the price/value topic mentioning IOH is up sharply in the same window.',
       sources:['Probe RPA','VOC'], kpi:'Target: close price gap to ≤5% within 72h; hold 30GB tier share loss under 0.3pt.',
       prompt:'Buat rencana taktis lengkap untuk counter-promo tier 30GB, termasuk struktur harga, target wilayah, dan estimasi dampak terhadap margin.',
@@ -2957,7 +2962,7 @@
         'Field enablement: brief GraPARI and authorized dealers same-day with a one-page battlecard versus the IOH offer.',
         'Measurement: track tier-level net adds and churn daily for 14 days; auto-expire the offer if the gap closes via a national move instead.'
       ] },
-    { horizon:'Medium-term · P2 · 45–60 days', title:'Accelerate 5G rollout to close the gap with XL', color:'var(--data)',
+    { horizon:'Medium-term · P2 · 45–60 days', title:'Accelerate 5G rollout to close the gap with XL', color:'var(--data)', categories:['Network'],
       body:'Network benchmark data shows XLSmart\'s 5G download speed advantage widening in urban corridors of JABAR and JATIM. Sentiment on network quality trails coverage sentiment by 5pts, suggesting speed perception — not availability — is the gap.',
       sources:['Network benchmark','Product sentiment'], kpi:'Target: cut XL 5G speed-perception gap by 40% in scoped corridors within one quarter.',
       prompt:'Susun rencana percepatan rollout 5G untuk menutup gap kecepatan dengan XL, termasuk prioritas lokasi berdasarkan data benchmark jaringan.',
@@ -2972,7 +2977,7 @@
         'Governance: report rollout progress at the monthly strategy review, per the Model &amp; accuracy governance cadence.',
         'Measurement: track the Network Experience Benchmark gap to XL monthly in the scoped corridors until it closes by the 40% target.'
       ] },
-    { horizon:'Medium-term · P2 · 4–6 weeks', title:'Run a brand campaign to reset the price narrative', color:'var(--violet)',
+    { horizon:'Medium-term · P2 · 4–6 weeks', title:'Run a brand campaign to reset the price narrative', color:'var(--violet)', categories:['Marketing'],
       body:'Price/value is the weakest of six tracked sentiment topics and has declined for three consecutive weeks, while VOC shows repeated direct price comparisons to IOH and XL. A value-reframing campaign can arrest the narrative before it hardens into churn.',
       sources:['Product sentiment','VOC'], kpi:'Target: lift price/value sentiment by 8pts within 6 weeks without a national price cut.',
       prompt:'Rancang konsep kampanye brand untuk mereset narasi harga Telkomsel dibanding kompetitor, lengkap dengan pesan utama dan channel distribusi.',
@@ -2986,7 +2991,7 @@
         'Timing: launch inside the current sentiment-tracking window so the campaign\'s effect is measurable before the next Synthesis cycle.',
         'Measurement: track price/value sentiment weekly; target +8pts within 6 weeks.'
       ] },
-    { horizon:'Medium-term · P2/P3 · this quarter', title:'Invest in gaming & upload-experience quality', color:'#2a78d6',
+    { horizon:'Medium-term · P2/P3 · this quarter', title:'Invest in gaming & upload-experience quality', color:'#2a78d6', categories:['Network','Marketing'],
       body:'Mention-volume analysis shows gaming and content-upload complaints clustering in the same regions as the network-quality sentiment dip. This is a differentiated experience play against IOH\'s price-led and XL\'s coverage-led positioning.',
       sources:['Buzz','Network benchmark'], kpi:'Target: reduce gaming-latency complaints by 25% and lift network-quality sentiment 4pts in one quarter.',
       prompt:'Buat business case untuk investasi peningkatan kualitas gaming dan upload experience, termasuk estimasi biaya dan dampak terhadap retensi pelanggan.',
@@ -3001,7 +3006,7 @@
         'Packaging: explore a gaming-oriented add-on (low-latency routing) as a differentiator versus IOH\'s price-led and XL\'s coverage-led plays.',
         'Measurement: track gaming-latency complaint volume and network-quality sentiment in the flagged regions monthly against the 25%/4pt targets.'
       ] },
-    { horizon:'Immediate · P1 · 24h', title:'Contain the outage in ' + place, color:'var(--bad)',
+    { horizon:'Immediate · P1 · 24h', title:'Contain the outage in ' + place, color:'var(--bad)', categories:['Network','Customer'],
       body:'NOC feed confirms intermittent service across 6 BTS sites since last night; VOC shows an 890-engagement complaint thread on X and complaint volume up ' + drivers.complaintPct + '% in the affected cluster. Left unaddressed, this compounds the region\'s existing share pressure.',
       sources:['NOC feed','VOC · X','RETINA'], kpi:'Target: full restoration within 24h; publish customer-facing ETA within 2h.',
       prompt:'Susun rencana tanggap darurat untuk gangguan jaringan ' + place + ', termasuk komunikasi pelanggan dan eskalasi ke tim NOC.',
@@ -3016,7 +3021,7 @@
         'Escalation: if the SLA is missed, escalate to the CMO war-room channel per the Decision-log obligation in Governance.',
         'Measurement: monitor the complaint thread\'s sentiment and volume hourly until it returns to baseline.'
       ] },
-    { horizon:'Longer-term · P3 · 2–3 quarters', title:'Expand enterprise & B2B account penetration', color:'var(--good)',
+    { horizon:'Longer-term · P3 · 2–3 quarters', title:'Expand enterprise & B2B account penetration', color:'var(--good)', categories:['Sales'],
       body:'Macro signals show telco FDI sentiment cautiously positive and industry ARPU flat, suggesting consumer-tier growth is capped while enterprise connectivity spend is rising. RETINA field scans show limited Telkomsel enterprise-account presence outside JABOTABEK.',
       sources:['Macro indicators','RETINA'], kpi:'Target: grow enterprise/B2B account base by 15% outside JABOTABEK within 3 quarters.',
       prompt:'Buat proposal ekspansi akun enterprise dan B2B di luar JABOTABEK, termasuk target segmen dan proyeksi pendapatan.',
@@ -3041,6 +3046,16 @@
     const m = horizon.match(/P(\d)/);
     return m ? parseInt(m[1], 10) : 9;
   }
+  // Which team(s) the recommendation's main issue falls under — a rec can
+  // carry more than one when it genuinely needs cross-functional treatment
+  // (e.g. an outage needs both Network restoration and Customer comms).
+  const CATEGORY_META = {
+    Marketing: { color:'var(--violet)' },
+    Network:   { color:'var(--data)' },
+    Customer:  { color:'var(--warn)' },
+    Sales:     { color:'var(--good)' },
+    Others:    { color:'var(--text-3)' }
+  };
   function renderRecs(drivers, place){
     lastRecs = buildRecs(drivers, place).slice().sort((a, b) => recPriorityRank(a.horizon) - recPriorityRank(b.horizon));
     const grid = document.getElementById('recGrid');
@@ -3050,8 +3065,14 @@
       el.className = 'rec-card';
       el.dataset.detail = 'rec-' + recIdx;
       el.style.setProperty('--panel-accent', r.color);
+      const cats = (r.categories && r.categories.length) ? r.categories : ['Others'];
+      const catBadges = cats.map(c => {
+        const meta = CATEGORY_META[c] || CATEGORY_META.Others;
+        return '<span class="rec-cat" style="color:' + meta.color + ';border-color:' + meta.color + ';">' + c + '</span>';
+      }).join('');
       el.innerHTML =
         '<div class="rec-top"><span class="eyebrow" style="color:' + r.color + '">' + r.horizon + '</span></div>' +
+        '<div class="rec-cat-row">' + catBadges + '</div>' +
         '<div class="rec-title">' + r.title + '</div>' +
         '<div class="rec-rationale">' + r.body + '</div>' +
         '<div class="chip-row">' + r.sources.map(s => '<span class="chip">' + s + '</span>').join('') + '</div>' +
@@ -3142,7 +3163,7 @@
     // #recGrid's DOM, so MarketSight can cite the actual recommendations on
     // screen for this scope instead of being unaware the card exists.
     if(lastRecs && lastRecs.length){
-      lines.push('Strategic recommendations: ' + lastRecs.map(r => '[' + r.horizon + '] ' + r.title + ' — ' + r.kpi).join(' | '));
+      lines.push('Strategic recommendations: ' + lastRecs.map(r => '[' + r.horizon + ' · ' + ((r.categories && r.categories.length) ? r.categories.join('/') : 'Others') + '] ' + r.title + ' — ' + r.kpi).join(' | '));
     }
     // Same "biggest finding" callouts rendered on each card, so MarketSight's
     // answers cite the identical headline finding instead of re-deriving (or
@@ -4004,7 +4025,7 @@
       ).join('');
       const place = lastPlace || 'the national footprint';
       const worst = lastDrivers ? lastDrivers.worst : null;
-      return { eyebrow:r.horizon, title:r.title,
+      return { eyebrow:r.horizon + ' · ' + ((r.categories && r.categories.length) ? r.categories.join(' / ') : 'Others'), title:r.title,
         body:
           (worst ? '<p><b>Related Synthesis:</b> Surfaced from the current read for <b>' + place + '</b>, where <b>' + worst.label + '</b> is the sharpest drag (' + fmt1(worst.delta) + ') \u2014 see the Synthesis card above for the full cross-signal narrative.</p>' : '') +
           '<p><b>Key finding:</b> ' + r.body + '</p>' +

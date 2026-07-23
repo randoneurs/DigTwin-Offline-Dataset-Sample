@@ -832,7 +832,7 @@
       <div class="scope-line" id="scopeLine"></div>
     </div>
 
-    <div class="row-2col" id="execAskRow">
+    <div class="row-2col">
       <div class="panel" id="execSummaryCard" style="--panel-accent:var(--brand);">
         <div class="panel-head">
           <div>
@@ -3246,8 +3246,12 @@
     document.querySelectorAll('.panel-group').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + id).classList.add('active');
     // Executive Summary and Ask the Intelligence AI narrate the Overview's
-    // Synthesis — only relevant while Overview itself is the active section.
-    document.getElementById('execAskRow').style.display = (id === 'overview') ? '' : 'none';
+    // Synthesis — auto-minimize (not fully hide) them on every other section,
+    // reusing each card's own collapse toggle so the header + toggle button
+    // stay visible and the user can still expand either one back manually.
+    const onOverview = id === 'overview';
+    setCardCollapsed(document.querySelector('.card-toggle[data-target="execSummaryBody"]'), !onOverview);
+    setCardCollapsed(document.querySelector('.card-toggle[data-target="askBody"]'), !onOverview);
   }
   sidebarNav.addEventListener('click', e => {
     const btn = e.target.closest('.navbtn');
@@ -3278,16 +3282,20 @@
   });
 
   /* ================= EXECUTIVE SUMMARY / ASK AI CARD HIDE-UNHIDE ================= */
+  function setCardCollapsed(btn, collapsed){
+    if(!btn) return;
+    const target = document.getElementById(btn.dataset.target);
+    if(!target) return;
+    target.style.display = collapsed ? 'none' : '';
+    btn.classList.toggle('collapsed', collapsed);
+    btn.setAttribute('aria-expanded', String(!collapsed));
+    const label = btn.dataset.label || 'card';
+    btn.title = collapsed ? ('Show ' + label) : ('Hide ' + label);
+  }
   document.querySelectorAll('.card-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const target = document.getElementById(btn.dataset.target);
-      if(!target) return;
-      const willHide = target.style.display !== 'none';
-      target.style.display = willHide ? 'none' : '';
-      btn.classList.toggle('collapsed', willHide);
-      btn.setAttribute('aria-expanded', String(!willHide));
-      const label = btn.dataset.label || 'card';
-      btn.title = willHide ? ('Show ' + label) : ('Hide ' + label);
+      setCardCollapsed(btn, !!target && target.style.display !== 'none');
     });
   });
 

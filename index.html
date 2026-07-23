@@ -1691,6 +1691,8 @@
   }
 
   let lastKPIs = null;
+  let lastDrivers = null;
+  let lastPlace = null;
   function renderCoreKPIs(kpis){
     lastKPIs = kpis;
     const shareFinding = kpiFinding(kpis.metaShare, kpis.metaShareDelta, kpis.shareByOperator, { unit: 'pt', metric: 'share' });
@@ -1771,6 +1773,9 @@
   const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   function formatYMD(d){
     return d.getFullYear() + '-' + MONTH_ABBR[d.getMonth()] + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function fmtAsOf(iso){
+    return iso ? formatYMD(new Date(iso)) : null;
   }
   // These four cards (Pricing Probe, Alerts, Product Sentiment, Competitor & Buzz)
   // aren't backed by a Hadoop snapshot — their "as of" reference is the selected
@@ -2606,6 +2611,8 @@
     renderCoreKPIs(kpis);
     const drivers = computeSynthDrivers(rng, kpis);
     const place = regionNarrativeName();
+    lastDrivers = drivers;
+    lastPlace = place;
     renderExecSummary(kpis, drivers);
     renderSynthesis(kpis, drivers);
     renderSentiment(rng);
@@ -2941,7 +2948,7 @@
         'Packaging: explore a gaming-oriented add-on (low-latency routing) as a differentiator versus IOH\'s price-led and XL\'s coverage-led plays.',
         'Measurement: track gaming-latency complaint volume and network-quality sentiment in the flagged regions monthly against the 25%/4pt targets.'
       ] },
-    { horizon:'Immediate · P1 · 24h', title:'Contain the ' + place + ' outage', color:'var(--bad)',
+    { horizon:'Immediate · P1 · 24h', title:'Contain the outage in ' + place, color:'var(--bad)',
       body:'NOC feed confirms intermittent service across 6 BTS sites since last night; VOC shows an 890-engagement complaint thread on X and complaint volume up ' + drivers.complaintPct + '% in the affected cluster. Left unaddressed, this compounds the region\'s existing share pressure.',
       sources:['NOC feed','VOC · X','RETINA'], kpi:'Target: full restoration within 24h; publish customer-facing ETA within 2h.',
       prompt:'Susun rencana tanggap darurat untuk gangguan jaringan ' + place + ', termasuk komunikasi pelanggan dan eskalasi ke tim NOC.',
@@ -3794,8 +3801,24 @@
     if(key === 'kpi-nps') return buildKpiModal('nps');
     if(key === 'kpi-netbench') return buildNetworkModal();
     if(key === 'synthesis'){
+      const metaDate = fmtAsOf(hadoopSnapshot && hadoopSnapshot.generatedAt);
+      const retinaDate = fmtAsOf(retinaSnapshot && retinaSnapshot.generatedAt);
+      const networkDate = fmtAsOf(networkSnapshot && networkSnapshot.generatedAt);
+      const worst = lastDrivers ? lastDrivers.worst : null;
+      const place = lastPlace || 'the national footprint';
       return { eyebrow:'Synthesis · methodology', title:'How this narrative is built',
-        body:'<p>Regenerated whenever the Area/Region/City/Week filter changes, cross-referencing four systems: <b>RETINA</b> (field outlet scans), <b>Probe</b> (competitor pricing RPA), <b>VOC</b> (social/review listening), and the <b>Network Experience Benchmark</b> (crowdsourced network quality). Figures are AI-synthesized decision support \u2014 validate against source systems before acting (see Governance).</p>' };
+        body:
+          '<p>Regenerated whenever the Area/Region/City/Week filter changes, cross-referencing four systems. Figures are AI-synthesized decision support \u2014 validate against source systems before acting (see Governance).</p>' +
+          '<p style="margin-top:8px;"><b>Sourced data &amp; reference \u2014 when:</b></p>' +
+          '<div class="detail-table">' +
+            '<div class="detail-row"><span class="dk">Meta Market Share</span><span class="dv">' + (metaDate ? 'as of ' + metaDate : 'modeled \u2014 no snapshot loaded') + '</span></div>' +
+            '<div class="detail-row"><span class="dk">RETINA field scan</span><span class="dv">' + (retinaDate ? 'as of ' + retinaDate : 'modeled \u2014 no snapshot loaded') + '</span></div>' +
+            '<div class="detail-row"><span class="dk">Network Experience Benchmark</span><span class="dv">' + (networkDate ? 'as of ' + networkDate : 'modeled \u2014 no snapshot loaded') + '</span></div>' +
+            '<div class="detail-row"><span class="dk">Probe pricing RPA</span><span class="dv">crawled every 6 hours</span></div>' +
+            '<div class="detail-row"><span class="dk">VOC listening</span><span class="dv">rolling social/review window</span></div>' +
+          '</div>' +
+          (worst ? '<p style="margin-top:10px;"><b>Current read for ' + place + ':</b> <b>' + worst.label + '</b> is this scope\u2019s sharpest drag (' + fmt1(worst.delta) + ').</p>' : '') +
+          '<p style="color:var(--text-3);font-size:11px;margin-top:8px;">This is the same narrative text MarketSight AI grounds its answers on \u2014 ask a question above for a deeper, conversational read.</p>' };
     }
     if(key.indexOf('action-') === 0){
       const actionIdx = parseInt(key.slice(7), 10);
@@ -3910,16 +3933,19 @@
       const newsHtml = (r.news || []).map(n =>
         '<div class="news-item"><div class="news-meta"><span class="news-source">' + n.source + '</span><span class="news-date">' + n.date + '</span></div><div class="news-headline">' + n.headline + '</div></div>'
       ).join('');
+      const place = lastPlace || 'the national footprint';
+      const worst = lastDrivers ? lastDrivers.worst : null;
       return { eyebrow:r.horizon, title:r.title,
         body:
+          (worst ? '<p><b>Related Synthesis:</b> Surfaced from the current read for <b>' + place + '</b>, where <b>' + worst.label + '</b> is the sharpest drag (' + fmt1(worst.delta) + ') \u2014 see the Synthesis card above for the full cross-signal narrative.</p>' : '') +
           '<p><b>Key finding:</b> ' + r.body + '</p>' +
           (newsHtml ? '<p><b>Related published news:</b></p><div class="news-list">' + newsHtml + '</div>' +
             '<p style="color:var(--text-3);font-size:11px;">Illustrative demo data \u2014 headlines shown here are for mockup purposes and are not linked to a live external article.</p>' : '') +
-          '<p><b>Data available:</b></p>' +
+          '<p><b>Sourced data &amp; reference:</b></p>' +
           '<div class="chip-row">' + r.sources.map(s => '<span class="chip">' + s + '</span>').join('') + '</div>' +
           '<div class="callout" style="margin-top:10px;">\ud83c\udfaf ' + r.kpi + '</div>' +
           '<div class="detail-table"><div class="detail-row"><span class="dk">Owner</span><span class="dv">' + oc.owner + '</span></div><div class="detail-row"><span class="dk">Cadence</span><span class="dv">' + oc.cadence + '</span></div></div>' +
-          (r.gtm && r.gtm.length ? '<p style="margin-top:14px;"><b>Key go-to-market strategy:</b></p><ul class="detail-list">' + r.gtm.map(g => '<li>' + g + '</li>').join('') + '</ul>' : '') };
+          (r.gtm && r.gtm.length ? '<p style="margin-top:14px;"><b>Go-to-market strategy \u2014 detailed steps:</b></p><ul class="detail-list">' + r.gtm.map(g => '<li>' + g + '</li>').join('') + '</ul>' : '') };
     }
     if(key.indexOf('gov-') === 0){
       const govIdx = parseInt(key.slice(4), 10);

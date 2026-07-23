@@ -1245,6 +1245,14 @@
     "PUMA": ["Kota Jayapura","Kota Ambon","Kabupaten Merauke","Kota Sorong","Kabupaten Mimika","Kota Ternate","Kabupaten Jayawijaya","Kota Manokwari"]
   };
   const ALL_REGIONS = Object.keys(REGION_LABELS);
+  // Reverse lookups so a Region- or City-only filter selection (Area/Region left
+  // at 'ALL' because the selects are independent, not a forced drill-down) can
+  // still resolve its true parent for display — mirrors how matchScopeRow()
+  // resolves the true parent for data lookups.
+  const REGION_TO_AREA = {};
+  Object.keys(AREA_MAP).forEach(a => AREA_MAP[a].forEach(r => { REGION_TO_AREA[r] = a; }));
+  const CITY_TO_REGION = {};
+  Object.keys(CITY_MAP).forEach(r => CITY_MAP[r].forEach(c => { CITY_TO_REGION[c] = r; }));
 
   /* ================= OPERATOR IDENTITY (uniform logo + color across every card) ================= */
   const OPERATORS = {
@@ -1303,15 +1311,39 @@
     { key: 'xlsmart', label: 'XLSmart', color: '#2a78d6' }
   ];
 
+  // Shared by findSnapshotRow/findRetinaRow/findNetworkRow. The Area/Region/City
+  // filters are independent <select>s (a user can pick a Region or City without
+  // ever touching Area — populateRegions/populateCities list every region/city
+  // nationwide whenever their parent is left at 'ALL'), but every real data row
+  // always carries its own true area/region/city, never 'ALL' paired with a
+  // specific region/city. Matching used to require scope.area/region to equal
+  // 'ALL' or the row's own value exactly, which meant a Region- or City-only
+  // selection (area still 'ALL') could never match any row and silently fell
+  // through to the national rollup. Fixed by matching on whichever field is
+  // actually set, most specific first, and only constraining on a shallower
+  // field (area/region) when the caller actually chose a non-'ALL' value for it.
+  function matchScopeRow(rows, scope){
+    if(scope.city && scope.city !== 'ALL'){
+      const row = rows.find(x => x.city === scope.city
+        && (scope.region === 'ALL' || x.region === scope.region)
+        && (scope.area === 'ALL' || x.area === scope.area));
+      if(row) return row;
+    }
+    if(scope.region && scope.region !== 'ALL'){
+      const row = rows.find(x => x.region === scope.region && x.city === 'ALL'
+        && (scope.area === 'ALL' || x.area === scope.area));
+      if(row) return row;
+    }
+    if(scope.area && scope.area !== 'ALL'){
+      const row = rows.find(x => x.area === scope.area && x.region === 'ALL' && x.city === 'ALL');
+      if(row) return row;
+    }
+    return rows.find(x => x.area === 'ALL' && x.region === 'ALL' && x.city === 'ALL') || null;
+  }
+
   function findRetinaRow(scope){
     if(!retinaSnapshot || !Array.isArray(retinaSnapshot.rows)) return null;
-    const rows = retinaSnapshot.rows;
-    const find = (a,r,c) => rows.find(x => x.area===a && x.region===r && x.city===c);
-    return find(scope.area, scope.region, scope.city)
-        || find(scope.area, scope.region, 'ALL')
-        || find(scope.area, 'ALL', 'ALL')
-        || find('ALL', 'ALL', 'ALL')
-        || null;
+    return matchScopeRow(retinaSnapshot.rows, scope);
   }
 
   /* ================= NETWORK EXPERIENCE SNAPSHOT (OpenSignal ONX Spotlight) =================
@@ -1340,13 +1372,7 @@
 
   function findNetworkRow(scope){
     if(!networkSnapshot || !Array.isArray(networkSnapshot.rows)) return null;
-    const rows = networkSnapshot.rows;
-    const find = (a,r,c) => rows.find(x => x.area===a && x.region===r && x.city===c);
-    return find(scope.area, scope.region, scope.city)
-        || find(scope.area, scope.region, 'ALL')
-        || find(scope.area, 'ALL', 'ALL')
-        || find('ALL', 'ALL', 'ALL')
-        || null;
+    return matchScopeRow(networkSnapshot.rows, scope);
   }
 
   const HADOOP_SCHEMA_EXAMPLE = {
@@ -1410,13 +1436,7 @@
     // Area/Region/City was actually selected. Same no-week-dimension approach
     // findRetinaRow/findNetworkRow already use.
     const rows = hadoopSnapshot.rows.filter(x => !x.island && !x.archetype);
-    const find = (a,r,c) => rows.find(x => x.area===a && x.region===r && x.city===c);
-    return find(scope.area, scope.region, scope.city)
-        || find(scope.area, scope.region, 'ALL')
-        || find(scope.area, 'ALL', 'ALL')
-        || find('ALL', 'ALL', 'ALL')
-        || rows.find(x => x.area==='ALL' && x.region==='ALL' && x.city==='ALL')
-        || null;
+    return matchScopeRow(rows, scope);
   }
 
   function walkTo(rng, end, steps, spread){
@@ -1804,8 +1824,14 @@
     return [fArea.value, fRegion.value, fCity.value, fWeek.value].join('|');
   }
   function scopeLabel(){
-    const area = fArea.value === 'ALL' ? 'All Areas' : fArea.value;
-    const region = fRegion.value === 'ALL' ? 'All Regions' : REGION_LABELS[fRegion.value];
+    // Resolve the true region/area even when a Region- or City-only selection
+    // left a shallower filter at 'ALL', so the label always matches the row
+    // matchScopeRow() actually picked (e.g. "Kota Surabaya (8. JATIM)" rather
+    // than the misleading "Kota Surabaya (All Regions)").
+    const effRegion = fRegion.value !== 'ALL' ? fRegion.value : (CITY_TO_REGION[fCity.value] || 'ALL');
+    const effArea = fArea.value !== 'ALL' ? fArea.value : (REGION_TO_AREA[effRegion] || 'ALL');
+    const area = effArea === 'ALL' ? 'All Areas' : effArea;
+    const region = effRegion === 'ALL' ? 'All Regions' : REGION_LABELS[effRegion];
     const city = fCity.value === 'ALL' ? 'All Cities' : fCity.value;
     return { area, region, city, week: fWeek.value };
   }

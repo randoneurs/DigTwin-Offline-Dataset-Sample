@@ -161,8 +161,7 @@
   .scope-line b{ color:var(--data); font-weight:600; }
 
   .ask-row{ display:flex; gap:8px; align-items:flex-end; }
-  .suggest-row{ display:none; gap:8px; flex-wrap:wrap; margin-top:10px; }
-  .suggest-row.show{ display:flex; animation:fadein .15s ease; }
+  .suggest-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
   .suggest-chip{
     font-family:var(--sans); font-size:11.5px; font-weight:600; line-height:1.4; padding:7px 12px;
     border-radius:100px; background:var(--surface-3); border:1px solid var(--border-strong);
@@ -3137,7 +3136,6 @@
   const askBtn = document.getElementById('askBtn');
   const aiAnswer = document.getElementById('aiAnswer');
   const aiAnswerText = document.getElementById('aiAnswerText');
-  const suggestRowEl = document.getElementById('suggestRow');
 
   function autoResizeAsk(){
     askInput.style.height = 'auto';
@@ -3149,7 +3147,6 @@
     if(!question || !question.trim()) return;
     askInput.value = question;
     autoResizeAsk();
-    if(suggestRowEl) suggestRowEl.classList.remove('show');
     aiAnswer.classList.remove('show');
     aiAnswerText.textContent = 'MarketSight is analyzing RETINA, Probe, VOC and benchmark datasets…';
     aiAnswer.classList.add('show');
@@ -3162,15 +3159,6 @@
   askInput.addEventListener('keydown', e => {
     if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); runAsk(askInput.value); }
   });
-
-  /* suggested questions only appear while the Ask input is focused/clicked */
-  if(suggestRowEl){
-    askInput.addEventListener('focus', () => { suggestRowEl.classList.add('show'); });
-    askInput.addEventListener('blur', () => {
-      // delay so a click on a suggestion chip (which blurs the input first) still registers
-      setTimeout(() => { suggestRowEl.classList.remove('show'); }, 150);
-    });
-  }
 
   document.addEventListener('click', e => {
     const btn = e.target.closest('[data-prompt]');

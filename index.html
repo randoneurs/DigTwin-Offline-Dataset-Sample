@@ -246,6 +246,12 @@
   .kpi-value{ font-size:26px; font-weight:700; }
   .kpi-delta{ font-size:12px; font-weight:700; }
   .kpi-compare{ font-size:11px; color:var(--text-3); margin-top:4px; line-height:1.5; min-height:32px; }
+  .kpi-alert{
+    display:flex; gap:6px; align-items:flex-start; font-size:10.5px; line-height:1.4; margin-top:8px;
+    padding:6px 8px; border-radius:8px; background:var(--bad-dim); border:1px solid rgba(239,68,68,0.3); color:#ffc4c4;
+    min-height:34px;
+  }
+  .kpi-alert.good{ background:var(--good-dim); border-color:rgba(47,191,110,.35); color:#7be8ab; }
   .kpi-spark{ margin-top:auto; padding-top:8px; opacity:0.92; }
   .kpi-spark svg{ display:block; }
 
@@ -903,9 +909,7 @@
         </table>
       </div>
 
-      <div class="callout bad">
-        ⚠ <div><b>Price move detected:</b> IOH cut its <b>Freedom Internet 30GB</b> price by <b>18%</b> (Rp 89,000 → Rp 73,000) roughly <b>36 hours before</b> this scan — undercutting Telkomsel's equivalent Combo Sakti SKU by Rp 15,000.</div>
-      </div>
+      <div class="callout bad" id="probeCallout"></div>
 
       <div class="scan-meta">
         <div><span class="k">Apps / storefronts covered</span><span class="v">12</span></div>
@@ -939,6 +943,7 @@
           <tbody id="retinaBody"></tbody>
         </table>
       </div>
+      <div class="callout" id="retinaCallout"></div>
       <div class="scan-meta">
         <div><span class="k">Telkomsel group</span><span class="v">Telkomsel, ByU</span></div>
         <div><span class="k">IOH group</span><span class="v">Indosat, Three</span></div>
@@ -1106,6 +1111,7 @@
           <span class="chip" id="competitorAsOf"></span>
         </div>
         <div class="stack" id="competitorList"></div>
+        <div class="callout bad" id="competitorCallout"></div>
       </div>
 
       <div class="panel" style="--panel-accent:var(--data);" data-detail="buzz">
@@ -1283,6 +1289,14 @@
      (telkomsel, ioh, xlsmart), each {availability, visibility, avIndex} on a 0-5 scale.
   */
   let retinaSnapshot = null;
+  // Latest per-card "biggest finding for Telkomsel" text, one per callout — shared
+  // with dashboardContextText() so MarketSight's answers cite the same headline
+  // finding as the card itself instead of re-deriving (or contradicting) it.
+  let lastRetinaFinding = null;
+  let lastNetworkFinding = null;
+  let lastShareFinding = null;
+  let lastNpsFinding = null;
+  let lastCompetitorFinding = null;
   const RETINA_GROUPS = [
     { key: 'telkomsel', label: 'Telkomsel', color: '#e30613' },
     { key: 'ioh', label: 'IOH', color: '#f0ad2e' },
@@ -1386,12 +1400,21 @@
     // plain national rollup (and archetype-area rows share an area with the plain area
     // rollup) — exclude them here so this scope-based lookup can't collide with them.
     // They're read directly (by island/archetype) in hadoopMarketShareContext instead.
+    //
+    // Deliberately NOT matched on scope.week: this snapshot only ever holds ONE week's
+    // data (whatever the last META export's date was), while the Week filter's default
+    // selection is always "today's" ISO week — those two drift apart as real time passes
+    // (the export doesn't get regenerated every week), so requiring an exact week match
+    // made every area/region/city lookup fail once they diverged, silently falling
+    // through to the week-agnostic national-only fallback regardless of which
+    // Area/Region/City was actually selected. Same no-week-dimension approach
+    // findRetinaRow/findNetworkRow already use.
     const rows = hadoopSnapshot.rows.filter(x => !x.island && !x.archetype);
-    const find = (a,r,c,w) => rows.find(x => x.area===a && x.region===r && x.city===c && x.week===w);
-    return find(scope.area, scope.region, scope.city, scope.week)
-        || find(scope.area, scope.region, 'ALL', scope.week)
-        || find(scope.area, 'ALL', 'ALL', scope.week)
-        || find('ALL', 'ALL', 'ALL', scope.week)
+    const find = (a,r,c) => rows.find(x => x.area===a && x.region===r && x.city===c);
+    return find(scope.area, scope.region, scope.city)
+        || find(scope.area, scope.region, 'ALL')
+        || find(scope.area, 'ALL', 'ALL')
+        || find('ALL', 'ALL', 'ALL')
         || rows.find(x => x.area==='ALL' && x.region==='ALL' && x.city==='ALL')
         || null;
   }
@@ -1560,7 +1583,7 @@
     return '<span class="kpi-delta num"' + compareTitle(suffix, source, comparedToDate) + ' style="color:' + color + '">' + arrow + ' ' + fmt1(Math.abs(delta)) + ' ' + suffix + '</span>';
   }
 
-  function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine, generatedAt, comparedToDate, deltaYoy, comparedToDateYoy, deltaWow, comparedToDateWow, sourceLabel){
+  function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine, generatedAt, comparedToDate, deltaYoy, comparedToDateYoy, deltaWow, comparedToDateWow, sourceLabel, alertLine, alertGood){
     const sourceChip = source === 'hadoop'
       ? '<span class="kpi-source hadoop">● ' + (sourceLabel || 'Hadoop snapshot') + '</span>'
       : '<span class="kpi-source modeled">◐ Modeled estimate</span>';
@@ -1575,6 +1598,7 @@
           deltaPill(deltaYoy, 'YoY', source, comparedToDateYoy) +
         '</div>' +
         (compareLine ? '<div class="kpi-compare">' + compareLine + '</div>' : '') +
+        (alertLine ? '<div class="kpi-alert' + (alertGood ? ' good' : '') + '">' + (alertGood ? '✓' : '⚠') + ' <div>' + alertLine + '</div></div>' : '') +
         '<div class="kpi-spark">' + sparkline(history, accent) + '</div>' +
       '</div>';
   }
@@ -1604,14 +1628,49 @@
     return candidates.map(fmt).join(' | ');
   }
 
+  // Biggest single finding for Telkomsel from a KPI tile's own data: lead with a
+  // real MoM decline if there is one (the sharpest thing that actually moved),
+  // otherwise fall back to whichever tracked competitor sits closest to
+  // Telkomsel's own value (the tightest competitive gap at this scope).
+  function kpiFinding(value, delta, byOperator, opts){
+    opts = opts || {};
+    const unit = opts.unit || '';
+    const metric = opts.metric || 'score';
+    if(delta != null && delta < 0){
+      return { text: 'Telkomsel ' + metric + ' down ' + fmt1(Math.abs(delta)) + unit + ' MoM at this scope — the sharpest movement this period.', bad: true };
+    }
+    if(byOperator){
+      const candidates = ['xl', 'ioh'].map(k => ({ name: OPERATORS[k].name, value: byOperator[k] })).filter(c => c.value != null);
+      if(candidates.length){
+        candidates.sort((a, b) => Math.abs(value - a.value) - Math.abs(value - b.value));
+        const closest = candidates[0];
+        const gap = round1(value - closest.value);
+        if(gap <= 5){
+          return { text: gap >= 0
+            ? closest.name + ' trails by only ' + fmt1(Math.abs(gap)) + unit + ' — the tightest competitive gap at this scope.'
+            : closest.name + ' leads Telkomsel by ' + fmt1(Math.abs(gap)) + unit + ' at this scope.', bad: true };
+        }
+        return { text: 'Telkomsel leads ' + closest.name + ' by ' + fmt1(Math.abs(gap)) + unit + ' at this scope, a comfortable margin.', bad: false };
+      }
+    }
+    return null;
+  }
+
   let lastKPIs = null;
   function renderCoreKPIs(kpis){
     lastKPIs = kpis;
+    const shareFinding = kpiFinding(kpis.metaShare, kpis.metaShareDelta, kpis.shareByOperator, { unit: 'pt', metric: 'share' });
+    const npsFinding = kpiFinding(kpis.csiNps, kpis.csiNpsDelta, kpis.csiNpsByOperator, { metric: 'CSI-NPS' });
+    const netBenchFinding = kpiFinding(kpis.netBench, kpis.netBenchDelta, kpis.netBenchByOperator, { metric: 'benchmark score' });
+    lastShareFinding = shareFinding ? shareFinding.text : null;
+    lastNpsFinding = npsFinding ? npsFinding.text : null;
+    lastNetworkFinding = netBenchFinding ? netBenchFinding.text : null;
+
     const row = document.getElementById('kpiRow');
     row.innerHTML =
-      kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.metaShareSource, kpis.metaShareHistory, 'var(--brand)', 'kpi-share', competitorCompareLine(kpis.shareByOperator, kpis.shareByOperatorPrev, kpis.shareByOperatorYoy, '%'), kpis.generatedAt, kpis.comparedToDate, kpis.metaShareDeltaYoy, kpis.comparedToDateYoy, kpis.metaShareDeltaWow, kpis.comparedToDateWow) +
-      kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.csiNpsSource, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps', competitorCompareLine(kpis.csiNpsByOperator, kpis.csiNpsByOperatorPrev, kpis.csiNpsByOperatorYoy, ''), kpis.generatedAt, kpis.comparedToDate, kpis.csiNpsDeltaYoy, kpis.comparedToDateYoy, kpis.csiNpsDeltaWow, kpis.comparedToDateWow) +
-      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.netBenchSource, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench', competitorCompareLine(kpis.netBenchByOperator, kpis.netBenchByOperatorPrev, kpis.netBenchByOperatorYoy, ''), kpis.netBenchGeneratedAt, null, kpis.netBenchDeltaYoy, null, kpis.netBenchDeltaWow, null, 'ONX Spotlight');
+      kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.metaShareSource, kpis.metaShareHistory, 'var(--brand)', 'kpi-share', competitorCompareLine(kpis.shareByOperator, kpis.shareByOperatorPrev, kpis.shareByOperatorYoy, '%'), kpis.generatedAt, kpis.comparedToDate, kpis.metaShareDeltaYoy, kpis.comparedToDateYoy, kpis.metaShareDeltaWow, kpis.comparedToDateWow, null, shareFinding && shareFinding.text, shareFinding && !shareFinding.bad) +
+      kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.csiNpsSource, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps', competitorCompareLine(kpis.csiNpsByOperator, kpis.csiNpsByOperatorPrev, kpis.csiNpsByOperatorYoy, ''), kpis.generatedAt, kpis.comparedToDate, kpis.csiNpsDeltaYoy, kpis.comparedToDateYoy, kpis.csiNpsDeltaWow, kpis.comparedToDateWow, null, npsFinding && npsFinding.text, npsFinding && !npsFinding.bad) +
+      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.netBenchSource, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench', competitorCompareLine(kpis.netBenchByOperator, kpis.netBenchByOperatorPrev, kpis.netBenchByOperatorYoy, ''), kpis.netBenchGeneratedAt, null, kpis.netBenchDeltaYoy, null, kpis.netBenchDeltaWow, null, 'ONX Spotlight', netBenchFinding && netBenchFinding.text, netBenchFinding && !netBenchFinding.bad);
 
     const status = document.getElementById('hbStatus');
     if(kpis.source === 'hadoop'){
@@ -1795,14 +1854,22 @@
   // A fresh RPA scan can pick up small regional promo variance, so each price
   // is jittered ±4% per scope (seeded by rng, same as the rest of the modeled
   // cards) rather than showing the exact same nationwide figure everywhere.
+  let lastProbeFinding = null;
   function renderProbeTable(rng){
     const body = document.getElementById('probeBody');
     body.innerHTML = '';
+    let worst = null;
     PROBE_ROWS.forEach(row => {
       const tsel = Math.round(jitter(rng, row.tsel, row.tsel * 0.04) / 100) * 100;
       const ioh = Math.round(jitter(rng, row.ioh, row.ioh * 0.04) / 100) * 100;
       const xl = Math.round(jitter(rng, row.xl, row.xl * 0.04) / 100) * 100;
       const st = statusFor(tsel, ioh, xl);
+      const rivalIsIoh = ioh <= xl;
+      const rivalPrice = rivalIsIoh ? ioh : xl;
+      const gapPct = Math.round(((tsel - rivalPrice) / rivalPrice) * 100);
+      if(!worst || gapPct > worst.gapPct){
+        worst = { tier: row.tier, tsel, rivalPrice, rivalName: rivalIsIoh ? 'IOH' : 'XLSmart', gapPct };
+      }
       const tr = document.createElement('tr');
       tr.innerHTML =
         '<td>' + row.tier + '</td>' +
@@ -1812,6 +1879,17 @@
         '<td><span class="status-tag ' + st.cls + '">' + st.text + '</span></td>';
       body.appendChild(tr);
     });
+
+    const calloutEl = document.getElementById('probeCallout');
+    if(worst && worst.gapPct > 0){
+      lastProbeFinding = 'Biggest pricing exposure: Telkomsel\'s ' + worst.tier + ' sits ' + worst.gapPct + '% above ' + worst.rivalName + '\'s ' + fmtRp(worst.rivalPrice) + '.';
+      calloutEl.className = 'callout bad';
+      calloutEl.innerHTML = '⚠ <div><b>Biggest exposure:</b> Telkomsel\'s <b>' + worst.tier + '</b> sits <b>' + worst.gapPct + '% above</b> ' + worst.rivalName + '\'s <b>' + fmtRp(worst.rivalPrice) + '</b> — the widest price gap on this scan.</div>';
+    } else if(worst){
+      lastProbeFinding = 'No exposed tiers this scan — Telkomsel is at or below every tracked competitor price.';
+      calloutEl.className = 'callout';
+      calloutEl.innerHTML = '✓ <div><b>Holding price leadership:</b> Telkomsel is at or below every tracked competitor price this scan — no exposed tiers.</div>';
+    }
   }
 
   /* ================= PRODUCT MOVEMENT & SENTIMENT (ported from the "Product Movement & Sentiment" artifact) ================= */
@@ -2455,6 +2533,27 @@
       rowHtml('Availability Score', 'availability') +
       rowHtml('Visibility Score', 'visibility') +
       rowHtml('AV Index', 'avIndex');
+
+    // Biggest finding for Telkomsel at this scope: whichever of the two raw
+    // scores lags the other identifies the actual outlet-execution gap (product
+    // presence vs. branding/POSM), which a single AV Index average hides.
+    const tsel = scores.telkomsel;
+    const gap = round1(tsel.availability - tsel.visibility);
+    const rivalBest = Math.max(scores.ioh ? scores.ioh.avIndex : -Infinity, scores.xlsmart ? scores.xlsmart.avIndex : -Infinity);
+    const behindRival = rivalBest > tsel.avIndex;
+    const calloutEl = document.getElementById('retinaCallout');
+    calloutEl.className = 'callout' + (behindRival || Math.abs(gap) >= 0.5 ? ' bad' : '');
+    if(behindRival){
+      lastRetinaFinding = 'Telkomsel AV Index (' + fmt1(tsel.avIndex) + ') trails the strongest competitor (' + fmt1(rivalBest) + ') at this scope.';
+      calloutEl.innerHTML = '⚠ <div><b>Competitor lead in outlet execution:</b> Telkomsel\'s AV Index (<b>' + fmt1(tsel.avIndex) + '</b>) trails the strongest competitor (<b>' + fmt1(rivalBest) + '</b>) at this scope.</div>';
+    } else if(Math.abs(gap) >= 0.5){
+      const weaker = gap > 0 ? 'Visibility' : 'Availability';
+      lastRetinaFinding = 'Telkomsel\'s ' + weaker + ' Score lags its other outlet metric by ' + fmt1(Math.abs(gap)) + 'pt — the execution gap to close.';
+      calloutEl.innerHTML = '⚠ <div><b>Outlet execution gap:</b> Telkomsel\'s <b>' + weaker + '</b> Score lags its other outlet metric by <b>' + fmt1(Math.abs(gap)) + 'pt</b> — ' + (weaker === 'Visibility' ? 'branding/POSM presence' : 'product availability') + ' is the gap to close, not the overall average.</div>';
+    } else {
+      lastRetinaFinding = 'Telkomsel leads all tracked competitors on AV Index at this scope, with Availability and Visibility roughly balanced.';
+      calloutEl.innerHTML = '✓ <div><b>Leading position:</b> Telkomsel leads all tracked competitors on AV Index at this scope, with Availability and Visibility roughly balanced.</div>';
+    }
   }
 
   function applyScope(){
@@ -2724,6 +2823,13 @@
         '<button class="btn btn-sm" data-prompt="Berikan analisis mendalam tentang pergerakan kompetitor ' + c.fullName + ' termasuk implikasinya terhadap pangsa pasar Telkomsel.">' + c.action + '</button>';
       wrap.appendChild(el);
     });
+
+    // Biggest threat for Telkomsel: the highest-risk competitor row, using the
+    // same price-cut/outlet numbers already cited in Synthesis/Alerts/Recs.
+    const highRisk = lastCompetitors.find(c => c.risk === 'high') || lastCompetitors[0];
+    lastCompetitorFinding = highRisk.fullName + ' is the highest-risk mover — ' + highRisk.tag.toLowerCase() + ' at ' + place + '.';
+    document.getElementById('competitorCallout').innerHTML =
+      '⚠ <div><b>Biggest threat:</b> <b>' + highRisk.fullName + '</b> is the highest-risk mover — ' + highRisk.tag.toLowerCase() + ' at ' + place + '.</div>';
   }
 
   /* ================= STRATEGIC RECOMMENDATIONS ================= */
@@ -2921,6 +3027,17 @@
     ].filter(line => !/: $/.test(line));
     const shareDetail = hadoopMarketShareContext();
     if(shareDetail) lines.push(shareDetail);
+    // Same "biggest finding" callouts rendered on each card, so MarketSight's
+    // answers cite the identical headline finding instead of re-deriving (or
+    // contradicting) what's already on screen.
+    [
+      ['Meta Market Share finding', lastShareFinding],
+      ['CSI-NPS finding', lastNpsFinding],
+      ['Network Experience Benchmark finding', lastNetworkFinding],
+      ['RETINA finding', lastRetinaFinding],
+      ['Pricing Probe finding', lastProbeFinding],
+      ['Competitor movement finding', lastCompetitorFinding]
+    ].forEach(([label, val]) => { if(val) lines.push(label + ': ' + val); });
     return lines.join('\n');
   }
 

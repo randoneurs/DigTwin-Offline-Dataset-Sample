@@ -2982,7 +2982,7 @@
     { horizon:'Immediate · P1 · 24–72h', title:'Launch matched counter-promo on exposed 30GB tier', color:'var(--bad)', categories:['Marketing','Sales'],
       body:'- IOH cut 30GB SKU **' + drivers.priceCut + '%** (Rp 89K\u219273K), flipping Telkomsel from near-parity to exposed.\n  - VOC price/value mentions of IOH spiking in the same window.',
       sources:['Probe RPA','VOC'], kpi:'Target: close price gap to ≤5% within 72h; hold 30GB tier share loss under 0.3pt.',
-      prompt:'Buat rencana taktis lengkap untuk counter-promo tier 30GB, termasuk struktur harga, target wilayah, dan estimasi dampak terhadap margin.',
+      prompt:'Draft a complete tactical plan for a 30GB tier counter-promo, including pricing structure, target region, and estimated margin impact.',
       news:[
         { source:'Kontan.co.id', date:'2026-07-14', headline:'IOH pangkas harga paket data 30GB, perang tarif kian ketat' },
         { source:'Selular.ID', date:'2026-07-15', headline:'Diskon Freedom Internet 30GB jadi Rp73 ribu, netizen ramai bandingkan dengan Telkomsel' }
@@ -2997,7 +2997,7 @@
     { horizon:'Medium-term · P2 · 45–60 days', title:'Accelerate 5G rollout to close the gap with XL', color:'var(--data)', categories:['Network'],
       body:'- XLSmart\'s 5G speed lead is **widening** in JABAR/JATIM urban corridors.\n  - Network sentiment trails coverage sentiment by 5pts \u2014 a speed gap, not availability.',
       sources:['Network benchmark','Product sentiment'], kpi:'Target: cut XL 5G speed-perception gap by 40% in scoped corridors within one quarter.',
-      prompt:'Susun rencana percepatan rollout 5G untuk menutup gap kecepatan dengan XL, termasuk prioritas lokasi berdasarkan data benchmark jaringan.',
+      prompt:'Draft a plan to accelerate 5G rollout to close the speed gap with XL, including site prioritization based on network benchmark data.',
       news:[
         { source:'Selular.ID', date:'2026-07-08', headline:'XL Axiata perkuat jaringan 5G di koridor Jabar dan Jatim' },
         { source:'Tek.id', date:'2026-07-11', headline:'Hasil benchmark: kecepatan unduh 5G XL unggul tipis di area urban' }
@@ -3012,7 +3012,7 @@
     { horizon:'Medium-term · P2 · 4–6 weeks', title:'Run a brand campaign to reset the price narrative', color:'var(--violet)', categories:['Marketing'],
       body:'- Price/value is the **weakest** tracked sentiment topic, down 3 straight weeks.\n  - VOC shows repeated direct price comparisons to IOH/XL \u2014 risks hardening into churn.',
       sources:['Product sentiment','VOC'], kpi:'Target: lift price/value sentiment by 8pts within 6 weeks without a national price cut.',
-      prompt:'Rancang konsep kampanye brand untuk mereset narasi harga Telkomsel dibanding kompetitor, lengkap dengan pesan utama dan channel distribusi.',
+      prompt:'Design a brand campaign concept to reset Telkomsel\'s price narrative versus competitors, including key message and distribution channels.',
       news:[
         { source:'Marketeers.com', date:'2026-07-12', headline:'Publik ramai bandingkan tarif data Telkomsel vs kompetitor di media sosial' }
       ],
@@ -3026,7 +3026,7 @@
     { horizon:'Medium-term · P2/P3 · this quarter', title:'Invest in gaming & upload-experience quality', color:'#2a78d6', categories:['Network','Marketing'],
       body:'- Gaming/upload complaints **cluster** with the network-quality sentiment dip.\n  - A differentiated play vs. IOH\'s price-led and XL\'s coverage-led positioning.',
       sources:['Buzz','Network benchmark'], kpi:'Target: reduce gaming-latency complaints by 25% and lift network-quality sentiment 4pts in one quarter.',
-      prompt:'Buat business case untuk investasi peningkatan kualitas gaming dan upload experience, termasuk estimasi biaya dan dampak terhadap retensi pelanggan.',
+      prompt:'Build a business case for investing in gaming and upload-experience quality, including cost estimate and impact on customer retention.',
       news:[
         { source:'Jagat Review', date:'2026-07-09', headline:'Gamer keluhkan lag saat memakai jaringan Telkomsel di beberapa wilayah' },
         { source:'Dailysocial.id', date:'2026-07-13', headline:'Komunitas gaming ramai bahas kualitas jaringan operator saat live-stream' }
@@ -3041,7 +3041,7 @@
     { horizon:'Immediate · P1 · 24h', title:'Contain the outage in ' + place, color:'var(--bad)', categories:['Network','Customer'],
       body:'- NOC confirms **6 BTS sites** down since last night; complaint volume up ' + drivers.complaintPct + '%.\n  - Left unaddressed, compounds existing share pressure in ' + place + '.',
       sources:['NOC feed','VOC · X','RETINA'], kpi:'Target: full restoration within 24h; publish customer-facing ETA within 2h.',
-      prompt:'Susun rencana tanggap darurat untuk gangguan jaringan ' + place + ', termasuk komunikasi pelanggan dan eskalasi ke tim NOC.',
+      prompt:'Draft an emergency response plan for the network outage in ' + place + ', including customer communications and NOC team escalation.',
       news:[
         { source:'Detik Jatim', date:'2026-07-15', headline:'Sinyal Telkomsel byar-pet di ' + place + ', warga keluhkan gangguan semalaman' },
         { source:'Kompas.com', date:'2026-07-16', headline:'Telkomsel selidiki gangguan jaringan di sejumlah titik ' + place }
@@ -3056,7 +3056,7 @@
     { horizon:'Longer-term · P3 · 2–3 quarters', title:'Expand enterprise & B2B account penetration', color:'var(--good)', categories:['Sales'],
       body:'- Consumer-tier growth is **capped**; enterprise connectivity spend is rising per macro signals.\n  - RETINA shows thin Telkomsel enterprise presence outside JABOTABEK.',
       sources:['Macro indicators','RETINA'], kpi:'Target: grow enterprise/B2B account base by 15% outside JABOTABEK within 3 quarters.',
-      prompt:'Buat proposal ekspansi akun enterprise dan B2B di luar JABOTABEK, termasuk target segmen dan proyeksi pendapatan.',
+      prompt:'Build a proposal to expand enterprise and B2B accounts outside JABOTABEK, including target segments and revenue projection.',
       news:[
         { source:'Bisnis.com', date:'2026-07-05', headline:'Permintaan konektivitas enterprise tumbuh di tengah perlambatan pasar konsumen' },
         { source:'Investor.id', date:'2026-07-10', headline:'Sentimen FDI sektor telekomunikasi tetap positif meski ARPU konsumen stagnan' }
@@ -4126,11 +4126,11 @@
     document.getElementById('modalOverlay').classList.add('show');
 
     const prompt = r.prompt +
-      ' Sertakan bagian-bagian berikut secara eksplisit dan berlabel jelas, masing-masing sebagai kategori tersendiri sesuai format outline yang biasa kamu pakai: ' +
-      'Rencana Aksi (langkah taktis rinci), Ruang Lingkup (area/region/kota spesifik tempat ini dijalankan berdasarkan scope saat ini: ' + scopeText + '), ' +
-      'Penanggung Jawab (tim ' + owners + ' beserta peran masing-masing), Tujuan (objective bisnis dari rekomendasi ini), ' +
-      'Dampak (impact yang diharapkan terhadap share/CSI-NPS/revenue jika berhasil), dan Metrik Keberhasilan (angka target spesifik dan cara mengukurnya). ' +
-      'Konteks masalah yang mendasari: ' + r.body;
+      ' Respond in English only. Include the following sections explicitly and clearly labeled, each as its own category in your usual outline format: ' +
+      'Action Plan (detailed tactical steps), Scope (specific area/region/city this applies to, based on the current scope: ' + scopeText + '), ' +
+      'Owner (the ' + owners + ' team(s) and each one\'s role), Objective (the business objective of this recommendation), ' +
+      'Impact (expected impact on share/CSI-NPS/revenue if successful), and Success Metrics (specific target numbers and how to measure them). ' +
+      'Underlying problem context: ' + r.body;
 
     aiAnswerFor(prompt)
       .then(reply => { document.getElementById('recBriefContent').innerHTML = formatMarketSightReply(reply); })

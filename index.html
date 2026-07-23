@@ -878,7 +878,7 @@
           <h2>Pricing–Product Probe</h2>
           <div class="sub">RPA-based competitor app/web price tracking · Telkomsel vs IOH vs XLSmart</div>
         </div>
-        <span class="chip">Updated 41 min ago</span>
+        <span class="chip" id="pricingAsOf"></span>
       </div>
 
       <div class="table-wrap">
@@ -916,6 +916,7 @@
       <div class="panel" style="--panel-accent:var(--bad);">
         <div class="panel-head">
           <div><h2>Active alerts</h2><div class="sub">3 open · sorted by severity</div></div>
+          <span class="chip" id="alertsAsOf"></span>
         </div>
         <div class="stack" id="alertList"></div>
       </div>
@@ -929,6 +930,7 @@
       <div class="panel" style="--panel-accent:var(--data);" data-detail="sentiment">
         <div class="panel-head">
           <div><h2>Product sentiment</h2><div class="sub">Telkomsel-only · reactions to price, quota &amp; experience on recently released packages</div></div>
+          <span class="chip" id="sentimentAsOf"></span>
         </div>
         <div class="stack" id="sentimentList" style="gap:12px;"></div>
         <div class="callout" id="sentimentCallout"></div>
@@ -1062,6 +1064,7 @@
       <div class="panel" style="--panel-accent:var(--amber);">
         <div class="panel-head">
           <div><h2>Competitor movement</h2><div class="sub">Network, pricing &amp; org-signal tracking</div></div>
+          <span class="chip" id="competitorAsOf"></span>
         </div>
         <div class="stack" id="competitorList"></div>
       </div>
@@ -1567,10 +1570,19 @@
   function formatYMD(d){
     return d.getFullYear() + '-' + MONTH_ABBR[d.getMonth()] + '-' + String(d.getDate()).padStart(2,'0');
   }
+  // These four cards (Pricing Probe, Alerts, Product Sentiment, Competitor & Buzz)
+  // aren't backed by a Hadoop snapshot — their "as of" reference is the selected
+  // Period (Week-Year) filter, same date the LIVE pill up top already shows.
+  const SECTION_ASOF_IDS = ['pricingAsOf', 'alertsAsOf', 'sentimentAsOf', 'competitorAsOf'];
   function updateLiveDate(){
     const selectedOpt = fWeek.options[fWeek.selectedIndex];
     const d = (selectedOpt && selectedOpt.dataset.date) ? new Date(selectedOpt.dataset.date) : today;
     document.getElementById('liveDate').textContent = formatYMD(d);
+    const asOfLabel = 'as of data : ' + formatYMD(d);
+    SECTION_ASOF_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.textContent = asOfLabel;
+    });
   }
 
   /* ================= POPULATE FILTERS ================= */

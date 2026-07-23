@@ -943,7 +943,7 @@
           <h2>Product movement, by validity tier</h2>
           <div class="sub">Same 30-day window, aligned by validity so comparable price/quota tiers sit in the same row across operators</div>
         </div>
-        <span class="chip">Re-crawled 14 Jul</span>
+        <span class="chip" id="pmValidityAsOf"></span>
       </div>
       <div class="table-wrap">
         <table class="vc-table">
@@ -1000,6 +1000,7 @@
           <h2>Sentiment on official product posts</h2>
           <div class="sub">Telkomsel is the only brand with product-specific posts on its own account this window; for IOH and XLSmart we additionally searched public hashtags tied to their products</div>
         </div>
+        <span class="chip" id="pmSentimentAsOf"></span>
       </div>
       <div class="chip-row" style="margin-bottom:12px;">
         <span class="chip" style="background:var(--bad-dim);color:#ff8a8a;border-color:rgba(239,68,68,.4);">● Negative</span>
@@ -1573,7 +1574,7 @@
   // These four cards (Pricing Probe, Alerts, Product Sentiment, Competitor & Buzz)
   // aren't backed by a Hadoop snapshot — their "as of" reference is the selected
   // Period (Week-Year) filter, same date the LIVE pill up top already shows.
-  const SECTION_ASOF_IDS = ['pricingAsOf', 'alertsAsOf', 'sentimentAsOf', 'competitorAsOf'];
+  const SECTION_ASOF_IDS = ['pricingAsOf', 'alertsAsOf', 'sentimentAsOf', 'competitorAsOf', 'pmValidityAsOf', 'pmSentimentAsOf'];
   function updateLiveDate(){
     const selectedOpt = fWeek.options[fWeek.selectedIndex];
     const d = (selectedOpt && selectedOpt.dataset.date) ? new Date(selectedOpt.dataset.date) : today;

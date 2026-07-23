@@ -832,7 +832,7 @@
       <div class="scope-line" id="scopeLine"></div>
     </div>
 
-    <div class="row-2col">
+    <div class="row-2col" id="execAskRow">
       <div class="panel" id="execSummaryCard" style="--panel-accent:var(--brand);">
         <div class="panel-head">
           <div>
@@ -3245,6 +3245,9 @@
     targetBtn.classList.add('active');
     document.querySelectorAll('.panel-group').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + id).classList.add('active');
+    // Executive Summary and Ask the Intelligence AI narrate the Overview's
+    // Synthesis — only relevant while Overview itself is the active section.
+    document.getElementById('execAskRow').style.display = (id === 'overview') ? '' : 'none';
   }
   sidebarNav.addEventListener('click', e => {
     const btn = e.target.closest('.navbtn');

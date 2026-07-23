@@ -910,7 +910,7 @@
       <div class="panel-head">
         <div>
           <h2>Synthesis — what's moving Telkomsel's market share</h2>
-          <div class="sub">Auto-generated from RETINA field scan, Probe pricing RPA, network benchmark &amp; VOC signals</div>
+          <div class="sub" id="synthSourcesLine">This resume sourced from :</div>
         </div>
         <span class="chip" id="synthScopeChip">National view</span>
       </div>
@@ -2502,6 +2502,15 @@
     const benchCls = kpis.netBenchDelta <= 0 ? 'hl-neg' : 'hl-pos';
 
     document.getElementById('synthScopeChip').textContent = s.city !== 'All Cities' ? s.city : (s.region !== 'All Regions' ? s.region : (s.area !== 'All Areas' ? s.area : 'National view')) ;
+
+    // Same real-vs-modeled/as-of check the "How this narrative is built"
+    // popup uses, so the subtitle and the popup never disagree about which
+    // systems are backing this specific narrative right now.
+    const retinaDate = fmtAsOf(retinaSnapshot && retinaSnapshot.generatedAt);
+    const networkDate = fmtAsOf(networkSnapshot && networkSnapshot.generatedAt);
+    document.getElementById('synthSourcesLine').textContent = 'This resume sourced from : RETINA field scan' +
+      (retinaDate ? ' (' + retinaDate + ')' : ' (modeled)') + ' · Probe pricing RPA · Network Experience Benchmark' +
+      (networkDate ? ' (' + networkDate + ')' : ' (modeled)') + ' · VOC signals';
 
     const narrative = document.getElementById('synthNarrative');
     narrative.innerHTML =

@@ -199,6 +199,9 @@
   #aiAnswerText .cat{
     display:block; color:var(--data); font-weight:700;
   }
+  #aiAnswerText .cat:not(:first-child){
+    border-top:1px solid var(--border); padding-top:8px; margin-top:2px;
+  }
   .ai-answer .tag{
     display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700;
     letter-spacing:0.08em; text-transform:uppercase; color:var(--data); margin-bottom:6px;
@@ -2190,19 +2193,35 @@
     renderBuzzExtras();
   }
 
-  function renderSynthesis(rng, kpis){
+  // Computed once per applyScope() and shared by both renderExecSummary and
+  // renderSynthesis, so the two cards always cite the identical driver facts
+  // (same outlet count, same price cut, same "worst KPI") instead of each
+  // narrating its own version of the story from independent random draws.
+  function computeSynthDrivers(rng, kpis){
+    const outlets = Math.round(jitter(rng, 14, 5));
+    const complaintPct = Math.round(jitter(rng, 64, 18));
+    const priceCut = Math.round(jitter(rng, 18, 4));
+    const drags = [
+      { label:'CSI-NPS', delta:kpis.csiNpsDelta, note:'customer satisfaction and advocacy' },
+      { label:'Network Experience Benchmark', delta:kpis.netBenchDelta, note:'network quality perception' }
+    ];
+    const worst = drags.reduce((a,b) => b.delta < a.delta ? b : a);
+    return { outlets, complaintPct, priceCut, worst };
+  }
+
+  function renderSynthesis(kpis, drivers){
     const s = scopeLabel();
     const place = regionNarrativeName();
     const share = kpis.metaShare;
     const delta = kpis.metaShareDelta;
     const deltaCls = delta >= 0 ? 'hl-pos' : 'hl-neg';
     const deltaArrow = delta >= 0 ? '▲' : '▼';
-    const outlets = Math.round(jitter(rng, 14, 5));
+    const outlets = drivers.outlets;
     const npsDelta = kpis.csiNpsDelta;
     const npsCls = npsDelta <= 0 ? 'hl-neg' : 'hl-pos';
     const npsPhrase = fmt1(Math.abs(npsDelta)) + '-point ' + (npsDelta <= 0 ? 'drop' : 'gain') + ' in CSI-NPS score';
-    const complaintPct = Math.round(jitter(rng, 64, 18));
-    const priceCut = Math.round(jitter(rng, 18, 4));
+    const complaintPct = drivers.complaintPct;
+    const priceCut = drivers.priceCut;
     const benchCls = kpis.netBenchDelta <= 0 ? 'hl-neg' : 'hl-pos';
 
     document.getElementById('synthScopeChip').textContent = s.city !== 'All Cities' ? s.city : (s.region !== 'All Regions' ? s.region : (s.area !== 'All Areas' ? s.area : 'National view')) ;
@@ -2250,7 +2269,7 @@
       'Scope: <b>' + s.area + '</b> · <b>' + s.region + '</b> · <b>' + s.city + '</b> · <b>' + s.week + '</b> — all panels below reflect this filter.';
   }
 
-  function renderExecSummary(kpis){
+  function renderExecSummary(kpis, drivers){
     const s = scopeLabel();
     const place = regionNarrativeName();
     const share = kpis.metaShare;
@@ -2261,14 +2280,11 @@
     document.getElementById('execScopeChip').textContent =
       s.city !== 'All Cities' ? s.city : (s.region !== 'All Regions' ? s.region : (s.area !== 'All Areas' ? s.area : 'National view'));
 
-    // whichever KPI moved the most negatively this week is called out as the headline drag
-    const drags = [
-      { label:'CSI-NPS', delta:kpis.csiNpsDelta, note:'customer satisfaction and advocacy' },
-      { label:'Network Experience Benchmark', delta:kpis.netBenchDelta, note:'network quality perception' }
-    ];
-    const worst = drags.reduce((a,b) => b.delta < a.delta ? b : a);
+    // Same worst-KPI + outlet/price-cut facts Synthesis narrates below, so the two
+    // cards always agree on both the numbers and the story behind them.
+    const worst = drivers.worst;
     const headline = worst.delta < 0
-      ? 'The clearest drag this period is <b>' + worst.label + '</b> (' + fmt1(worst.delta) + '), tied to ' + worst.note + '.'
+      ? 'The clearest drag this period is <b>' + worst.label + '</b> (' + fmt1(worst.delta) + '), driven by IOH opening <b>' + drivers.outlets + ' new outlets</b> and cutting its 30GB price by <b>' + drivers.priceCut + '%</b> — tied to ' + worst.note + '.'
       : 'No single metric is sharply negative this period — the picture is broadly stable.';
 
     document.getElementById('execSummaryText').innerHTML =
@@ -2283,8 +2299,9 @@
     updateLiveDate();
     const kpis = getCoreKPIs(rawScope(), rng);
     renderCoreKPIs(kpis);
-    renderExecSummary(kpis);
-    renderSynthesis(rng, kpis);
+    const drivers = computeSynthDrivers(rng, kpis);
+    renderExecSummary(kpis, drivers);
+    renderSynthesis(kpis, drivers);
     renderSentiment(rng);
     renderBuzzChart(rng);
   }

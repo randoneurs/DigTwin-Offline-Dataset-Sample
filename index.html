@@ -2229,16 +2229,16 @@
     const narrative = document.getElementById('synthNarrative');
     narrative.innerHTML =
       'Telkomsel market share in <b>' + place + '</b> stands at <b>' + fmt1(share) + '%</b> ' +
-      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + fmt1(Math.abs(delta)) + 'pt MoM</span>' +
+      'this period (<b class="' + deltaCls + '">' + deltaArrow + ' ' + fmt1(Math.abs(delta)) + 'pt MoM</b>' +
       (kpis.metaShareSource === 'hadoop' ? ', sourced from the latest Hadoop Meta Market Share extract' : ', modeled pending a live Hadoop snapshot') + '). ' +
       'Cross-signal review points to three converging drivers: a <b>RETINA field outlet scan</b> confirms IOH opened ' +
       '<b class="num-cite">' + outlets + ' new outlets/kiosks</b> in the scoped area over the past 3 weeks as part of a network densification push; ' +
-      'this coincides with a <span class="' + npsCls + '">' + npsPhrase + '</span>' +
-      ' (Network Experience Benchmark <span class="' + benchCls + '">' + (kpis.netBenchDelta >= 0 ? '▲' : '▼') + ' ' + fmt1(Math.abs(kpis.netBenchDelta)) + '</span> to <b>' + fmt1(kpis.netBench) + '</b>) ' +
-      'and a <span class="hl-neg">' + complaintPct + '% spike in complaint volume</span>, following a service-quality incident flagged in VOC data. ' +
+      'this coincides with a <b class="' + npsCls + '">' + npsPhrase + '</b>' +
+      ' (Network Experience Benchmark <b class="' + benchCls + '">' + (kpis.netBenchDelta >= 0 ? '▲' : '▼') + ' ' + fmt1(Math.abs(kpis.netBenchDelta)) + '</b> to <b>' + fmt1(kpis.netBench) + '</b>) ' +
+      'and a <b class="hl-neg">' + complaintPct + '% spike in complaint volume</b>, following a service-quality incident flagged in VOC data. ' +
       'Simultaneously, the <b>Probe pricing RPA</b> detected IOH cutting its 30GB flagship SKU price by <b class="num-cite">' + priceCut + '%</b> shortly before this scan, ' +
       'undercutting Telkomsel\'s equivalent package. ' +
-      'The combination of <span class="hl-neg">network disruption, aggressive competitor pricing, and physical footprint expansion</span> is assessed as the primary driver of share movement in this scope.';
+      '<b>The combination of <span class="hl-neg">network disruption, aggressive competitor pricing, and physical footprint expansion</span> is assessed as the primary driver of share movement in this scope.</b>';
 
     const actions = [
       { p:'p1', fn:'Marketing', horizon:'24–48h', text:'Deploy a matched-value counter-offer on the exposed 30GB tier in ' + place + ' to close the Rp 15,000 price gap before it compounds share loss.' },
@@ -2289,7 +2289,7 @@
 
     document.getElementById('execSummaryText').innerHTML =
       'Telkomsel market share in <b>' + place + '</b> stands at <b>' + fmt1(share) + '%</b> ' +
-      'this period (<span class="' + deltaCls + '">' + deltaArrow + ' ' + fmt1(Math.abs(delta)) + 'pt MoM</span>). ' +
+      'this period (<b class="' + deltaCls + '">' + deltaArrow + ' ' + fmt1(Math.abs(delta)) + 'pt MoM</b>). ' +
       headline + ' A prioritized action list and the full cross-signal narrative are one click away in <b>Overview</b>.';
   }
 
@@ -2720,11 +2720,17 @@
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
+  // MarketSight marks its single most significant word/phrase per bullet with
+  // **double asterisks** (see app.py's SYSTEM_PROMPT) — convert that to <strong>
+  // after escaping, so the bold markers themselves can't be used to inject HTML.
+  function boldKeyFindings(escapedLine){
+    return escapedLine.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  }
   function formatMarketSightReply(text){
     return text.split('\n').map(line =>
       MARKETSIGHT_CATEGORIES.includes(line.trim())
         ? '<strong class="cat">' + escapeHtml(line.trim()) + '</strong>'
-        : escapeHtml(line)
+        : boldKeyFindings(escapeHtml(line))
     ).join('\n');
   }
 

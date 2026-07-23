@@ -3194,6 +3194,76 @@
     }));
   }
 
+  // RETINA: Nationwide/Area/Region AV Index compared across the 3 operator groups,
+  // straight from the loaded retina_latest.json (no snapshot -> null, same
+  // "no data yet" handling as the Meta Market Share modal).
+  function retinaAreaRegionRows(){
+    if(!retinaSnapshot || !Array.isArray(retinaSnapshot.rows)) return null;
+    const national = retinaSnapshot.rows.find(r => r.level === 'Nationwide');
+    if(!national) return null;
+    const areas = {};
+    retinaSnapshot.rows.filter(r => r.level === 'Area').forEach(r => { areas[r.area] = r; });
+    const regions = {};
+    retinaSnapshot.rows.filter(r => r.level === 'Region').forEach(r => { regions[r.region] = r; });
+    return { national, areas, regions };
+  }
+
+  // Top 5 cities with the lowest Telkomsel AV Index (our own weakest outlet coverage,
+  // same Telkomsel-centric lens "Cities losing share" already uses for Meta Market Share).
+  function retinaWorstCities(){
+    if(!retinaSnapshot || !Array.isArray(retinaSnapshot.rows)) return null;
+    const rows = retinaSnapshot.rows.filter(r => r.level === 'City' && r.telkomsel);
+    if(!rows.length) return null;
+    return rows
+      .map(r => ({ name: r.city, region: r.region, ...r.telkomsel }))
+      .sort((a, b) => a.avIndex - b.avIndex)
+      .slice(0, 5);
+  }
+
+  function numCell(val){
+    return '<td class="num">' + (val == null ? '–' : fmt1(val)) + '</td>';
+  }
+  function buildRetinaAreaRegionTable(data){
+    const header = '<thead><tr><th>Region</th>' +
+      RETINA_GROUPS.map(g => '<th class="num">' + g.label + '</th>').join('') + '</tr></thead>';
+    const dataRow = (name, row, cls) => {
+      if(!row) return '';
+      const cells = RETINA_GROUPS.map(g => numCell(row[g.key] ? row[g.key].avIndex : null)).join('');
+      return '<tr><td class="name-cell' + (cls ? ' ' + cls : '') + '">' + name + '</td>' + cells + '</tr>';
+    };
+    const nationalSection = '<div class="area-group-label">Nationwide</div><table class="probe">' + header +
+      '<tbody>' + dataRow('National', data.national) + '</tbody></table>';
+    const areaSections = Object.keys(AREA_MAP).map(areaName => {
+      const areaAggRow = dataRow(areaName + ' (All Regions)', data.areas[areaName], 'area-agg-row');
+      const regionRows = AREA_MAP[areaName].map(r => dataRow(REGION_LABELS[r], data.regions[r])).join('');
+      return '<div class="area-group-label">' + areaName + '</div><table class="probe">' + header +
+        '<tbody>' + areaAggRow + regionRows + '</tbody></table>';
+    }).join('');
+    return nationalSection + areaSections;
+  }
+  function buildRetinaCitiesTable(cities){
+    const rows = cities.map(c =>
+      '<tr><td class="name-cell">' + c.name + '<div style="font-size:9.5px;color:var(--text-3);font-weight:400;">' + (REGION_LABELS[c.region] || c.region) + '</div></td>' +
+      numCell(c.availability) + numCell(c.visibility) + numCell(c.avIndex) + '</tr>'
+    ).join('');
+    return '<table class="probe"><thead><tr><th>City</th><th class="num">Availability</th><th class="num">Visibility</th><th class="num">AV Index</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }
+  function buildRetinaModal(){
+    const areaRegion = retinaAreaRegionRows();
+    const worstCities = retinaWorstCities();
+    const monthTag = retinaSnapshot && retinaSnapshot.month ? ' <span class="modal-source-tag">· Retina - ' + retinaSnapshot.month + '.xlsx</span>' : '';
+    if(!areaRegion){
+      return { eyebrow:'RETINA · Outlet Availability & Visibility', title:'No RETINA snapshot loaded yet',
+        body:'<p>Drop the monthly "Retina - &lt;Month&gt; &lt;Year&gt; (Monthly).xlsx" export through scripts/build_retina_snapshot.py and publish retina_latest.json to see the Area/Region breakdown and weakest cities here.</p>' };
+    }
+    return { eyebrow:'RETINA · Outlet Availability & Visibility', title:'Field outlet scan — detailed performance',
+      body:
+        '<p>Average outlet-level Availability and Visibility Score (0–5) across Telkomsel-brand and competitor stores, from the monthly RETINA field scan. AV Index is the mean of the two.</p>' +
+        '<div><div class="modal-section-label">AV Index by Area &amp; Region' + monthTag + '</div>' + buildRetinaAreaRegionTable(areaRegion) + '</div>' +
+        (worstCities ? '<div><div class="modal-section-label">Cities with the lowest Telkomsel AV Index</div>' + buildRetinaCitiesTable(worstCities) + '</div>' : '')
+    };
+  }
+
   function buildKpiModal(metric){
     if(!lastKPIs) return { eyebrow:'Core KPI', title:'No data yet', body:'<p>Apply a filter to load data.</p>' };
     const srcFor = (metricSource) => metricSource === 'hadoop'
@@ -3356,6 +3426,7 @@
           '<ul class="detail-list">' + d.gtm.map(g => '<li>' + g + '</li>').join('') + '</ul>'
       };
     }
+    if(key === 'retina') return buildRetinaModal();
     if(key === 'pricing'){
       return { eyebrow:'Pricing–Product Probe · methodology', title:'How this scan is built',
         body:'<p>An RPA crawler checks 12 competitor apps/storefronts every 6 hours across 1,240 tracked SKUs, comparing Telkomsel against IOH and XLSmart on matched package tiers. A row is tagged <b>exposed</b> when Telkomsel sits more than 10% above the cheapest competitor on that tier, <b>most expensive</b> when Telkomsel is the highest of the three, <b>cheapest</b> when lowest, and <b>near parity</b> otherwise.</p>' +
@@ -3482,7 +3553,7 @@
     document.getElementById('modalEyebrow').textContent = d.eyebrow;
     document.getElementById('modalTitle').textContent = d.title;
     document.getElementById('modalBody').innerHTML = d.body;
-    document.querySelector('.modal-box').classList.toggle('wide', key === 'kpi-share' || key === 'kpi-nps' || key === 'kpi-netbench');
+    document.querySelector('.modal-box').classList.toggle('wide', key === 'kpi-share' || key === 'kpi-nps' || key === 'kpi-netbench' || key === 'retina');
     document.getElementById('modalOverlay').classList.add('show');
   }
   function closeModal(){

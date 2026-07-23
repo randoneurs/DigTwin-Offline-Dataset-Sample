@@ -360,6 +360,8 @@
     border-bottom:1px solid var(--border);
   }
   table.probe td{ padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
+  table.probe th.num, table.probe td.num{ text-align:right; }
+  table.probe td.name-cell{ font-weight:600; color:var(--text-1); }
   table.probe tr:last-child td{ border-bottom:none; }
   table.probe td.price{ font-family:var(--mono); font-weight:700; }
   .status-tag{ font-size:10px; font-weight:800; padding:3px 8px; border-radius:100px; letter-spacing:0.03em; white-space:nowrap; }
@@ -907,6 +909,37 @@
         <div><span class="k">Operators monitored</span><span class="v">3</span></div>
       </div>
     </div>
+
+    <div class="panel" style="--panel-accent:var(--good);" data-detail="retina">
+      <div class="panel-head">
+        <div>
+          <h2>RETINA — Outlet Availability &amp; Visibility</h2>
+          <div class="sub">Field outlet scan · Pulsa &amp; Paket Data availability/visibility at physical stores, scored 0–5</div>
+        </div>
+        <div class="kpi-pill-stack">
+          <span class="kpi-source" id="retinaSource"></span>
+          <span class="chip" id="retinaAsOf"></span>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="probe">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th class="num"><span class="op-th-inner"><span class="op-logo xs" style="background:#e30613;">T</span>Telkomsel</span></th>
+              <th class="num"><span class="op-th-inner"><span class="op-logo xs" style="background:#f0ad2e;">I</span>IOH</span></th>
+              <th class="num"><span class="op-th-inner"><span class="op-logo xs" style="background:#2a78d6;">X</span>XLSmart</span></th>
+            </tr>
+          </thead>
+          <tbody id="retinaBody"></tbody>
+        </table>
+      </div>
+      <div class="scan-meta">
+        <div><span class="k">Telkomsel group</span><span class="v">Telkomsel, ByU</span></div>
+        <div><span class="k">IOH group</span><span class="v">Indosat, Three</span></div>
+        <div><span class="k">XLSmart group</span><span class="v">XL, Axis, Smartfren</span></div>
+      </div>
+    </div>
   </section>
   </div><!-- /panel-pricing -->
 
@@ -1237,6 +1270,30 @@
      exact numbers. Generate this file from the META market-share exports with scripts/build_snapshot.py.
   */
   let hadoopSnapshot = null;
+
+  /* ================= RETINA SNAPSHOT (outlet Availability/Visibility, monthly) =================
+     Generated from a "Retina - <Month> <Year> (Monthly).xlsx" outlet-visit export via
+     scripts/build_retina_snapshot.py. Rows are keyed by level/area/region/city (no week —
+     this is a monthly aggregate, not a weekly one) and carry a score per operator GROUP
+     (telkomsel, ioh, xlsmart), each {availability, visibility, avIndex} on a 0-5 scale.
+  */
+  let retinaSnapshot = null;
+  const RETINA_GROUPS = [
+    { key: 'telkomsel', label: 'Telkomsel', color: '#e30613' },
+    { key: 'ioh', label: 'IOH', color: '#f0ad2e' },
+    { key: 'xlsmart', label: 'XLSmart', color: '#2a78d6' }
+  ];
+
+  function findRetinaRow(scope){
+    if(!retinaSnapshot || !Array.isArray(retinaSnapshot.rows)) return null;
+    const rows = retinaSnapshot.rows;
+    const find = (a,r,c) => rows.find(x => x.area===a && x.region===r && x.city===c);
+    return find(scope.area, scope.region, scope.city)
+        || find(scope.area, scope.region, 'ALL')
+        || find(scope.area, 'ALL', 'ALL')
+        || find('ALL', 'ALL', 'ALL')
+        || null;
+  }
 
   const HADOOP_SCHEMA_EXAMPLE = {
     generatedAt: "2026-07-10T09:32:00+07:00",
@@ -2306,6 +2363,43 @@
       headline + ' A prioritized action list and the full cross-signal narrative are one click away in <b>Overview</b>.';
   }
 
+  function renderRetinaCard(scope, rng){
+    const row = findRetinaRow(scope);
+    const source = row ? 'hadoop' : 'modeled';
+    const sourceEl = document.getElementById('retinaSource');
+    sourceEl.textContent = source === 'hadoop' ? '● RETINA outlet scan' : '◐ Modeled estimate';
+    sourceEl.className = 'kpi-source ' + source;
+
+    const asOfEl = document.getElementById('retinaAsOf');
+    asOfEl.textContent = (source === 'hadoop' && retinaSnapshot && retinaSnapshot.month)
+      ? 'as of data (monthly) : ' + retinaSnapshot.month
+      : '';
+
+    // Build a {availability, visibility, avIndex} per group either from the real row
+    // or, if unavailable, a modeled-but-internally-consistent estimate (avIndex is
+    // always derived from the other two, never rolled independently).
+    const scores = {};
+    RETINA_GROUPS.forEach(g => {
+      if(row && row[g.key]){
+        scores[g.key] = row[g.key];
+      } else {
+        const availability = round1(jitter(rng, 3.2, 0.9));
+        const visibility = round1(jitter(rng, 2.9, 0.9));
+        scores[g.key] = { availability, visibility, avIndex: round1((availability + visibility) / 2) };
+      }
+    });
+
+    const rowHtml = (label, key) => {
+      const cells = RETINA_GROUPS.map(g => '<td class="num">' + fmt1(scores[g.key][key]) + '</td>').join('');
+      return '<tr><td class="name-cell">' + label + '</td>' + cells + '</tr>';
+    };
+
+    document.getElementById('retinaBody').innerHTML =
+      rowHtml('Availability Score', 'availability') +
+      rowHtml('Visibility Score', 'visibility') +
+      rowHtml('AV Index', 'avIndex');
+  }
+
   function applyScope(){
     const rng = rngFor(scopeKey());
     updateScopeLine();
@@ -2317,6 +2411,7 @@
     renderSynthesis(kpis, drivers);
     renderSentiment(rng);
     renderBuzzChart(rng);
+    renderRetinaCard(rawScope(), rng);
   }
 
   /* ================= HADOOP SNAPSHOT LOADER WIRING ================= */
@@ -2367,6 +2462,21 @@
       .catch(() => { /* no published snapshot yet — dashboard keeps modeled estimates */ });
   }
   autoLoadSnapshot();
+
+  // Same auto-fetch pattern for the RETINA outlet scan, regenerated monthly by
+  // scripts/build_retina_snapshot.py — independent of the META snapshot above.
+  const AUTO_RETINA_URL = 'retina_latest.json';
+  function autoLoadRetina(){
+    fetch(AUTO_RETINA_URL, { cache: 'no-store' })
+      .then(res => { if(!res.ok) throw new Error('not found'); return res.json(); })
+      .then(parsed => {
+        if(!parsed || !Array.isArray(parsed.rows)) throw new Error('missing "rows" array');
+        retinaSnapshot = parsed;
+        applyScope();
+      })
+      .catch(() => { /* no published RETINA snapshot yet — card keeps modeled estimates */ });
+  }
+  autoLoadRetina();
 
   hbFormatBtn.addEventListener('click', () => {
     const showing = hbFormat.style.display !== 'none';

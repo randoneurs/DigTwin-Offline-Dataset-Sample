@@ -1,0 +1,1977 @@
+{
+  "generatedAt": "2026-06-01T00:00:00+07:00",
+  "month": "2026-06",
+  "note": "Generated from a RETINA monthly outlet-visit export via scripts/build_retina_snapshot.py \u2014 do not hand-edit.",
+  "rows": [
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kabupaten Bogor",
+      "telkomsel": {
+        "availability": 3.91,
+        "visibility": 3.12,
+        "avIndex": 3.52
+      },
+      "ioh": {
+        "availability": 3.76,
+        "visibility": 2.49,
+        "avIndex": 3.12
+      },
+      "xlsmart": {
+        "availability": 3.23,
+        "visibility": 2.34,
+        "avIndex": 2.79
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kabupaten Kampar",
+      "telkomsel": {
+        "availability": 4.17,
+        "visibility": 3.89,
+        "avIndex": 4.03
+      },
+      "ioh": {
+        "availability": 2.58,
+        "visibility": 2.08,
+        "avIndex": 2.33
+      },
+      "xlsmart": {
+        "availability": 3.55,
+        "visibility": 2.45,
+        "avIndex": 3.0
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kabupaten Jember",
+      "telkomsel": {
+        "availability": 4.78,
+        "visibility": 4.2,
+        "avIndex": 4.49
+      },
+      "ioh": {
+        "availability": 3.09,
+        "visibility": 2.75,
+        "avIndex": 2.92
+      },
+      "xlsmart": {
+        "availability": 3.62,
+        "visibility": 3.01,
+        "avIndex": 3.31
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kota Kupang",
+      "telkomsel": {
+        "availability": 4.48,
+        "visibility": 3.6,
+        "avIndex": 4.04
+      },
+      "ioh": {
+        "availability": 3.86,
+        "visibility": 3.0,
+        "avIndex": 3.43
+      },
+      "xlsmart": {
+        "availability": 4.6,
+        "visibility": 4.0,
+        "avIndex": 4.3
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Jayapura",
+      "telkomsel": {
+        "availability": 4.99,
+        "visibility": 4.74,
+        "avIndex": 4.87
+      },
+      "ioh": {
+        "availability": 3.84,
+        "visibility": 3.02,
+        "avIndex": 3.43
+      },
+      "xlsmart": {
+        "availability": 3.69,
+        "visibility": 3.27,
+        "avIndex": 3.48
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.36,
+        "visibility": 3.98,
+        "avIndex": 4.17
+      },
+      "ioh": {
+        "availability": 3.13,
+        "visibility": 2.67,
+        "avIndex": 2.9
+      },
+      "xlsmart": {
+        "availability": 3.13,
+        "visibility": 2.56,
+        "avIndex": 2.84
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kabupaten Ogan Ilir",
+      "telkomsel": {
+        "availability": 3.89,
+        "visibility": 2.77,
+        "avIndex": 3.33
+      },
+      "ioh": {
+        "availability": 3.38,
+        "visibility": 2.69,
+        "avIndex": 3.04
+      },
+      "xlsmart": {
+        "availability": 3.69,
+        "visibility": 3.08,
+        "avIndex": 3.38
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Manokwari",
+      "telkomsel": {
+        "availability": 5.0,
+        "visibility": 5.0,
+        "avIndex": 5.0
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Surabaya",
+      "telkomsel": {
+        "availability": 4.35,
+        "visibility": 4.08,
+        "avIndex": 4.21
+      },
+      "ioh": {
+        "availability": 2.7,
+        "visibility": 2.48,
+        "avIndex": 2.59
+      },
+      "xlsmart": {
+        "availability": 3.16,
+        "visibility": 2.26,
+        "avIndex": 2.71
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Bandar Lampung",
+      "telkomsel": {
+        "availability": 3.31,
+        "visibility": 2.85,
+        "avIndex": 3.08
+      },
+      "ioh": {
+        "availability": 2.54,
+        "visibility": 2.21,
+        "avIndex": 2.38
+      },
+      "xlsmart": {
+        "availability": 3.17,
+        "visibility": 2.23,
+        "avIndex": 2.7
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 3.88,
+        "visibility": 3.22,
+        "avIndex": 3.55
+      },
+      "ioh": {
+        "availability": 3.67,
+        "visibility": 2.78,
+        "avIndex": 3.22
+      },
+      "xlsmart": {
+        "availability": 3.23,
+        "visibility": 2.48,
+        "avIndex": 2.85
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Lhokseumawe",
+      "telkomsel": {
+        "availability": 4.53,
+        "visibility": 3.95,
+        "avIndex": 4.24
+      },
+      "ioh": {
+        "availability": 2.85,
+        "visibility": 2.54,
+        "avIndex": 2.7
+      },
+      "xlsmart": {
+        "availability": 3.52,
+        "visibility": 3.05,
+        "avIndex": 3.29
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Surakarta",
+      "telkomsel": {
+        "availability": 3.93,
+        "visibility": 3.44,
+        "avIndex": 3.69
+      },
+      "ioh": {
+        "availability": 3.28,
+        "visibility": 2.87,
+        "avIndex": 3.08
+      },
+      "xlsmart": {
+        "availability": 3.35,
+        "visibility": 2.9,
+        "avIndex": 3.12
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kabupaten Minahasa",
+      "telkomsel": {
+        "availability": 4.33,
+        "visibility": 4.22,
+        "avIndex": 4.28
+      },
+      "ioh": {
+        "availability": 2.0,
+        "visibility": 1.71,
+        "avIndex": 1.85
+      },
+      "xlsmart": {
+        "availability": 2.5,
+        "visibility": 1.83,
+        "avIndex": 2.17
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Malang",
+      "telkomsel": {
+        "availability": 4.6,
+        "visibility": 4.45,
+        "avIndex": 4.53
+      },
+      "ioh": {
+        "availability": 3.02,
+        "visibility": 2.23,
+        "avIndex": 2.62
+      },
+      "xlsmart": {
+        "availability": 3.84,
+        "visibility": 3.25,
+        "avIndex": 3.54
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kota Gorontalo",
+      "telkomsel": {
+        "availability": 4.4,
+        "visibility": 3.6,
+        "avIndex": 4.0
+      },
+      "ioh": {
+        "availability": 2.85,
+        "visibility": 1.54,
+        "avIndex": 2.2
+      },
+      "xlsmart": {
+        "availability": 2.45,
+        "visibility": 2.18,
+        "avIndex": 2.32
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Bekasi",
+      "telkomsel": {
+        "availability": 4.44,
+        "visibility": 3.45,
+        "avIndex": 3.95
+      },
+      "ioh": {
+        "availability": 3.26,
+        "visibility": 2.57,
+        "avIndex": 2.92
+      },
+      "xlsmart": {
+        "availability": 3.18,
+        "visibility": 2.59,
+        "avIndex": 2.88
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Kediri",
+      "telkomsel": {
+        "availability": 4.38,
+        "visibility": 4.12,
+        "avIndex": 4.25
+      },
+      "ioh": {
+        "availability": 2.85,
+        "visibility": 1.92,
+        "avIndex": 2.38
+      },
+      "xlsmart": {
+        "availability": 3.83,
+        "visibility": 2.73,
+        "avIndex": 3.28
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Prabumulih",
+      "telkomsel": {
+        "availability": 3.6,
+        "visibility": 2.13,
+        "avIndex": 2.87
+      },
+      "ioh": {
+        "availability": 3.04,
+        "visibility": 2.19,
+        "avIndex": 2.62
+      },
+      "xlsmart": {
+        "availability": 3.0,
+        "visibility": 2.12,
+        "avIndex": 2.56
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.24,
+        "visibility": 3.8,
+        "avIndex": 4.02
+      },
+      "ioh": {
+        "availability": 3.4,
+        "visibility": 2.75,
+        "avIndex": 3.08
+      },
+      "xlsmart": {
+        "availability": 3.01,
+        "visibility": 2.42,
+        "avIndex": 2.71
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kabupaten Banyumas",
+      "telkomsel": {
+        "availability": 4.21,
+        "visibility": 3.59,
+        "avIndex": 3.9
+      },
+      "ioh": {
+        "availability": 3.63,
+        "visibility": 2.94,
+        "avIndex": 3.29
+      },
+      "xlsmart": {
+        "availability": 3.27,
+        "visibility": 2.61,
+        "avIndex": 2.94
+      }
+    },
+    {
+      "level": "Area",
+      "area": "Area 1",
+      "region": "ALL",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.47,
+        "visibility": 3.84,
+        "avIndex": 4.15
+      },
+      "ioh": {
+        "availability": 3.11,
+        "visibility": 2.3,
+        "avIndex": 2.71
+      },
+      "xlsmart": {
+        "availability": 2.96,
+        "visibility": 2.26,
+        "avIndex": 2.61
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kabupaten Garut",
+      "telkomsel": {
+        "availability": 4.01,
+        "visibility": 3.22,
+        "avIndex": 3.62
+      },
+      "ioh": {
+        "availability": 3.25,
+        "visibility": 2.36,
+        "avIndex": 2.8
+      },
+      "xlsmart": {
+        "availability": 2.98,
+        "visibility": 2.26,
+        "avIndex": 2.62
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Metro",
+      "telkomsel": {
+        "availability": 3.0,
+        "visibility": 3.0,
+        "avIndex": 3.0
+      },
+      "xlsmart": {
+        "availability": 5.0,
+        "visibility": 3.5,
+        "avIndex": 4.25
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Mojokerto",
+      "telkomsel": {
+        "availability": 4.88,
+        "visibility": 4.92,
+        "avIndex": 4.9
+      },
+      "xlsmart": {
+        "availability": 5.0,
+        "visibility": 4.0,
+        "avIndex": 4.5
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kabupaten Deli Serdang",
+      "telkomsel": {
+        "availability": 4.56,
+        "visibility": 3.72,
+        "avIndex": 4.14
+      },
+      "ioh": {
+        "availability": 3.09,
+        "visibility": 2.28,
+        "avIndex": 2.68
+      },
+      "xlsmart": {
+        "availability": 2.97,
+        "visibility": 2.24,
+        "avIndex": 2.61
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kabupaten Simalungun",
+      "telkomsel": {
+        "availability": 4.62,
+        "visibility": 4.32,
+        "avIndex": 4.47
+      },
+      "ioh": {
+        "availability": 3.8,
+        "visibility": 2.83,
+        "avIndex": 3.31
+      },
+      "xlsmart": {
+        "availability": 2.95,
+        "visibility": 2.19,
+        "avIndex": 2.57
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Padang",
+      "telkomsel": {
+        "availability": 4.66,
+        "visibility": 4.0,
+        "avIndex": 4.33
+      },
+      "ioh": {
+        "availability": 3.48,
+        "visibility": 2.57,
+        "avIndex": 3.02
+      },
+      "xlsmart": {
+        "availability": 3.56,
+        "visibility": 2.13,
+        "avIndex": 2.84
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kabupaten Sumbawa",
+      "telkomsel": {
+        "availability": 4.59,
+        "visibility": 3.86,
+        "avIndex": 4.22
+      },
+      "ioh": {
+        "availability": 3.52,
+        "visibility": 2.48,
+        "avIndex": 3.0
+      },
+      "xlsmart": {
+        "availability": 2.99,
+        "visibility": 2.23,
+        "avIndex": 2.61
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Tanjungpinang",
+      "telkomsel": {
+        "availability": 4.3,
+        "visibility": 3.7,
+        "avIndex": 4.0
+      },
+      "ioh": {
+        "availability": 2.6,
+        "visibility": 2.4,
+        "avIndex": 2.5
+      },
+      "xlsmart": {
+        "availability": 3.27,
+        "visibility": 2.45,
+        "avIndex": 2.86
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Cirebon",
+      "telkomsel": {
+        "availability": 4.52,
+        "visibility": 4.06,
+        "avIndex": 4.29
+      },
+      "ioh": {
+        "availability": 3.61,
+        "visibility": 2.57,
+        "avIndex": 3.09
+      },
+      "xlsmart": {
+        "availability": 3.21,
+        "visibility": 3.04,
+        "avIndex": 3.12
+      }
+    },
+    {
+      "level": "Area",
+      "area": "Area 3",
+      "region": "ALL",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.27,
+        "visibility": 3.86,
+        "avIndex": 4.06
+      },
+      "ioh": {
+        "availability": 3.24,
+        "visibility": 2.66,
+        "avIndex": 2.95
+      },
+      "xlsmart": {
+        "availability": 3.11,
+        "visibility": 2.52,
+        "avIndex": 2.81
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.49,
+        "visibility": 3.96,
+        "avIndex": 4.22
+      },
+      "ioh": {
+        "availability": 3.41,
+        "visibility": 2.61,
+        "avIndex": 3.01
+      },
+      "xlsmart": {
+        "availability": 3.42,
+        "visibility": 2.59,
+        "avIndex": 3.0
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kabupaten Langkat",
+      "telkomsel": {
+        "availability": 4.6,
+        "visibility": 3.69,
+        "avIndex": 4.14
+      },
+      "ioh": {
+        "availability": 3.13,
+        "visibility": 2.23,
+        "avIndex": 2.68
+      },
+      "xlsmart": {
+        "availability": 3.08,
+        "visibility": 2.34,
+        "avIndex": 2.71
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kabupaten Banyuwangi",
+      "telkomsel": {
+        "availability": 4.17,
+        "visibility": 3.88,
+        "avIndex": 4.03
+      },
+      "ioh": {
+        "availability": 2.98,
+        "visibility": 2.65,
+        "avIndex": 2.81
+      },
+      "xlsmart": {
+        "availability": 2.58,
+        "visibility": 2.42,
+        "avIndex": 2.5
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Jakarta Timur",
+      "telkomsel": {
+        "availability": 3.99,
+        "visibility": 3.7,
+        "avIndex": 3.85
+      },
+      "ioh": {
+        "availability": 3.62,
+        "visibility": 3.03,
+        "avIndex": 3.33
+      },
+      "xlsmart": {
+        "availability": 3.49,
+        "visibility": 2.58,
+        "avIndex": 3.04
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Bandung",
+      "telkomsel": {
+        "availability": 3.97,
+        "visibility": 3.54,
+        "avIndex": 3.75
+      },
+      "ioh": {
+        "availability": 3.26,
+        "visibility": 2.44,
+        "avIndex": 2.85
+      },
+      "xlsmart": {
+        "availability": 3.21,
+        "visibility": 2.58,
+        "avIndex": 2.9
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Bogor",
+      "telkomsel": {
+        "availability": 3.37,
+        "visibility": 2.8,
+        "avIndex": 3.08
+      },
+      "ioh": {
+        "availability": 2.85,
+        "visibility": 1.98,
+        "avIndex": 2.42
+      },
+      "xlsmart": {
+        "availability": 2.96,
+        "visibility": 2.71,
+        "avIndex": 2.83
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kota Madiun",
+      "telkomsel": {
+        "availability": 4.58,
+        "visibility": 4.3,
+        "avIndex": 4.44
+      },
+      "ioh": {
+        "availability": 3.74,
+        "visibility": 2.89,
+        "avIndex": 3.32
+      },
+      "xlsmart": {
+        "availability": 2.44,
+        "visibility": 1.81,
+        "avIndex": 2.12
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Jakarta Utara",
+      "telkomsel": {
+        "availability": 4.33,
+        "visibility": 2.33,
+        "avIndex": 3.33
+      },
+      "ioh": {
+        "availability": 3.38,
+        "visibility": 1.75,
+        "avIndex": 2.56
+      },
+      "xlsmart": {
+        "availability": 3.5,
+        "visibility": 2.5,
+        "avIndex": 3.0
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kabupaten Tangerang",
+      "telkomsel": {
+        "availability": 4.46,
+        "visibility": 3.62,
+        "avIndex": 4.04
+      },
+      "ioh": {
+        "availability": 3.97,
+        "visibility": 3.91,
+        "avIndex": 3.94
+      },
+      "xlsmart": {
+        "availability": 3.33,
+        "visibility": 2.82,
+        "avIndex": 3.08
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kabupaten Sumedang",
+      "telkomsel": {
+        "availability": 3.88,
+        "visibility": 3.24,
+        "avIndex": 3.56
+      },
+      "ioh": {
+        "availability": 3.02,
+        "visibility": 2.18,
+        "avIndex": 2.6
+      },
+      "xlsmart": {
+        "availability": 3.15,
+        "visibility": 2.33,
+        "avIndex": 2.74
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kota Denpasar",
+      "telkomsel": {
+        "availability": 4.36,
+        "visibility": 3.31,
+        "avIndex": 3.83
+      },
+      "ioh": {
+        "availability": 3.26,
+        "visibility": 2.55,
+        "avIndex": 2.9
+      },
+      "xlsmart": {
+        "availability": 3.14,
+        "visibility": 2.26,
+        "avIndex": 2.7
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kabupaten Mimika",
+      "telkomsel": {
+        "availability": 4.89,
+        "visibility": 4.57,
+        "avIndex": 4.73
+      },
+      "ioh": {
+        "availability": 3.25,
+        "visibility": 2.85,
+        "avIndex": 3.05
+      },
+      "xlsmart": {
+        "availability": 3.18,
+        "visibility": 2.48,
+        "avIndex": 2.83
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Cimahi",
+      "telkomsel": {
+        "availability": 4.0,
+        "visibility": 3.78,
+        "avIndex": 3.89
+      },
+      "ioh": {
+        "availability": 3.09,
+        "visibility": 2.63,
+        "avIndex": 2.86
+      },
+      "xlsmart": {
+        "availability": 3.2,
+        "visibility": 2.55,
+        "avIndex": 2.88
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Pematangsiantar",
+      "telkomsel": {
+        "availability": 4.43,
+        "visibility": 4.13,
+        "avIndex": 4.28
+      },
+      "ioh": {
+        "availability": 3.42,
+        "visibility": 2.49,
+        "avIndex": 2.96
+      },
+      "xlsmart": {
+        "availability": 3.02,
+        "visibility": 2.12,
+        "avIndex": 2.57
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kabupaten Bekasi",
+      "telkomsel": {
+        "availability": 3.52,
+        "visibility": 3.18,
+        "avIndex": 3.35
+      },
+      "ioh": {
+        "availability": 3.56,
+        "visibility": 3.02,
+        "avIndex": 3.29
+      },
+      "xlsmart": {
+        "availability": 3.03,
+        "visibility": 2.44,
+        "avIndex": 2.73
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.22,
+        "visibility": 3.52,
+        "avIndex": 3.87
+      },
+      "ioh": {
+        "availability": 3.35,
+        "visibility": 2.57,
+        "avIndex": 2.96
+      },
+      "xlsmart": {
+        "availability": 3.0,
+        "visibility": 2.28,
+        "avIndex": 2.64
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.4,
+        "visibility": 3.77,
+        "avIndex": 4.08
+      },
+      "ioh": {
+        "availability": 3.04,
+        "visibility": 2.24,
+        "avIndex": 2.64
+      },
+      "xlsmart": {
+        "availability": 3.01,
+        "visibility": 2.22,
+        "avIndex": 2.62
+      }
+    },
+    {
+      "level": "Area",
+      "area": "Area 2",
+      "region": "ALL",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.11,
+        "visibility": 3.55,
+        "avIndex": 3.83
+      },
+      "ioh": {
+        "availability": 3.47,
+        "visibility": 2.69,
+        "avIndex": 3.08
+      },
+      "xlsmart": {
+        "availability": 3.12,
+        "visibility": 2.44,
+        "avIndex": 2.78
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Sorong",
+      "telkomsel": {
+        "availability": 4.97,
+        "visibility": 4.74,
+        "avIndex": 4.86
+      },
+      "ioh": {
+        "availability": 1.65,
+        "visibility": 2.29,
+        "avIndex": 1.97
+      },
+      "xlsmart": {
+        "availability": 3.69,
+        "visibility": 3.0,
+        "avIndex": 3.34
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Binjai",
+      "telkomsel": {
+        "availability": 3.96,
+        "visibility": 3.33,
+        "avIndex": 3.65
+      },
+      "ioh": {
+        "availability": 3.44,
+        "visibility": 2.83,
+        "avIndex": 3.13
+      },
+      "xlsmart": {
+        "availability": 2.48,
+        "visibility": 2.0,
+        "avIndex": 2.24
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Medan",
+      "telkomsel": {
+        "availability": 4.88,
+        "visibility": 4.66,
+        "avIndex": 4.77
+      },
+      "ioh": {
+        "availability": 1.98,
+        "visibility": 1.71,
+        "avIndex": 1.84
+      },
+      "xlsmart": {
+        "availability": 2.38,
+        "visibility": 1.88,
+        "avIndex": 2.13
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "Kota Banda Aceh",
+      "telkomsel": {
+        "availability": 2.79,
+        "visibility": 1.62,
+        "avIndex": 2.21
+      },
+      "ioh": {
+        "availability": 4.56,
+        "visibility": 2.99,
+        "avIndex": 3.77
+      },
+      "xlsmart": {
+        "availability": 2.18,
+        "visibility": 2.55,
+        "avIndex": 2.37
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.11,
+        "visibility": 3.5,
+        "avIndex": 3.81
+      },
+      "ioh": {
+        "availability": 3.36,
+        "visibility": 2.58,
+        "avIndex": 2.97
+      },
+      "xlsmart": {
+        "availability": 3.12,
+        "visibility": 2.43,
+        "avIndex": 2.78
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kabupaten Buleleng",
+      "telkomsel": {
+        "availability": 3.5,
+        "visibility": 3.5,
+        "avIndex": 3.5
+      },
+      "ioh": {
+        "availability": 4.2,
+        "visibility": 2.4,
+        "avIndex": 3.3
+      },
+      "xlsmart": {
+        "availability": 2.25,
+        "visibility": 1.75,
+        "avIndex": 2.0
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kabupaten Lampung Selatan",
+      "telkomsel": {
+        "availability": 2.4,
+        "visibility": 2.8,
+        "avIndex": 2.6
+      },
+      "ioh": {
+        "availability": 3.25,
+        "visibility": 2.88,
+        "avIndex": 3.06
+      },
+      "xlsmart": {
+        "availability": 2.7,
+        "visibility": 2.4,
+        "avIndex": 2.55
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kabupaten Bandung",
+      "telkomsel": {
+        "availability": 4.11,
+        "visibility": 3.48,
+        "avIndex": 3.79
+      },
+      "ioh": {
+        "availability": 3.48,
+        "visibility": 2.88,
+        "avIndex": 3.18
+      },
+      "xlsmart": {
+        "availability": 3.13,
+        "visibility": 2.3,
+        "avIndex": 2.71
+      }
+    },
+    {
+      "level": "Area",
+      "area": "Area 4",
+      "region": "ALL",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.69,
+        "visibility": 4.21,
+        "avIndex": 4.45
+      },
+      "ioh": {
+        "availability": 3.45,
+        "visibility": 2.7,
+        "avIndex": 3.08
+      },
+      "xlsmart": {
+        "availability": 3.35,
+        "visibility": 2.65,
+        "avIndex": 3.0
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Sukabumi",
+      "telkomsel": {
+        "availability": 2.38,
+        "visibility": 2.5,
+        "avIndex": 2.44
+      },
+      "ioh": {
+        "availability": 3.86,
+        "visibility": 3.0,
+        "avIndex": 3.43
+      },
+      "xlsmart": {
+        "availability": 3.27,
+        "visibility": 2.73,
+        "avIndex": 3.0
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Semarang",
+      "telkomsel": {
+        "availability": 4.06,
+        "visibility": 3.72,
+        "avIndex": 3.89
+      },
+      "ioh": {
+        "availability": 2.81,
+        "visibility": 2.51,
+        "avIndex": 2.66
+      },
+      "xlsmart": {
+        "availability": 2.89,
+        "visibility": 2.37,
+        "avIndex": 2.63
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Ambon",
+      "telkomsel": {
+        "availability": 5.0,
+        "visibility": 4.33,
+        "avIndex": 4.67
+      },
+      "ioh": {
+        "availability": 5.0,
+        "visibility": 2.0,
+        "avIndex": 3.5
+      },
+      "xlsmart": {
+        "availability": 5.0,
+        "visibility": 5.0,
+        "avIndex": 5.0
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Jambi",
+      "telkomsel": {
+        "availability": 4.98,
+        "visibility": 4.8,
+        "avIndex": 4.89
+      },
+      "ioh": {
+        "availability": 2.95,
+        "visibility": 2.37,
+        "avIndex": 2.66
+      },
+      "xlsmart": {
+        "availability": 2.8,
+        "visibility": 1.88,
+        "avIndex": 2.34
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 3.97,
+        "visibility": 3.52,
+        "avIndex": 3.75
+      },
+      "ioh": {
+        "availability": 3.34,
+        "visibility": 2.67,
+        "avIndex": 3.0
+      },
+      "xlsmart": {
+        "availability": 2.99,
+        "visibility": 2.45,
+        "avIndex": 2.72
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JABAR",
+      "city": "Kota Tasikmalaya",
+      "telkomsel": {
+        "availability": 4.13,
+        "visibility": 3.59,
+        "avIndex": 3.86
+      },
+      "ioh": {
+        "availability": 2.69,
+        "visibility": 2.2,
+        "avIndex": 2.45
+      },
+      "xlsmart": {
+        "availability": 2.15,
+        "visibility": 1.98,
+        "avIndex": 2.06
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Pekanbaru",
+      "telkomsel": {
+        "availability": 4.74,
+        "visibility": 4.22,
+        "avIndex": 4.48
+      },
+      "ioh": {
+        "availability": 2.67,
+        "visibility": 2.25,
+        "avIndex": 2.46
+      },
+      "xlsmart": {
+        "availability": 3.78,
+        "visibility": 2.48,
+        "avIndex": 3.13
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kabupaten Bone",
+      "telkomsel": {
+        "availability": 3.89,
+        "visibility": 3.06,
+        "avIndex": 3.48
+      },
+      "ioh": {
+        "availability": 2.8,
+        "visibility": 2.6,
+        "avIndex": 2.7
+      },
+      "xlsmart": {
+        "availability": 2.55,
+        "visibility": 2.55,
+        "avIndex": 2.55
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kabupaten Ende",
+      "telkomsel": {
+        "availability": 4.72,
+        "visibility": 4.39,
+        "avIndex": 4.55
+      },
+      "ioh": {
+        "availability": 3.03,
+        "visibility": 1.95,
+        "avIndex": 2.49
+      },
+      "xlsmart": {
+        "availability": 3.59,
+        "visibility": 2.71,
+        "avIndex": 3.15
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kabupaten Merauke",
+      "telkomsel": {
+        "availability": 4.79,
+        "visibility": 3.67,
+        "avIndex": 4.23
+      },
+      "ioh": {
+        "availability": 4.25,
+        "visibility": 4.0,
+        "avIndex": 4.12
+      },
+      "xlsmart": {
+        "availability": 4.84,
+        "visibility": 2.2,
+        "avIndex": 3.52
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "BALINUSRA",
+      "city": "Kabupaten Badung",
+      "telkomsel": {
+        "availability": 4.34,
+        "visibility": 3.62,
+        "avIndex": 3.98
+      },
+      "ioh": {
+        "availability": 3.1,
+        "visibility": 2.53,
+        "avIndex": 2.81
+      },
+      "xlsmart": {
+        "availability": 3.53,
+        "visibility": 1.96,
+        "avIndex": 2.75
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Pekalongan",
+      "telkomsel": {
+        "availability": 4.63,
+        "visibility": 4.25,
+        "avIndex": 4.44
+      },
+      "ioh": {
+        "availability": 2.95,
+        "visibility": 2.28,
+        "avIndex": 2.62
+      },
+      "xlsmart": {
+        "availability": 3.12,
+        "visibility": 2.62,
+        "avIndex": 2.87
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Magelang",
+      "telkomsel": {
+        "availability": 3.49,
+        "visibility": 2.91,
+        "avIndex": 3.2
+      },
+      "ioh": {
+        "availability": 1.0,
+        "visibility": 1.0,
+        "avIndex": 1.0
+      },
+      "xlsmart": {
+        "availability": 1.49,
+        "visibility": 1.91,
+        "avIndex": 1.7
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.41,
+        "visibility": 3.74,
+        "avIndex": 4.08
+      },
+      "ioh": {
+        "availability": 3.0,
+        "visibility": 2.25,
+        "avIndex": 2.62
+      },
+      "xlsmart": {
+        "availability": 2.93,
+        "visibility": 2.29,
+        "avIndex": 2.61
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATENG-DIY",
+      "city": "Kota Tegal",
+      "telkomsel": {
+        "availability": 4.76,
+        "visibility": 4.64,
+        "avIndex": 4.7
+      },
+      "ioh": {
+        "availability": 1.69,
+        "visibility": 1.49,
+        "avIndex": 1.59
+      },
+      "xlsmart": {
+        "availability": 2.11,
+        "visibility": 1.77,
+        "avIndex": 1.94
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kabupaten Karawang",
+      "telkomsel": {
+        "availability": 3.84,
+        "visibility": 3.4,
+        "avIndex": 3.62
+      },
+      "ioh": {
+        "availability": 3.99,
+        "visibility": 3.12,
+        "avIndex": 3.56
+      },
+      "xlsmart": {
+        "availability": 3.2,
+        "visibility": 2.38,
+        "avIndex": 2.79
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Tangerang",
+      "telkomsel": {
+        "availability": 4.09,
+        "visibility": 3.59,
+        "avIndex": 3.84
+      },
+      "ioh": {
+        "availability": 3.51,
+        "visibility": 2.86,
+        "avIndex": 3.18
+      },
+      "xlsmart": {
+        "availability": 3.13,
+        "visibility": 2.67,
+        "avIndex": 2.9
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Jakarta Pusat",
+      "telkomsel": {
+        "availability": 4.04,
+        "visibility": 3.61,
+        "avIndex": 3.83
+      },
+      "ioh": {
+        "availability": 3.78,
+        "visibility": 3.11,
+        "avIndex": 3.44
+      },
+      "xlsmart": {
+        "availability": 3.36,
+        "visibility": 2.35,
+        "avIndex": 2.85
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kota Dumai",
+      "telkomsel": {
+        "availability": 5.0,
+        "visibility": 4.0,
+        "avIndex": 4.5
+      },
+      "ioh": {
+        "availability": 1.0,
+        "visibility": 1.0,
+        "avIndex": 1.0
+      },
+      "xlsmart": {
+        "availability": 3.0,
+        "visibility": 3.5,
+        "avIndex": 3.25
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kabupaten Jayawijaya",
+      "telkomsel": {
+        "availability": 4.93,
+        "visibility": 4.79,
+        "avIndex": 4.86
+      },
+      "ioh": {
+        "availability": 2.0,
+        "visibility": 2.6,
+        "avIndex": 2.3
+      },
+      "xlsmart": {
+        "availability": 4.44,
+        "visibility": 3.62,
+        "avIndex": 4.03
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "EASTERN JABOTABEK",
+      "city": "Kota Depok",
+      "telkomsel": {
+        "availability": 4.16,
+        "visibility": 3.31,
+        "avIndex": 3.74
+      },
+      "ioh": {
+        "availability": 4.01,
+        "visibility": 2.76,
+        "avIndex": 3.38
+      },
+      "xlsmart": {
+        "availability": 3.5,
+        "visibility": 2.72,
+        "avIndex": 3.11
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.94,
+        "visibility": 4.56,
+        "avIndex": 4.75
+      },
+      "ioh": {
+        "availability": 3.65,
+        "visibility": 3.09,
+        "avIndex": 3.37
+      },
+      "xlsmart": {
+        "availability": 3.91,
+        "visibility": 3.21,
+        "avIndex": 3.56
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 1",
+      "region": "SUMBAGUT",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.53,
+        "visibility": 3.95,
+        "avIndex": 4.24
+      },
+      "ioh": {
+        "availability": 3.22,
+        "visibility": 2.37,
+        "avIndex": 2.79
+      },
+      "xlsmart": {
+        "availability": 2.95,
+        "visibility": 2.27,
+        "avIndex": 2.61
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Tangerang Selatan",
+      "telkomsel": {
+        "availability": 4.97,
+        "visibility": 4.64,
+        "avIndex": 4.8
+      },
+      "ioh": {
+        "availability": 4.6,
+        "visibility": 2.8,
+        "avIndex": 3.7
+      },
+      "xlsmart": {
+        "availability": 4.0,
+        "visibility": 2.86,
+        "avIndex": 3.43
+      }
+    },
+    {
+      "level": "Region",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.22,
+        "visibility": 3.59,
+        "avIndex": 3.9
+      },
+      "ioh": {
+        "availability": 3.44,
+        "visibility": 2.47,
+        "avIndex": 2.96
+      },
+      "xlsmart": {
+        "availability": 2.88,
+        "visibility": 2.29,
+        "avIndex": 2.58
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "PUMA",
+      "city": "Kota Ternate",
+      "telkomsel": {
+        "availability": 5.0,
+        "visibility": 4.67,
+        "avIndex": 4.83
+      },
+      "ioh": {
+        "availability": 1.0,
+        "visibility": 2.0,
+        "avIndex": 1.5
+      }
+    },
+    {
+      "level": "Nationwide",
+      "area": "ALL",
+      "region": "ALL",
+      "city": "ALL",
+      "telkomsel": {
+        "availability": 4.32,
+        "visibility": 3.82,
+        "avIndex": 4.07
+      },
+      "ioh": {
+        "availability": 3.32,
+        "visibility": 2.61,
+        "avIndex": 2.96
+      },
+      "xlsmart": {
+        "availability": 3.1,
+        "visibility": 2.46,
+        "avIndex": 2.78
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Jakarta Selatan",
+      "telkomsel": {
+        "availability": 4.01,
+        "visibility": 3.82,
+        "avIndex": 3.92
+      },
+      "ioh": {
+        "availability": 2.89,
+        "visibility": 1.83,
+        "avIndex": 2.36
+      },
+      "xlsmart": {
+        "availability": 2.88,
+        "visibility": 2.35,
+        "avIndex": 2.62
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Jakarta Barat",
+      "telkomsel": {
+        "availability": 4.36,
+        "visibility": 4.12,
+        "avIndex": 4.24
+      },
+      "ioh": {
+        "availability": 3.26,
+        "visibility": 2.47,
+        "avIndex": 2.87
+      },
+      "xlsmart": {
+        "availability": 2.16,
+        "visibility": 2.08,
+        "avIndex": 2.12
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 3",
+      "region": "JATIM",
+      "city": "Kabupaten Sidoarjo",
+      "telkomsel": {
+        "availability": 3.68,
+        "visibility": 3.97,
+        "avIndex": 3.83
+      },
+      "ioh": {
+        "availability": 2.35,
+        "visibility": 2.41,
+        "avIndex": 2.38
+      },
+      "xlsmart": {
+        "availability": 3.45,
+        "visibility": 2.6,
+        "avIndex": 3.03
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGTENG",
+      "city": "Kabupaten Bungo",
+      "telkomsel": {
+        "availability": 4.2,
+        "visibility": 3.25,
+        "avIndex": 3.73
+      },
+      "ioh": {
+        "availability": 3.62,
+        "visibility": 2.23,
+        "avIndex": 2.92
+      },
+      "xlsmart": {
+        "availability": 2.86,
+        "visibility": 2.14,
+        "avIndex": 2.5
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Cilegon",
+      "telkomsel": {
+        "availability": 4.75,
+        "visibility": 4.41,
+        "avIndex": 4.58
+      },
+      "ioh": {
+        "availability": 2.21,
+        "visibility": 2.1,
+        "avIndex": 2.16
+      },
+      "xlsmart": {
+        "availability": 1.79,
+        "visibility": 1.99,
+        "avIndex": 1.89
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 2",
+      "region": "JAKARTA-BANTEN",
+      "city": "Kota Serang",
+      "telkomsel": {
+        "availability": 4.57,
+        "visibility": 3.86,
+        "avIndex": 4.21
+      },
+      "ioh": {
+        "availability": 3.64,
+        "visibility": 3.35,
+        "avIndex": 3.5
+      },
+      "xlsmart": {
+        "availability": 3.31,
+        "visibility": 2.79,
+        "avIndex": 3.05
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "KALIMANTAN",
+      "city": "Kabupaten Kutai Kartanegara",
+      "telkomsel": {
+        "availability": 4.8,
+        "visibility": 3.0,
+        "avIndex": 3.9
+      },
+      "ioh": {
+        "availability": 2.0,
+        "visibility": 2.0,
+        "avIndex": 2.0
+      },
+      "xlsmart": {
+        "availability": 2.33,
+        "visibility": 2.67,
+        "avIndex": 2.5
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 4",
+      "region": "SULAWESI",
+      "city": "Kota Palu",
+      "telkomsel": {
+        "availability": 4.63,
+        "visibility": 4.2,
+        "avIndex": 4.42
+      },
+      "ioh": {
+        "availability": 3.03,
+        "visibility": 2.65,
+        "avIndex": 2.84
+      },
+      "xlsmart": {
+        "availability": 2.43,
+        "visibility": 1.96,
+        "avIndex": 2.2
+      }
+    },
+    {
+      "level": "City",
+      "area": "Area 1",
+      "region": "SUMBAGSEL",
+      "city": "Kota Bengkulu",
+      "telkomsel": {
+        "availability": 4.82,
+        "visibility": 3.74,
+        "avIndex": 4.28
+      },
+      "ioh": {
+        "availability": 2.35,
+        "visibility": 1.87,
+        "avIndex": 2.11
+      },
+      "xlsmart": {
+        "availability": 2.42,
+        "visibility": 2.0,
+        "avIndex": 2.21
+      }
+    }
+  ]
+}

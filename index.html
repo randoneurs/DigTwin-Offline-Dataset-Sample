@@ -219,16 +219,18 @@
   /* Hanging indent so a bullet's text always lines up under itself once it
      wraps to a second line — plain "- "/"  - " prefixed text under
      white-space:pre-wrap has no such indent, so a wrapped line falls back
-     to column 0 instead of under the bullet's own text. */
-  #aiAnswerText .ms-bullet{
+     to column 0 instead of under the bullet's own text. Shared (not scoped
+     to #aiAnswerText) since Strategic Recommendations' rationale reuses the
+     same formatMarketSightReply() output/format. */
+  .ms-bullet{
     position:relative; padding-left:13px; margin:3px 0 0; white-space:normal;
   }
-  #aiAnswerText .ms-bullet::before{ content:'•'; position:absolute; left:0; top:0; color:var(--data); }
-  #aiAnswerText .ms-sub{
+  .ms-bullet::before{ content:'•'; position:absolute; left:0; top:0; color:var(--data); }
+  .ms-sub{
     position:relative; padding-left:27px; margin:1px 0 5px; color:var(--text-2);
     font-size:12px; white-space:normal;
   }
-  #aiAnswerText .ms-sub::before{ content:'–'; position:absolute; left:13px; top:0; color:var(--text-3); }
+  .ms-sub::before{ content:'–'; position:absolute; left:13px; top:0; color:var(--text-3); }
   .ai-answer .tag{
     display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700;
     letter-spacing:0.08em; text-transform:uppercase; color:var(--data); margin-bottom:6px;
@@ -637,10 +639,12 @@
     font-size:14px; font-weight:700; line-height:1.3; min-height:37px;
     display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
   }
-  .rec-rationale{
-    font-size:12px; color:var(--text-2); line-height:1.6; min-height:96px;
-    display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden;
-  }
+  /* Rationale is now rendered as compact .ms-bullet/.ms-sub rows (same
+     hanging-indent format as Ask the AI's replies) rather than a plain
+     paragraph, so line-clamp on this element no longer applies — a
+     min-height alone is enough since every rec's body is kept to the same
+     one-bullet-plus-one-sub-bullet shape. */
+  .rec-rationale{ font-size:12px; color:var(--text-2); line-height:1.6; min-height:56px; }
   .rec-rationale .num-cite{ color:var(--text-1); font-weight:600; font-family:var(--mono); }
   .rec-card .chip-row{ min-height:26px; }
   .kpi-line{
@@ -878,7 +882,7 @@
 
       <div class="control-bar" id="askCard">
         <div class="ask-card-head">
-          <label for="askInput" class="eyebrow" style="margin:0;">Ask the intelligence AI</label>
+          <label for="askInput" class="eyebrow" style="margin:0;">Ask MarketSight AI Agent :</label>
           <button class="card-toggle" type="button" data-target="askBody" data-label="Ask the AI" aria-expanded="true" title="Hide Ask the AI">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
@@ -2948,7 +2952,7 @@
   function buildRecs(drivers, place){
     return [
     { horizon:'Immediate · P1 · 24–72h', title:'Launch matched counter-promo on exposed 30GB tier', color:'var(--bad)', categories:['Marketing','Sales'],
-      body:'Probe RPA confirmed IOH cut its flagship 30GB SKU by ' + drivers.priceCut + '% (Rp 89,000 → Rp 73,000), 36 hours before this scan, flipping the tier from near-parity to exposed. VOC volume on the price/value topic mentioning IOH is up sharply in the same window.',
+      body:'- IOH cut 30GB SKU **' + drivers.priceCut + '%** (Rp 89K\u219273K), flipping Telkomsel from near-parity to exposed.\n  - VOC price/value mentions of IOH spiking in the same window.',
       sources:['Probe RPA','VOC'], kpi:'Target: close price gap to ≤5% within 72h; hold 30GB tier share loss under 0.3pt.',
       prompt:'Buat rencana taktis lengkap untuk counter-promo tier 30GB, termasuk struktur harga, target wilayah, dan estimasi dampak terhadap margin.',
       news:[
@@ -2963,7 +2967,7 @@
         'Measurement: track tier-level net adds and churn daily for 14 days; auto-expire the offer if the gap closes via a national move instead.'
       ] },
     { horizon:'Medium-term · P2 · 45–60 days', title:'Accelerate 5G rollout to close the gap with XL', color:'var(--data)', categories:['Network'],
-      body:'Network benchmark data shows XLSmart\'s 5G download speed advantage widening in urban corridors of JABAR and JATIM. Sentiment on network quality trails coverage sentiment by 5pts, suggesting speed perception — not availability — is the gap.',
+      body:'- XLSmart\'s 5G speed lead is **widening** in JABAR/JATIM urban corridors.\n  - Network sentiment trails coverage sentiment by 5pts \u2014 a speed gap, not availability.',
       sources:['Network benchmark','Product sentiment'], kpi:'Target: cut XL 5G speed-perception gap by 40% in scoped corridors within one quarter.',
       prompt:'Susun rencana percepatan rollout 5G untuk menutup gap kecepatan dengan XL, termasuk prioritas lokasi berdasarkan data benchmark jaringan.',
       news:[
@@ -2978,7 +2982,7 @@
         'Measurement: track the Network Experience Benchmark gap to XL monthly in the scoped corridors until it closes by the 40% target.'
       ] },
     { horizon:'Medium-term · P2 · 4–6 weeks', title:'Run a brand campaign to reset the price narrative', color:'var(--violet)', categories:['Marketing'],
-      body:'Price/value is the weakest of six tracked sentiment topics and has declined for three consecutive weeks, while VOC shows repeated direct price comparisons to IOH and XL. A value-reframing campaign can arrest the narrative before it hardens into churn.',
+      body:'- Price/value is the **weakest** tracked sentiment topic, down 3 straight weeks.\n  - VOC shows repeated direct price comparisons to IOH/XL \u2014 risks hardening into churn.',
       sources:['Product sentiment','VOC'], kpi:'Target: lift price/value sentiment by 8pts within 6 weeks without a national price cut.',
       prompt:'Rancang konsep kampanye brand untuk mereset narasi harga Telkomsel dibanding kompetitor, lengkap dengan pesan utama dan channel distribusi.',
       news:[
@@ -2992,7 +2996,7 @@
         'Measurement: track price/value sentiment weekly; target +8pts within 6 weeks.'
       ] },
     { horizon:'Medium-term · P2/P3 · this quarter', title:'Invest in gaming & upload-experience quality', color:'#2a78d6', categories:['Network','Marketing'],
-      body:'Mention-volume analysis shows gaming and content-upload complaints clustering in the same regions as the network-quality sentiment dip. This is a differentiated experience play against IOH\'s price-led and XL\'s coverage-led positioning.',
+      body:'- Gaming/upload complaints **cluster** with the network-quality sentiment dip.\n  - A differentiated play vs. IOH\'s price-led and XL\'s coverage-led positioning.',
       sources:['Buzz','Network benchmark'], kpi:'Target: reduce gaming-latency complaints by 25% and lift network-quality sentiment 4pts in one quarter.',
       prompt:'Buat business case untuk investasi peningkatan kualitas gaming dan upload experience, termasuk estimasi biaya dan dampak terhadap retensi pelanggan.',
       news:[
@@ -3007,7 +3011,7 @@
         'Measurement: track gaming-latency complaint volume and network-quality sentiment in the flagged regions monthly against the 25%/4pt targets.'
       ] },
     { horizon:'Immediate · P1 · 24h', title:'Contain the outage in ' + place, color:'var(--bad)', categories:['Network','Customer'],
-      body:'NOC feed confirms intermittent service across 6 BTS sites since last night; VOC shows an 890-engagement complaint thread on X and complaint volume up ' + drivers.complaintPct + '% in the affected cluster. Left unaddressed, this compounds the region\'s existing share pressure.',
+      body:'- NOC confirms **6 BTS sites** down since last night; complaint volume up ' + drivers.complaintPct + '%.\n  - Left unaddressed, compounds existing share pressure in ' + place + '.',
       sources:['NOC feed','VOC · X','RETINA'], kpi:'Target: full restoration within 24h; publish customer-facing ETA within 2h.',
       prompt:'Susun rencana tanggap darurat untuk gangguan jaringan ' + place + ', termasuk komunikasi pelanggan dan eskalasi ke tim NOC.',
       news:[
@@ -3022,7 +3026,7 @@
         'Measurement: monitor the complaint thread\'s sentiment and volume hourly until it returns to baseline.'
       ] },
     { horizon:'Longer-term · P3 · 2–3 quarters', title:'Expand enterprise & B2B account penetration', color:'var(--good)', categories:['Sales'],
-      body:'Macro signals show telco FDI sentiment cautiously positive and industry ARPU flat, suggesting consumer-tier growth is capped while enterprise connectivity spend is rising. RETINA field scans show limited Telkomsel enterprise-account presence outside JABOTABEK.',
+      body:'- Consumer-tier growth is **capped**; enterprise connectivity spend is rising per macro signals.\n  - RETINA shows thin Telkomsel enterprise presence outside JABOTABEK.',
       sources:['Macro indicators','RETINA'], kpi:'Target: grow enterprise/B2B account base by 15% outside JABOTABEK within 3 quarters.',
       prompt:'Buat proposal ekspansi akun enterprise dan B2B di luar JABOTABEK, termasuk target segmen dan proyeksi pendapatan.',
       news:[
@@ -3074,7 +3078,7 @@
         '<div class="rec-top"><span class="eyebrow" style="color:' + r.color + '">' + r.horizon + '</span></div>' +
         '<div class="rec-cat-row">' + catBadges + '</div>' +
         '<div class="rec-title">' + r.title + '</div>' +
-        '<div class="rec-rationale">' + r.body + '</div>' +
+        '<div class="rec-rationale">' + formatMarketSightReply(r.body) + '</div>' +
         '<div class="chip-row">' + r.sources.map(s => '<span class="chip">' + s + '</span>').join('') + '</div>' +
         '<div class="kpi-line">' + r.kpi + '</div>' +
         '<button class="btn btn-accent btn-sm" data-rec-brief="' + recIdx + '">Send detailed brief to AI</button>';
@@ -4028,7 +4032,7 @@
       return { eyebrow:r.horizon + ' · ' + ((r.categories && r.categories.length) ? r.categories.join(' / ') : 'Others'), title:r.title,
         body:
           (worst ? '<p><b>Related Synthesis:</b> Surfaced from the current read for <b>' + place + '</b>, where <b>' + worst.label + '</b> is the sharpest drag (' + fmt1(worst.delta) + ') \u2014 see the Synthesis card above for the full cross-signal narrative.</p>' : '') +
-          '<p><b>Key finding:</b> ' + r.body + '</p>' +
+          '<p style="margin-bottom:0;"><b>Key finding:</b></p><div>' + formatMarketSightReply(r.body) + '</div>' +
           (newsHtml ? '<p><b>Related published news:</b></p><div class="news-list">' + newsHtml + '</div>' +
             '<p style="color:var(--text-3);font-size:11px;">Illustrative demo data \u2014 headlines shown here are for mockup purposes and are not linked to a live external article.</p>' : '') +
           '<p><b>Sourced data &amp; reference:</b></p>' +

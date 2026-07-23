@@ -361,6 +361,11 @@
   }
   table.probe td{ padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
   table.probe th.num, table.probe td.num{ text-align:right; border-left:1px solid var(--border); }
+  table.probe tr.area-group-row td, table.mkt-table tr.area-group-row td{
+    font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--data);
+    padding:14px 8px 4px; border-bottom:none;
+  }
+  table.probe tbody tr.area-group-row:first-child td, table.mkt-table tbody tr.area-group-row:first-child td{ padding-top:4px; }
   table.probe td.name-cell{ font-weight:600; color:var(--text-1); }
   table.probe tr:last-child td{ border-bottom:none; }
   table.probe td.price{ font-family:var(--mono); font-weight:700; }
@@ -3119,6 +3124,9 @@
     const cls = delta >= 0 ? 'delta-up' : 'delta-down';
     return '<td class="num ' + cls + '">' + (delta >= 0 ? '▲' : '▼') + fmt1(Math.abs(delta)) + '</td>';
   }
+  function groupRow(label, colCount){
+    return '<tr class="area-group-row"><td colspan="' + colCount + '">' + label + '</td></tr>';
+  }
   function buildAreaRegionTable(dataByRegion, unit, valueLabel, nationalRow, areaRows){
     const header = '<thead><tr><th>Region</th><th class="num">' + valueLabel + '</th><th class="num">WoW</th><th class="num">MoM</th><th class="num">YoY</th></tr></thead>';
     const dataRow = (name, d, cls) => {
@@ -3126,16 +3134,13 @@
       return '<tr><td class="name-cell' + (cls ? ' ' + cls : '') + '">' + name + '</td><td class="num">' + fmt1(d.val) + unit + '</td>' +
         deltaCell(d.wow) + deltaCell(d.mom) + deltaCell(d.yoy) + '</tr>';
     };
-    const nationalSection = nationalRow
-      ? '<div class="area-group-label">Nationwide</div><table class="mkt-table">' + header + '<tbody>' + dataRow('National', nationalRow) + '</tbody></table>'
-      : '';
-    const areaSections = Object.keys(AREA_MAP).map(areaName => {
+    const nationalRows = nationalRow ? groupRow('Nationwide', 5) + dataRow('National', nationalRow) : '';
+    const areaRowsHtml = Object.keys(AREA_MAP).map(areaName => {
       const areaAggRow = areaRows && areaRows[areaName] ? dataRow(areaName + ' (All Regions)', areaRows[areaName], 'area-agg-row') : '';
       const regionRows = AREA_MAP[areaName].map(r => dataRow(REGION_LABELS[r], dataByRegion[r])).join('');
-      return '<div class="area-group-label">' + areaName + '</div>' +
-        '<table class="mkt-table">' + header + '<tbody>' + areaAggRow + regionRows + '</tbody></table>';
+      return groupRow(areaName, 5) + areaAggRow + regionRows;
     }).join('');
-    return nationalSection + areaSections;
+    return '<table class="mkt-table">' + header + '<tbody>' + nationalRows + areaRowsHtml + '</tbody></table>';
   }
   function buildCitiesLosingTable(cities, unit, valueLabel){
     const top5 = cities.slice().sort((a, b) => a.mom - b.mom).slice(0, 5);
@@ -3223,24 +3228,35 @@
   function numCell(val){
     return '<td class="num">' + (val == null ? '–' : fmt1(val)) + '</td>';
   }
-  function buildRetinaAreaRegionTable(data){
+  const RETINA_PARAMS = [
+    { key: 'availability', label: 'Availability Score' },
+    { key: 'visibility', label: 'Visibility Score' },
+    { key: 'avIndex', label: 'AV Index' }
+  ];
+  let lastRetinaAreaRegion = null;
+  function buildRetinaAreaRegionTable(data, paramKey){
     const header = '<thead><tr><th>Region</th>' +
       RETINA_GROUPS.map(g => '<th class="num">' + g.label + '</th>').join('') + '</tr></thead>';
     const dataRow = (name, row, cls) => {
       if(!row) return '';
-      const cells = RETINA_GROUPS.map(g => numCell(row[g.key] ? row[g.key].avIndex : null)).join('');
+      const cells = RETINA_GROUPS.map(g => numCell(row[g.key] ? row[g.key][paramKey] : null)).join('');
       return '<tr><td class="name-cell' + (cls ? ' ' + cls : '') + '">' + name + '</td>' + cells + '</tr>';
     };
-    const nationalSection = '<div class="area-group-label">Nationwide</div><table class="probe">' + header +
-      '<tbody>' + dataRow('National', data.national) + '</tbody></table>';
-    const areaSections = Object.keys(AREA_MAP).map(areaName => {
+    const nationalRows = groupRow('Nationwide', 1 + RETINA_GROUPS.length) + dataRow('National', data.national);
+    const areaRowsHtml = Object.keys(AREA_MAP).map(areaName => {
       const areaAggRow = dataRow(areaName + ' (All Regions)', data.areas[areaName], 'area-agg-row');
       const regionRows = AREA_MAP[areaName].map(r => dataRow(REGION_LABELS[r], data.regions[r])).join('');
-      return '<div class="area-group-label">' + areaName + '</div><table class="probe">' + header +
-        '<tbody>' + areaAggRow + regionRows + '</tbody></table>';
+      return groupRow(areaName, 1 + RETINA_GROUPS.length) + areaAggRow + regionRows;
     }).join('');
-    return nationalSection + areaSections;
+    return '<table class="probe">' + header + '<tbody>' + nationalRows + areaRowsHtml + '</tbody></table>';
   }
+  function renderRetinaAreaRegionTable(paramKey){
+    if(!lastRetinaAreaRegion) return;
+    document.getElementById('retinaAreaRegionWrap').innerHTML = buildRetinaAreaRegionTable(lastRetinaAreaRegion, paramKey);
+  }
+  document.addEventListener('change', e => {
+    if(e.target.id === 'retinaParamSelect') renderRetinaAreaRegionTable(e.target.value);
+  });
   function buildRetinaCitiesTable(cities){
     const rows = cities.map(c =>
       '<tr><td class="name-cell">' + c.name + '<div style="font-size:9.5px;color:var(--text-3);font-weight:400;">' + (REGION_LABELS[c.region] || c.region) + '</div></td>' +
@@ -3252,14 +3268,24 @@
     const areaRegion = retinaAreaRegionRows();
     const worstCities = retinaWorstCities();
     const monthTag = retinaSnapshot && retinaSnapshot.month ? ' <span class="modal-source-tag">· Retina - ' + retinaSnapshot.month + '.xlsx</span>' : '';
+    lastRetinaAreaRegion = areaRegion;
     if(!areaRegion){
       return { eyebrow:'RETINA · Outlet Availability & Visibility', title:'No RETINA snapshot loaded yet',
         body:'<p>Drop the monthly "Retina - &lt;Month&gt; &lt;Year&gt; (Monthly).xlsx" export through scripts/build_retina_snapshot.py and publish retina_latest.json to see the Area/Region breakdown and weakest cities here.</p>' };
     }
+    const paramOptions = RETINA_PARAMS.map(p =>
+      '<option value="' + p.key + '"' + (p.key === 'avIndex' ? ' selected' : '') + '>' + p.label + '</option>'
+    ).join('');
     return { eyebrow:'RETINA · Outlet Availability & Visibility', title:'Field outlet scan — detailed performance',
       body:
         '<p>Average outlet-level Availability and Visibility Score (0–5) across Telkomsel-brand and competitor stores, from the monthly RETINA field scan. AV Index is the mean of the two.</p>' +
-        '<div><div class="modal-section-label">AV Index by Area &amp; Region' + monthTag + '</div>' + buildRetinaAreaRegionTable(areaRegion) + '</div>' +
+        '<div>' +
+          '<div class="modal-section-label" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">' +
+            '<span>By Area &amp; Region' + monthTag + '</span>' +
+            '<select id="retinaParamSelect">' + paramOptions + '</select>' +
+          '</div>' +
+          '<div id="retinaAreaRegionWrap">' + buildRetinaAreaRegionTable(areaRegion, 'avIndex') + '</div>' +
+        '</div>' +
         (worstCities ? '<div><div class="modal-section-label">Cities with the lowest Telkomsel AV Index</div>' + buildRetinaCitiesTable(worstCities) + '</div>' : '')
     };
   }

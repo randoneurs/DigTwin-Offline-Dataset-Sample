@@ -895,11 +895,7 @@
               Ask
             </button>
           </div>
-          <div class="suggest-row" id="suggestRow">
-            <button class="suggest-chip" type="button" data-prompt="What's driving Telkomsel's market share movement — and why?">What's driving Telkomsel's market share movement — and why?</button>
-            <button class="suggest-chip" type="button" data-prompt="Which areas are seeing the sharpest Telkomsel decline?">Which areas are seeing the sharpest Telkomsel decline?</button>
-            <button class="suggest-chip" type="button" data-prompt="Where and on what metrics have competitors overtaken us in rank?">Where and on what metrics have competitors overtaken us in rank?</button>
-          </div>
+          <div class="suggest-row" id="suggestRow"></div>
           <div class="ai-answer" id="aiAnswer">
             <div class="tag">MarketSight AI Findings :</div>
             <div class="ai-loading-bar" id="aiLoadingBar"><div class="ai-loading-fill"></div></div>
@@ -1915,6 +1911,37 @@
     return 'the national footprint';
   }
 
+  // The next level a user could still drill into from here (Area -> Region ->
+  // City), or null once City is already selected — used to phrase the
+  // "which X is worst" suggestion at whatever granularity still makes sense.
+  function nextDrillLevelLabel(){
+    const s = scopeLabel();
+    if(s.city !== 'All Cities') return null;
+    if(s.region !== 'All Regions') return 'City/Kabupaten';
+    if(s.area !== 'All Areas') return 'Region';
+    return 'Area';
+  }
+
+  // Ask MarketSight AI's suggested-question chips — rebuilt on every filter
+  // change so their wording always names the currently selected Area/Region/
+  // City instead of a generic, scope-blind question.
+  function renderSuggestedQuestions(){
+    const row = document.getElementById('suggestRow');
+    if(!row) return;
+    const place = regionNarrativeName();
+    const drillLabel = nextDrillLevelLabel();
+    const questions = [
+      "What's driving Telkomsel's market share movement in " + place + " — and why?",
+      drillLabel
+        ? ('Which ' + drillLabel + ' within ' + place + ' is seeing the sharpest Telkomsel decline?')
+        : ("How does " + place + "'s performance compare to the national average?"),
+      'Where and on what metrics have competitors overtaken us in ' + place + '?'
+    ];
+    row.innerHTML = questions.map(q =>
+      '<button class="suggest-chip" type="button" data-prompt="' + q.replace(/"/g, '&quot;') + '">' + q + '</button>'
+    ).join('');
+  }
+
   const PRODUCT_SENTIMENT = [
     { name:'Combo Sakti 30GB', driver:'price', base:56 },
     { name:'Unlimited Malam', driver:'experience', base:75 },
@@ -2675,6 +2702,7 @@
     const place = regionNarrativeName();
     lastDrivers = drivers;
     lastPlace = place;
+    renderSuggestedQuestions();
     renderExecSummary(kpis, drivers);
     renderSynthesis(kpis, drivers);
     renderSentiment(rng);

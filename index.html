@@ -3077,7 +3077,7 @@
         '<div class="rec-rationale">' + r.body + '</div>' +
         '<div class="chip-row">' + r.sources.map(s => '<span class="chip">' + s + '</span>').join('') + '</div>' +
         '<div class="kpi-line">' + r.kpi + '</div>' +
-        '<button class="btn btn-accent btn-sm" data-prompt="' + r.prompt.replace(/"/g,'&quot;') + '">Send detailed brief to AI</button>';
+        '<button class="btn btn-accent btn-sm" data-rec-brief="' + recIdx + '">Send detailed brief to AI</button>';
       grid.appendChild(el);
     });
   }
@@ -4064,6 +4064,52 @@
     if(e.target.closest('button, a, input, select, label')) return;
     const card = e.target.closest('[data-detail]');
     if(card){ openModal(card.dataset.detail); }
+  });
+
+  // "Send detailed brief to AI" runs the recommendation's prompt through
+  // MarketSight (same API/context as Ask the AI) and shows the structured
+  // result in the shared modal, so it's visible regardless of which sidebar
+  // section is active — runAsk() alone would render into the Ask the AI
+  // card, which is minimized outside Overview.
+  function openRecBriefModal(recIdx){
+    const r = lastRecs[recIdx];
+    if(!r) return;
+    const s = scopeLabel();
+    const scopeText = s.city !== 'All Cities' ? (s.city + ' (' + s.region + ')') : (s.region !== 'All Regions' ? s.region : (s.area !== 'All Areas' ? s.area : 'National'));
+    const owners = (r.categories && r.categories.length) ? r.categories.join(', ') : 'Others';
+
+    document.getElementById('modalEyebrow').textContent = r.horizon + ' · ' + owners;
+    document.getElementById('modalTitle').textContent = r.title;
+    document.getElementById('modalBody').innerHTML =
+      '<div class="detail-table">' +
+        '<div class="detail-row"><span class="dk">Scope</span><span class="dv">' + scopeText + '</span></div>' +
+        '<div class="detail-row"><span class="dk">Owning team(s)</span><span class="dv">' + owners + '</span></div>' +
+        '<div class="detail-row"><span class="dk">Priority</span><span class="dv">' + r.horizon + '</span></div>' +
+      '</div>' +
+      '<div id="recBriefContent" style="margin-top:12px;">' +
+        '<div class="ai-loading-bar" style="display:block;"><div class="ai-loading-fill"></div></div>' +
+        '<p style="color:var(--text-3);font-size:12px;margin-top:8px;">MarketSight is drafting the detailed brief…</p>' +
+      '</div>';
+    document.querySelector('.modal-box').classList.add('wide');
+    document.getElementById('modalOverlay').classList.add('show');
+
+    const prompt = r.prompt +
+      ' Sertakan bagian-bagian berikut secara eksplisit dan berlabel jelas, masing-masing sebagai kategori tersendiri sesuai format outline yang biasa kamu pakai: ' +
+      'Rencana Aksi (langkah taktis rinci), Ruang Lingkup (area/region/kota spesifik tempat ini dijalankan berdasarkan scope saat ini: ' + scopeText + '), ' +
+      'Penanggung Jawab (tim ' + owners + ' beserta peran masing-masing), Tujuan (objective bisnis dari rekomendasi ini), ' +
+      'Dampak (impact yang diharapkan terhadap share/CSI-NPS/revenue jika berhasil), dan Metrik Keberhasilan (angka target spesifik dan cara mengukurnya). ' +
+      'Konteks masalah yang mendasari: ' + r.body;
+
+    aiAnswerFor(prompt)
+      .then(reply => { document.getElementById('recBriefContent').innerHTML = formatMarketSightReply(reply); })
+      .catch(err => {
+        const el = document.getElementById('recBriefContent');
+        if(el) el.innerHTML = '<p style="color:#ff8a8a;">MarketSight is unavailable right now: ' + err.message + '</p>';
+      });
+  }
+  document.addEventListener('click', e => {
+    const briefBtn = e.target.closest('[data-rec-brief]');
+    if(briefBtn){ openRecBriefModal(parseInt(briefBtn.dataset.recBrief, 10)); }
   });
   document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
 

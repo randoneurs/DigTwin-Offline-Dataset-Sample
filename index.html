@@ -1633,15 +1633,16 @@
     if(!candidates.length) return '';
     candidates.sort((a, b) => b.value - a.value);
 
+    const changeSpan = d => '<span style="color:' + (d >= 0 ? 'var(--good)' : 'var(--bad)') + '">' + (d >= 0 ? '▲' : '▼') + fmt1(Math.abs(d));
     const fmt = c => {
       const changes = [];
       if(prev && prev[c.key] != null){
         const d = round1(c.value - prev[c.key]);
-        changes.push((d >= 0 ? '▲' : '▼') + fmt1(Math.abs(d)) + ' MoM');
+        changes.push(changeSpan(d) + ' MoM</span>');
       }
       if(yoy && yoy[c.key] != null){
         const d = round1(c.value - yoy[c.key]);
-        changes.push((d >= 0 ? '▲' : '▼') + fmt1(Math.abs(d)) + ' YoY');
+        changes.push(changeSpan(d) + ' YoY</span>');
       }
       return c.name + ' : ' + fmt1(c.value) + unit + (changes.length ? '  (' + changes.join(' | ') + ')' : '');
     };

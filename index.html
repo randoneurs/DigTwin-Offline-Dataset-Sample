@@ -3112,6 +3112,14 @@
     ].filter(line => !/: $/.test(line));
     const shareDetail = hadoopMarketShareContext();
     if(shareDetail) lines.push(shareDetail);
+    // Strategic Recommendations grid isn't plain rendered text (each rec-card
+    // interleaves a title, rationale, source chips, and a KPI target line) —
+    // pull the structured fields straight from lastRecs instead of scraping
+    // #recGrid's DOM, so MarketSight can cite the actual recommendations on
+    // screen for this scope instead of being unaware the card exists.
+    if(lastRecs && lastRecs.length){
+      lines.push('Strategic recommendations: ' + lastRecs.map(r => '[' + r.horizon + '] ' + r.title + ' — ' + r.kpi).join(' | '));
+    }
     // Same "biggest finding" callouts rendered on each card, so MarketSight's
     // answers cite the identical headline finding instead of re-deriving (or
     // contradicting) what's already on screen.

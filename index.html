@@ -202,6 +202,19 @@
   #aiAnswerText .cat:not(:first-child){
     border-top:1px solid var(--border); padding-top:8px; margin-top:2px;
   }
+  /* Hanging indent so a bullet's text always lines up under itself once it
+     wraps to a second line — plain "- "/"  - " prefixed text under
+     white-space:pre-wrap has no such indent, so a wrapped line falls back
+     to column 0 instead of under the bullet's own text. */
+  #aiAnswerText .ms-bullet{
+    position:relative; padding-left:13px; margin:3px 0 0; white-space:normal;
+  }
+  #aiAnswerText .ms-bullet::before{ content:'•'; position:absolute; left:0; top:0; color:var(--data); }
+  #aiAnswerText .ms-sub{
+    position:relative; padding-left:27px; margin:1px 0 5px; color:var(--text-2);
+    font-size:12px; white-space:normal;
+  }
+  #aiAnswerText .ms-sub::before{ content:'–'; position:absolute; left:13px; top:0; color:var(--text-3); }
   .ai-answer .tag{
     display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700;
     letter-spacing:0.08em; text-transform:uppercase; color:var(--data); margin-bottom:6px;
@@ -3096,12 +3109,27 @@
   function boldKeyFindings(escapedLine){
     return escapedLine.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   }
+  // app.py's SYSTEM_PROMPT guarantees every line is blank, a category header,
+  // a "- " top-level bullet, or a further-indented "  - " sub-bullet — turn
+  // the latter two into their own block elements (see .ms-bullet/.ms-sub)
+  // instead of leaving them as plain "- "-prefixed text, so a bullet that
+  // wraps to a second line stays aligned under its own text rather than
+  // resetting to the left edge.
   function formatMarketSightReply(text){
-    return text.split('\n').map(line =>
-      MARKETSIGHT_CATEGORIES.includes(line.trim())
-        ? '<strong class="cat">' + escapeHtml(line.trim()) + '</strong>'
-        : boldKeyFindings(escapeHtml(line))
-    ).join('\n');
+    return text.split('\n').map(line => {
+      const trimmed = line.trim();
+      if(!trimmed) return '';
+      if(MARKETSIGHT_CATEGORIES.includes(trimmed)){
+        return '<strong class="cat">' + escapeHtml(trimmed) + '</strong>';
+      }
+      const isSub = /^\s{2,}-\s+/.test(line);
+      const isBullet = !isSub && /^-\s+/.test(trimmed);
+      if(isSub || isBullet){
+        const content = trimmed.replace(/^-\s+/, '');
+        return '<div class="' + (isSub ? 'ms-sub' : 'ms-bullet') + '">' + boldKeyFindings(escapeHtml(content)) + '</div>';
+      }
+      return '<div>' + boldKeyFindings(escapeHtml(line)) + '</div>';
+    }).join('');
   }
 
   const askInput = document.getElementById('askInput');

@@ -1300,6 +1300,41 @@
         || null;
   }
 
+  /* ================= NETWORK EXPERIENCE SNAPSHOT (OpenSignal ONX Spotlight) =================
+     Generated from an "ONXSpotlight_YYYYMMDD.xlsx" export via scripts/build_network_snapshot.py.
+     Same shape as the RETINA snapshot (level/area/region/city rows, no week — a single
+     as-of date, not a series), scored per operator GROUP (telkomsel, ioh, xlsmart), each
+     holding up to 12 parameters (see NETWORK_PARAMS). Independent of both the META and
+     RETINA snapshots — a different crawl, a different cadence, its own as-of date.
+  */
+  let networkSnapshot = null;
+  const NETWORK_PARAMS = [
+    { key: 'downloadSpeed', label: 'DownloadSpeed (Mbps)' },
+    { key: 'uploadSpeed', label: 'UploadSpeed (Mbps)' },
+    { key: 'videoExperience', label: 'VideoExperience' },
+    { key: 'voiceAppExperience', label: 'VoiceAppExperience' },
+    { key: 'gamesExperience', label: 'GamesExperience' },
+    { key: 'availability', label: 'Availability' },
+    { key: 'ccq', label: 'CCQ : Core Consistent Quality' },
+    { key: 'ecq', label: 'ECQ : Excellent Consistent Quality' },
+    { key: 'liveVideoExperience', label: 'LiveVideoExperience' },
+    { key: 'consistentQuality', label: 'ConsistentQuality' },
+    { key: 'coverageExperience', label: 'CoverageExperience' },
+    { key: 'reliability', label: 'Reliability' }
+  ];
+  const NETWORK_DEFAULT_PARAM = 'videoExperience';
+
+  function findNetworkRow(scope){
+    if(!networkSnapshot || !Array.isArray(networkSnapshot.rows)) return null;
+    const rows = networkSnapshot.rows;
+    const find = (a,r,c) => rows.find(x => x.area===a && x.region===r && x.city===c);
+    return find(scope.area, scope.region, scope.city)
+        || find(scope.area, scope.region, 'ALL')
+        || find(scope.area, 'ALL', 'ALL')
+        || find('ALL', 'ALL', 'ALL')
+        || null;
+  }
+
   const HADOOP_SCHEMA_EXAMPLE = {
     generatedAt: "2026-07-10T09:32:00+07:00",
     note: "One row per (area, region, city, week) combination your export covers. Use \"ALL\" for area/region/city to file a rollup row (e.g. a national row is area=ALL, region=ALL, city=ALL); use \"island\" or \"archetype\" instead for those grains. week must match this dashboard's period format, e.g. \"W28-2026\".",
@@ -1439,18 +1474,28 @@
       csiNpsByOperatorYoy = modeled.yoy;
     }
 
-    const hasBench = row && row.networkExperienceBenchmarkScore != null;
-    let netBench, netBenchDeltaWow, netBenchDelta, netBenchDeltaYoy, netBenchHistory, netBenchSource, netBenchByOperator, netBenchByOperatorPrev, netBenchByOperatorYoy;
+    // Network Experience Benchmark is sourced from its own ONX Spotlight snapshot
+    // (independent of the META hadoopSnapshot the row above comes from) — headline
+    // number is Telkomsel's VideoExperience-Overall score. Only one ONX export exists
+    // so far, so there's no prior period yet; deltas stay null (no pill shown) rather
+    // than being fabricated, same as any other real-but-historyless metric here.
+    const networkRow = findNetworkRow(scope);
+    const hasBench = networkRow && networkRow.telkomsel && networkRow.telkomsel[NETWORK_DEFAULT_PARAM] != null;
+    let netBench, netBenchDeltaWow, netBenchDelta, netBenchDeltaYoy, netBenchHistory, netBenchSource, netBenchByOperator, netBenchByOperatorPrev, netBenchByOperatorYoy, netBenchGeneratedAt;
     if(hasBench){
-      netBench = row.networkExperienceBenchmarkScore;
-      netBenchDeltaWow = row.networkExperienceBenchmarkPrevWowScore != null ? round1(row.networkExperienceBenchmarkScore - row.networkExperienceBenchmarkPrevWowScore) : null;
-      netBenchDelta = round1(row.networkExperienceBenchmarkScore - (row.networkExperienceBenchmarkPrevScore != null ? row.networkExperienceBenchmarkPrevScore : row.networkExperienceBenchmarkScore));
-      netBenchDeltaYoy = row.networkExperienceBenchmarkPrevYoyScore != null ? round1(row.networkExperienceBenchmarkScore - row.networkExperienceBenchmarkPrevYoyScore) : null;
-      netBenchHistory = row.networkBenchmarkHistory;
+      netBench = networkRow.telkomsel[NETWORK_DEFAULT_PARAM];
+      netBenchDeltaWow = null;
+      netBenchDelta = null;
+      netBenchDeltaYoy = null;
+      netBenchHistory = null;
       netBenchSource = 'hadoop';
-      netBenchByOperator = row.netBenchByOperator || null;
-      netBenchByOperatorPrev = row.netBenchByOperatorPrev || null;
-      netBenchByOperatorYoy = row.netBenchByOperatorYoy || null;
+      netBenchByOperator = {
+        xl: networkRow.xlsmart ? networkRow.xlsmart[NETWORK_DEFAULT_PARAM] : null,
+        ioh: networkRow.ioh ? networkRow.ioh[NETWORK_DEFAULT_PARAM] : null
+      };
+      netBenchByOperatorPrev = null;
+      netBenchByOperatorYoy = null;
+      netBenchGeneratedAt = networkSnapshot ? networkSnapshot.generatedAt : null;
     } else {
       netBench = round1(jitter(rng, 74, 6));
       netBenchDeltaWow = round1(jitter(rng, -0.5, 0.8));
@@ -1462,6 +1507,7 @@
       netBenchByOperator = modeled.current;
       netBenchByOperatorPrev = modeled.prev;
       netBenchByOperatorYoy = modeled.yoy;
+      netBenchGeneratedAt = null;
     }
 
     return {
@@ -1472,7 +1518,7 @@
       comparedToDateYoy: hadoopSnapshot ? hadoopSnapshot.comparedToDateYoy : null,
       metaShare, metaShareDeltaWow, metaShareDelta, metaShareDeltaYoy, metaShareHistory, metaShareSource, shareByOperator, shareByOperatorPrev, shareByOperatorYoy,
       csiNps, csiNpsDeltaWow, csiNpsDelta, csiNpsDeltaYoy, csiNpsHistory, csiNpsSource, csiNpsByOperator, csiNpsByOperatorPrev, csiNpsByOperatorYoy,
-      netBench, netBenchDeltaWow, netBenchDelta, netBenchDeltaYoy, netBenchHistory, netBenchSource, netBenchByOperator, netBenchByOperatorPrev, netBenchByOperatorYoy
+      netBench, netBenchDeltaWow, netBenchDelta, netBenchDeltaYoy, netBenchHistory, netBenchSource, netBenchByOperator, netBenchByOperatorPrev, netBenchByOperatorYoy, netBenchGeneratedAt
     };
   }
 
@@ -1514,9 +1560,9 @@
     return '<span class="kpi-delta num"' + compareTitle(suffix, source, comparedToDate) + ' style="color:' + color + '">' + arrow + ' ' + fmt1(Math.abs(delta)) + ' ' + suffix + '</span>';
   }
 
-  function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine, generatedAt, comparedToDate, deltaYoy, comparedToDateYoy, deltaWow, comparedToDateWow){
+  function kpiTile(label, value, unit, delta, source, history, accent, detailKey, compareLine, generatedAt, comparedToDate, deltaYoy, comparedToDateYoy, deltaWow, comparedToDateWow, sourceLabel){
     const sourceChip = source === 'hadoop'
-      ? '<span class="kpi-source hadoop">● Hadoop snapshot</span>'
+      ? '<span class="kpi-source hadoop">● ' + (sourceLabel || 'Hadoop snapshot') + '</span>'
       : '<span class="kpi-source modeled">◐ Modeled estimate</span>';
     return '<div class="kpi-tile" data-detail="' + detailKey + '" style="--panel-accent:' + accent + '">' +
         '<div class="kpi-top"><span class="kpi-label">' + label + '</span>' +
@@ -1565,7 +1611,7 @@
     row.innerHTML =
       kpiTile('Meta Market Share', kpis.metaShare, '%', kpis.metaShareDelta, kpis.metaShareSource, kpis.metaShareHistory, 'var(--brand)', 'kpi-share', competitorCompareLine(kpis.shareByOperator, kpis.shareByOperatorPrev, kpis.shareByOperatorYoy, '%'), kpis.generatedAt, kpis.comparedToDate, kpis.metaShareDeltaYoy, kpis.comparedToDateYoy, kpis.metaShareDeltaWow, kpis.comparedToDateWow) +
       kpiTile('CSI-NPS Score', kpis.csiNps, '', kpis.csiNpsDelta, kpis.csiNpsSource, kpis.csiNpsHistory, 'var(--violet)', 'kpi-nps', competitorCompareLine(kpis.csiNpsByOperator, kpis.csiNpsByOperatorPrev, kpis.csiNpsByOperatorYoy, ''), kpis.generatedAt, kpis.comparedToDate, kpis.csiNpsDeltaYoy, kpis.comparedToDateYoy, kpis.csiNpsDeltaWow, kpis.comparedToDateWow) +
-      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.netBenchSource, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench', competitorCompareLine(kpis.netBenchByOperator, kpis.netBenchByOperatorPrev, kpis.netBenchByOperatorYoy, ''), kpis.generatedAt, kpis.comparedToDate, kpis.netBenchDeltaYoy, kpis.comparedToDateYoy, kpis.netBenchDeltaWow, kpis.comparedToDateWow);
+      kpiTile('Network Experience Benchmark', kpis.netBench, '', kpis.netBenchDelta, kpis.netBenchSource, kpis.netBenchHistory, 'var(--data)', 'kpi-netbench', competitorCompareLine(kpis.netBenchByOperator, kpis.netBenchByOperatorPrev, kpis.netBenchByOperatorYoy, ''), kpis.netBenchGeneratedAt, null, kpis.netBenchDeltaYoy, null, kpis.netBenchDeltaWow, null, 'ONX Spotlight');
 
     const status = document.getElementById('hbStatus');
     if(kpis.source === 'hadoop'){
@@ -2483,6 +2529,21 @@
   }
   autoLoadRetina();
 
+  // Same auto-fetch pattern for the Network Experience Benchmark's ONX Spotlight
+  // snapshot, regenerated whenever a new ONXSpotlight_YYYYMMDD.xlsx export lands.
+  const AUTO_NETWORK_URL = 'network_latest.json';
+  function autoLoadNetwork(){
+    fetch(AUTO_NETWORK_URL, { cache: 'no-store' })
+      .then(res => { if(!res.ok) throw new Error('not found'); return res.json(); })
+      .then(parsed => {
+        if(!parsed || !Array.isArray(parsed.rows)) throw new Error('missing "rows" array');
+        networkSnapshot = parsed;
+        applyScope();
+      })
+      .catch(() => { /* no published Network snapshot yet — card keeps modeled estimates */ });
+  }
+  autoLoadNetwork();
+
   hbFormatBtn.addEventListener('click', () => {
     const showing = hbFormat.style.display !== 'none';
     if(showing){ hbFormat.style.display = 'none'; return; }
@@ -3228,6 +3289,100 @@
   function numCell(val){
     return '<td class="num">' + (val == null ? '–' : fmt1(val)) + '</td>';
   }
+
+  // Network Experience Benchmark: same Nationwide/Area/Region shape as RETINA
+  // (and reuses RETINA_GROUPS — both are keyed telkomsel/ioh/xlsmart), but with
+  // 12 selectable parameters instead of 3 fixed ones.
+  function networkAreaRegionRows(){
+    if(!networkSnapshot || !Array.isArray(networkSnapshot.rows)) return null;
+    const national = networkSnapshot.rows.find(r => r.level === 'Nationwide');
+    if(!national) return null;
+    const areas = {};
+    networkSnapshot.rows.filter(r => r.level === 'Area').forEach(r => { areas[r.area] = r; });
+    const regions = {};
+    networkSnapshot.rows.filter(r => r.level === 'Region').forEach(r => { regions[r.region] = r; });
+    return { national, areas, regions };
+  }
+  function networkWorstCities(paramKey){
+    if(!networkSnapshot || !Array.isArray(networkSnapshot.rows)) return null;
+    const rows = networkSnapshot.rows.filter(r => r.level === 'City' && r.telkomsel && r.telkomsel[paramKey] != null);
+    if(!rows.length) return null;
+    return rows
+      .map(r => ({ name: r.city, region: r.region, value: r.telkomsel[paramKey] }))
+      .sort((a, b) => a.value - b.value)
+      .slice(0, 5);
+  }
+  let lastNetworkAreaRegion = null;
+  function buildNetworkAreaRegionTable(data, paramKey){
+    const header = '<thead><tr><th>Region</th>' +
+      RETINA_GROUPS.map(g => '<th class="num">' + g.label + '</th>').join('') + '</tr></thead>';
+    const dataRow = (name, row, cls) => {
+      if(!row) return '';
+      const cells = RETINA_GROUPS.map(g => numCell(row[g.key] ? row[g.key][paramKey] : null)).join('');
+      return '<tr><td class="name-cell' + (cls ? ' ' + cls : '') + '">' + name + '</td>' + cells + '</tr>';
+    };
+    const nationalRows = groupRow('Nationwide', 1 + RETINA_GROUPS.length) + dataRow('National', data.national);
+    const areaRowsHtml = Object.keys(AREA_MAP).map(areaName => {
+      const areaAggRow = dataRow(areaName + ' (All Regions)', data.areas[areaName], 'area-agg-row');
+      const regionRows = AREA_MAP[areaName].map(r => dataRow(REGION_LABELS[r], data.regions[r])).join('');
+      return groupRow(areaName, 1 + RETINA_GROUPS.length) + areaAggRow + regionRows;
+    }).join('');
+    return '<table class="probe">' + header + '<tbody>' + nationalRows + areaRowsHtml + '</tbody></table>';
+  }
+  function buildNetworkCitiesTable(cities, paramLabel){
+    const rows = cities.map(c =>
+      '<tr><td class="name-cell">' + c.name + '<div style="font-size:9.5px;color:var(--text-3);font-weight:400;">' + (REGION_LABELS[c.region] || c.region) + '</div></td>' +
+      numCell(c.value) + '</tr>'
+    ).join('');
+    return '<table class="probe"><thead><tr><th>City</th><th class="num">' + paramLabel + '</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }
+  function renderNetworkParamTables(paramKey){
+    if(!lastNetworkAreaRegion) return;
+    const paramLabel = (NETWORK_PARAMS.find(p => p.key === paramKey) || {}).label || paramKey;
+    document.getElementById('networkAreaRegionWrap').innerHTML = buildNetworkAreaRegionTable(lastNetworkAreaRegion, paramKey);
+    const worst = networkWorstCities(paramKey);
+    document.getElementById('networkCitiesWrap').innerHTML = worst ? buildNetworkCitiesTable(worst, paramLabel) : '<p>No city-level data for this parameter yet.</p>';
+  }
+  document.addEventListener('change', e => {
+    if(e.target.id === 'networkParamSelect') renderNetworkParamTables(e.target.value);
+  });
+  function buildNetworkModal(){
+    const areaRegion = networkAreaRegionRows();
+    lastNetworkAreaRegion = areaRegion;
+    const monthTag = networkSnapshot && networkSnapshot.asOfDate ? ' <span class="modal-source-tag">· ONXSpotlight (as of ' + networkSnapshot.asOfDate + ')</span>' : '';
+    const srcNote = lastKPIs && lastKPIs.netBenchSource === 'hadoop'
+      ? 'Sourced from the loaded ONX Spotlight snapshot for the current filter scope.'
+      : 'Modeled estimate — load an ONX Spotlight snapshot for real figures.';
+    if(!areaRegion){
+      return { eyebrow:'Core KPI · Network Experience Benchmark', title:'Network Experience Benchmark — ' + fmt1(lastKPIs ? lastKPIs.netBench : null),
+        body:
+          '<p>Third-party / crowdsourced network quality benchmark score for the active scope. ' + srcNote + '</p>' +
+          buildMonthlyTrendSection(BENCH_TREND_MONTHLY, 'Monthly Network Experience Benchmark trend — national (TSEL vs IOH vs XLSmart)') +
+          '<div><div class="modal-section-label">Latest position by Area &amp; Region</div>' + buildAreaRegionTable(BENCH_BY_REGION, '', 'Score') + '</div>' +
+          '<div><div class="modal-section-label">Cities losing ground (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_BENCH, '', 'Score') + '</div>'
+      };
+    }
+    const defaultParam = (networkSnapshot && networkSnapshot.defaultParam) || NETWORK_DEFAULT_PARAM;
+    const paramOptions = NETWORK_PARAMS.map(p =>
+      '<option value="' + p.key + '"' + (p.key === defaultParam ? ' selected' : '') + '>' + p.label + '</option>'
+    ).join('');
+    const worst = networkWorstCities(defaultParam);
+    const defaultLabel = (NETWORK_PARAMS.find(p => p.key === defaultParam) || {}).label || defaultParam;
+    return { eyebrow:'Core KPI · Network Experience Benchmark', title:'Network Experience Benchmark — ' + fmt1(lastKPIs ? lastKPIs.netBench : null),
+      body:
+        '<p>OpenSignal ONX Spotlight crowdsourced network quality scores by parameter, for Telkomsel/IOH/XLSmart. ' + srcNote + '</p>' +
+        '<div>' +
+          '<div class="modal-section-label" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">' +
+            '<span>By Area &amp; Region' + monthTag + '</span>' +
+            '<select id="networkParamSelect">' + paramOptions + '</select>' +
+          '</div>' +
+          '<div id="networkAreaRegionWrap">' + buildNetworkAreaRegionTable(areaRegion, defaultParam) + '</div>' +
+        '</div>' +
+        '<div><div class="modal-section-label">Cities with the lowest Telkomsel score</div>' +
+          '<div id="networkCitiesWrap">' + (worst ? buildNetworkCitiesTable(worst, defaultLabel) : '<p>No city-level data for this parameter yet.</p>') + '</div>' +
+        '</div>'
+    };
+  }
   const RETINA_PARAMS = [
     { key: 'availability', label: 'Availability Score' },
     { key: 'visibility', label: 'Visibility Score' },
@@ -3318,13 +3473,7 @@
           '<div><div class="modal-section-label">Cities losing ground (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_NPS, '', 'Score') + '</div>'
       };
     }
-    return { eyebrow:'Core KPI · Network Experience Benchmark', title:'Network Experience Benchmark — ' + fmt1(lastKPIs.netBench),
-      body:
-        '<p>Third-party / crowdsourced network quality benchmark score for the active scope. ' + srcFor(lastKPIs.netBenchSource) + '</p>' +
-        buildMonthlyTrendSection(BENCH_TREND_MONTHLY, 'Monthly Network Experience Benchmark trend — national (TSEL vs IOH vs XLSmart)') +
-        '<div><div class="modal-section-label">Latest position by Area &amp; Region</div>' + buildAreaRegionTable(BENCH_BY_REGION, '', 'Score') + '</div>' +
-        '<div><div class="modal-section-label">Cities losing ground (negative MoM &amp; YoY)</div>' + buildCitiesLosingTable(CITIES_LOSING_BENCH, '', 'Score') + '</div>'
-    };
+    return null;
   }
 
   function buildBuzzModal(){
@@ -3434,7 +3583,7 @@
   function getModalContent(key){
     if(key === 'kpi-share') return buildKpiModal('share');
     if(key === 'kpi-nps') return buildKpiModal('nps');
-    if(key === 'kpi-netbench') return buildKpiModal('netbench');
+    if(key === 'kpi-netbench') return buildNetworkModal();
     if(key === 'synthesis'){
       return { eyebrow:'Synthesis · methodology', title:'How this narrative is built',
         body:'<p>Regenerated whenever the Area/Region/City/Week filter changes, cross-referencing four systems: <b>RETINA</b> (field outlet scans), <b>Probe</b> (competitor pricing RPA), <b>VOC</b> (social/review listening), and the <b>Network Experience Benchmark</b> (crowdsourced network quality). Figures are AI-synthesized decision support \u2014 validate against source systems before acting (see Governance).</p>' };

@@ -3034,8 +3034,15 @@
     ];
   }
   let lastRecs = [];
+  // First "P<n>" found in the horizon label ("Immediate · P1 · 24h" -> 1,
+  // "Medium-term · P2/P3 · this quarter" -> 2) — lower rank sorts first, so
+  // the grid reads most-urgent-first left to right, top to bottom.
+  function recPriorityRank(horizon){
+    const m = horizon.match(/P(\d)/);
+    return m ? parseInt(m[1], 10) : 9;
+  }
   function renderRecs(drivers, place){
-    lastRecs = buildRecs(drivers, place);
+    lastRecs = buildRecs(drivers, place).slice().sort((a, b) => recPriorityRank(a.horizon) - recPriorityRank(b.horizon));
     const grid = document.getElementById('recGrid');
     grid.innerHTML = '';
     lastRecs.forEach((r, recIdx) => {

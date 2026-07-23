@@ -293,7 +293,7 @@
     display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
     overflow:hidden;
   }
-  .kpi-spark{ margin-top:auto; padding-top:8px; opacity:0.92; }
+  .kpi-spark{ margin-top:auto; padding-top:16px; opacity:0.92; }
   .kpi-spark svg{ display:block; }
 
   /* ============ TICKERS ============ */
@@ -319,6 +319,10 @@
     animation:scroll-left 55s linear infinite;
   }
   .ticker.voc .ticker-track{ animation-duration:80s; }
+  /* .main-col .section zeroes out section.section's own margin-top, so the
+     VOC ticker (the last element before the Synthesis section on Overview)
+     needs its own bottom margin to keep the two cards from sitting flush. */
+  #vocTicker{ margin-bottom:22px; }
   .ticker-track:hover{ animation-play-state:paused; }
   @keyframes scroll-left{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
   @media (prefers-reduced-motion:reduce){

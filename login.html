@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — Market Intelligence Tactical Dashboard</title>
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:        #0a0d13;
+    --surface:   #10141d;
+    --surface-2: #151a25;
+    --border:    rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.16);
+    --text-1:    #eef1f6;
+    --text-2:    #9aa4b8;
+    --text-3:    #626d84;
+    --brand:     #e30613;
+    --brand-dim: rgba(227,6,19,0.14);
+    --bad:       #ef4444;
+    --bad-dim:   rgba(239,68,68,0.14);
+    --sans: -apple-system, "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; }
+  body{
+    font-family:var(--sans);
+    background:
+      radial-gradient(ellipse at top, rgba(227,6,19,0.08), transparent 60%),
+      var(--bg);
+    color:var(--text-1);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+  }
+  .card{
+    width:100%; max-width:380px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:28px 26px 24px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.45);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+  .logo-mark{
+    width:32px; height:32px; border-radius:8px; flex:none;
+    background:var(--brand); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:15px;
+  }
+  .brand h1{ font-size:14px; margin:0; line-height:1.3; }
+  .brand p{ margin:2px 0 0; font-size:11px; color:var(--text-3); }
+  label{ display:block; font-size:12px; color:var(--text-2); margin-bottom:6px; }
+  input[type=text], input[type=password]{
+    width:100%; padding:10px 12px; margin-bottom:14px;
+    background:var(--surface-2); border:1px solid var(--border-strong);
+    border-radius:8px; color:var(--text-1); font-size:14px;
+    outline:none;
+  }
+  input[type=text]:focus, input[type=password]:focus{ border-color:var(--brand); }
+  button{
+    width:100%; padding:11px 12px; border:none; border-radius:8px;
+    background:var(--brand); color:#fff; font-size:13.5px; font-weight:600;
+    cursor:pointer;
+  }
+  button:hover{ filter:brightness(1.08); }
+  .err{
+    display:none; margin-bottom:14px; padding:8px 10px;
+    background:var(--bad-dim); border:1px solid rgba(239,68,68,0.35);
+    color:#ff9c9c; font-size:12px; border-radius:8px;
+  }
+  .foot{ margin-top:16px; font-size:10.5px; color:var(--text-3); text-align:center; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">
+      <div class="logo-mark">T</div>
+      <div>
+        <h1>Market Intelligence Tactical Dashboard</h1>
+        <p>Restricted — Telkomsel CMO &amp; senior marketing leadership only</p>
+      </div>
+    </div>
+    <div class="err" id="err">Incorrect username or password. Please try again.</div>
+    <form id="loginForm" method="POST" action="/api/login">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" autofocus required autocomplete="username">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required autocomplete="current-password">
+      <input type="hidden" name="next" id="next" value="/">
+      <button type="submit">Sign in</button>
+    </form>
+    <div class="foot">Access is logged. Contact the CMO office for credentials.</div>
+  </div>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const next = params.get('next');
+    if (next && next.startsWith('/') && !next.startsWith('//')) {
+      document.getElementById('next').value = next;
+    }
+    if (params.get('error')) {
+      document.getElementById('err').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
